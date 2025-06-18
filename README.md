@@ -2,7 +2,7 @@
 
 Questo è un progetto React che consente di calcolare e visualizzare l'efficienza idraulica delle caditoie stradali.
 
-## 🔧 Funzionalità
+## Funzionalità
 
 - Inserimento dei parametri tramite **slider interattivi**:
   - Portata totale (Q)
@@ -20,8 +20,10 @@ Questo è un progetto React che consente di calcolare e visualizzare l'efficienz
   - Efficienza da formula combinata
 
 - Visualizzazione su **grafico radar** dinamico.
+- Modalità chiaro/scuro con pulsante di attivazione.
+- Layout responsive con possibilità di ridimensionare i pannelli.
 
-## ▶️ Avvio locale
+## Avvio locale
 
 1. Installa le dipendenze:
    ```bash
@@ -35,7 +37,7 @@ Questo è un progetto React che consente di calcolare e visualizzare l'efficienz
 
 3. Apri il browser su `http://localhost:5173`
 
-## 🚀 Deploy (consigliato: Vercel)
+## Deploy (consigliato: Vercel)
 
 1. Inizializza il repository Git:
    ```bash
@@ -52,7 +54,7 @@ Questo è un progetto React che consente di calcolare e visualizzare l'efficienz
 
 3. Accedi a [vercel.com](https://vercel.com), collega il repository e avvia il deploy automatico.
 
-## 📦 Build produzione
+## Build produzione
 
 ```bash
 npm run build
