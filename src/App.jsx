@@ -39,6 +39,16 @@ export default function App() {
 
   const [leftWidth, setLeftWidth] = useState(30);
   const [isResizing, setIsResizing] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved ? JSON.parse(saved) : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => setIsDarkMode((d) => !d);
 
   const startResize = () => setIsResizing(true);
 
@@ -95,9 +105,12 @@ export default function App() {
   }, [E]);
 
   return (
-    <div className="container">
+    <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="leftPane" style={{ flexBasis: `${leftWidth}%` }}>
         <h1>Efficienza Caditoie</h1>
+        <button onClick={toggleDarkMode}>
+          {isDarkMode ? "Tema Chiaro" : "Tema Scuro"}
+        </button>
         {Object.entries(params).map(([key, value]) => (
           <div key={key} className="slider-container">
             <label className="slider-label">
