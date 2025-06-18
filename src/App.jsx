@@ -116,9 +116,11 @@ export default function App() {
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="leftPane" style={{ flexBasis: isMobile ? "100%" : `${leftWidth}%` }}>
         <h1>Efficienza Caditoie</h1>
-        <button onClick={toggleDarkMode}>
-          {isDarkMode ? "Tema Chiaro" : "Tema Scuro"}
-        </button>
+        <br />
+        <div className="theme-toggle" onClick={toggleDarkMode}>
+          {isDarkMode ? "☀️" : "🌙"}
+        </div>
+        <br />
         {Object.entries(params).map(([key, value]) => (
           <div key={key} className="slider-container">
             <label className="slider-label">
