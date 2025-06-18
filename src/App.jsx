@@ -21,6 +21,7 @@ import {
 } from "recharts";
 import "./App.css";
 import { calcR1, calcR2, calcTotalEfficiency } from "./utils/calc";
+import Help from "./Help";
 
 export default function App() {
   const [params, setParams] = useState({
@@ -45,6 +46,7 @@ export default function App() {
     const saved = localStorage.getItem("darkMode");
     return saved ? JSON.parse(saved) : false;
   });
+  const [showHelp, setShowHelp] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
@@ -116,100 +118,113 @@ export default function App() {
   return (
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="leftPane" style={{ flexBasis: isMobile ? "100%" : `${leftWidth}%` }}>
-        <h1>Efficienza Caditoie</h1>
-        <br />
+        <nav className="menu">
+          <button onClick={() => setShowHelp(false)}>Calcolatore</button>
+          <button onClick={() => setShowHelp(true)}>Help</button>
+        </nav>
         <div className="theme-toggle" onClick={toggleDarkMode}>
           {isDarkMode ? "☀️" : "🌙"}
         </div>
-        <br />
-        {Object.entries(params).map(([key, value]) => (
-          <div key={key} className="slider-container">
-            <label className="slider-label">
-              {key}: {value.toFixed(2)}
-            </label>
-            <input
-              type="range"
-              min={key === "E0" ? 0 : 0.01}
-              max={key === "E0" ? 1 : key === "v" || key === "v0" ? 5 : 200}
-              step={key === "E0" || key === "j" || key === "L" ? 0.01 : 1}
-              value={value}
-              onChange={(e) => handleChange(key, e)}
-            />
-          </div>
-        ))}
+        {!showHelp && (
+          <>
+            <h1>Efficienza Caditoie</h1>
+            <br />
+            {Object.entries(params).map(([key, value]) => (
+              <div key={key} className="slider-container">
+                <label className="slider-label">
+                  {key}: {value.toFixed(2)}
+                </label>
+                <input
+                  type="range"
+                  min={key === "E0" ? 0 : 0.01}
+                  max={key === "E0" ? 1 : key === "v" || key === "v0" ? 5 : 200}
+                  step={key === "E0" || key === "j" || key === "L" ? 0.01 : 1}
+                  value={value}
+                  onChange={(e) => handleChange(key, e)}
+                />
+              </div>
+            ))}
+          </>
+        )}
       </div>
-      {!isMobile && <div className="resizer" onMouseDown={startResize} />}
-      {isMobile && <div className="divider" />}
+      {!showHelp && !isMobile && <div className="resizer" onMouseDown={startResize} />}
+      {!showHelp && isMobile && <div className="divider" />}
       <div className="rightPane">
-        <div className="chart-box">
-          <div className="formula-list">
-            <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
-            <p>
-              R2 = 1 / (1 + (0.083 * v<sup>1.8</sup>) / (j * L<sup>2/3</sup>)) =
-              {R2.toFixed(2)}
-            </p>
-            <p>Q1* = Q1 × R1 = {Q1_star.toFixed(2)}</p>
-            <p>Q2 = Q - Q1 = {Q2.toFixed(2)}</p>
-            <p>Q2* = Q2 × R2 = {Q2_star.toFixed(2)}</p>
-            <p>E = (Q1* + Q2*) / Q = {E.toFixed(2)}</p>
-            <p>E formula = R1 × E0 + R2 × (1 - E0) = {E_formula.toFixed(2)}</p>
-          </div>
-        </div>
+        {showHelp ? (
+          <Help />
+        ) : (
+          <>
+            <div className="chart-box">
+              <div className="formula-list">
+                <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
+                <p>
+                  R2 = 1 / (1 + (0.083 * v<sup>1.8</sup>) / (j * L<sup>2/3</sup>)) =
+                  {R2.toFixed(2)}
+                </p>
+                <p>Q1* = Q1 × R1 = {Q1_star.toFixed(2)}</p>
+                <p>Q2 = Q - Q1 = {Q2.toFixed(2)}</p>
+                <p>Q2* = Q2 × R2 = {Q2_star.toFixed(2)}</p>
+                <p>E = (Q1* + Q2*) / Q = {E.toFixed(2)}</p>
+                <p>E formula = R1 × E0 + R2 × (1 - E0) = {E_formula.toFixed(2)}</p>
+              </div>
+            </div>
 
-        <div className="chart-box">
-          <ResponsiveContainer width="100%" height={300}>
-            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-              <PolarGrid />
-              <PolarAngleAxis dataKey="subject" />
-              <PolarRadiusAxis angle={30} domain={[0, 1]} />
-              <Radar
-                name="Efficienze"
-                dataKey="A"
-                stroke="#8884d8"
-                fill="#8884d8"
-                fillOpacity={0.6}
-              >
-                <LabelList dataKey="A" formatter={(v) => v.toFixed(2)} />
-              </Radar>
+            <div className="chart-box">
+              <ResponsiveContainer width="100%" height={300}>
+                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                  <PolarGrid />
+                  <PolarAngleAxis dataKey="subject" />
+                  <PolarRadiusAxis angle={30} domain={[0, 1]} />
+                  <Radar
+                    name="Efficienze"
+                    dataKey="A"
+                    stroke="#8884d8"
+                    fill="#8884d8"
+                    fillOpacity={0.6}
+                  >
+                    <LabelList dataKey="A" formatter={(v) => v.toFixed(2)} />
+                  </Radar>
 
-              <Tooltip />
-            </RadarChart>
-          </ResponsiveContainer>
-        </div>
+                  <Tooltip />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
 
-        <div className="chart-box">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={barData}>
-              <XAxis dataKey="name" />
-              <YAxis domain={[0, 1]} />
-              <Tooltip />
-              <Bar dataKey="value" fill="#82ca9d">
-                <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
-              </Bar>
+            <div className="chart-box">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={barData}>
+                  <XAxis dataKey="name" />
+                  <YAxis domain={[0, 1]} />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#82ca9d">
+                    <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
+                  </Bar>
 
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
 
-        <div className="chart-box">
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                outerRadius={80}
-                label={({ name, value }) => `${name}: ${value.toFixed(2)}`}
+            <div className="chart-box">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    dataKey="value"
+                    nameKey="name"
+                    outerRadius={80}
+                    label={({ name, value }) => `${name}: ${value.toFixed(2)}`}
 
-              >
-                {pieData.map((entry, index) => (
-                  <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </>
+        )}
 
       </div>
     </div>

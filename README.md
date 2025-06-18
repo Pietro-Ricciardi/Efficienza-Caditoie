@@ -1,6 +1,7 @@
 # Efficienza Caditoie
 
 Questo è un progetto React che consente di calcolare e visualizzare l'efficienza idraulica delle caditoie stradali.
+Un file Excel di esempio è disponibile nella cartella `excel`.
 
 ## Funzionalità
 
