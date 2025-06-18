@@ -103,3 +103,17 @@
 .dark-mode .divider {
   background: #555;
 }
+
+.menu {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.menu button {
+  padding: 5px 10px;
+}
+
+.help-page {
+  line-height: 1.6;
+}
