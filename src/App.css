@@ -24,6 +24,19 @@
   background: #ddd;
 }
 
+.divider {
+  width: 100%;
+  height: 5px;
+  background: #ddd;
+}
+
+.theme-toggle {
+  font-size: 1.5em;
+  text-align: center;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -83,5 +96,9 @@
 }
 
 .dark-mode .resizer {
+  background: #555;
+}
+
+.dark-mode .divider {
   background: #555;
 }

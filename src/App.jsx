@@ -116,9 +116,11 @@ export default function App() {
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
       <div className="leftPane" style={{ flexBasis: isMobile ? "100%" : `${leftWidth}%` }}>
         <h1>Efficienza Caditoie</h1>
-        <button onClick={toggleDarkMode}>
-          {isDarkMode ? "Tema Chiaro" : "Tema Scuro"}
-        </button>
+        <br />
+        <div className="theme-toggle" onClick={toggleDarkMode}>
+          {isDarkMode ? "☀️" : "🌙"}
+        </div>
+        <br />
         {Object.entries(params).map(([key, value]) => (
           <div key={key} className="slider-container">
             <label className="slider-label">
@@ -136,7 +138,23 @@ export default function App() {
         ))}
       </div>
       {!isMobile && <div className="resizer" onMouseDown={startResize} />}
+      {isMobile && <div className="divider" />}
       <div className="rightPane">
+        <div className="chart-box">
+          <div className="formula-list">
+            <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
+            <p>
+              R2 = 1 / (1 + (0.083 * v<sup>1.8</sup>) / (j * L<sup>2/3</sup>)) =
+              {R2.toFixed(2)}
+            </p>
+            <p>Q1* = Q1 × R1 = {Q1_star.toFixed(2)}</p>
+            <p>Q2 = Q - Q1 = {Q2.toFixed(2)}</p>
+            <p>Q2* = Q2 × R2 = {Q2_star.toFixed(2)}</p>
+            <p>E = (Q1* + Q2*) / Q = {E.toFixed(2)}</p>
+            <p>E formula = R1 × E0 + R2 × (1 - E0) = {E_formula.toFixed(2)}</p>
+          </div>
+        </div>
+
         <div className="chart-box">
           <ResponsiveContainer width="100%" height={300}>
             <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
@@ -192,17 +210,6 @@ export default function App() {
           </ResponsiveContainer>
         </div>
 
-        <div className="chart-box">
-          <div className="formula-list">
-            <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
-            <p>R2 = 1 / (1 + (0.083 * v<sup>1.8</sup>) / (j * L<sup>2/3</sup>)) = {R2.toFixed(2)}</p>
-            <p>Q1* = Q1 × R1 = {Q1_star.toFixed(2)}</p>
-            <p>Q2 = Q - Q1 = {Q2.toFixed(2)}</p>
-            <p>Q2* = Q2 × R2 = {Q2_star.toFixed(2)}</p>
-            <p>E = (Q1* + Q2*) / Q = {E.toFixed(2)}</p>
-            <p>E formula = R1 × E0 + R2 × (1 - E0) = {E_formula.toFixed(2)}</p>
-          </div>
-        </div>
       </div>
     </div>
   );
