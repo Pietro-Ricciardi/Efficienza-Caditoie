@@ -39,6 +39,7 @@ export default function App() {
 
   const [leftWidth, setLeftWidth] = useState(30);
   const [isResizing, setIsResizing] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem("darkMode");
     return saved ? JSON.parse(saved) : false;
@@ -53,6 +54,13 @@ export default function App() {
   const startResize = () => setIsResizing(true);
 
   useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
     const handleMove = (e) => {
       if (!isResizing) return;
       const newWidth = (e.clientX / window.innerWidth) * 100;
@@ -65,7 +73,7 @@ export default function App() {
       document.removeEventListener("mousemove", handleMove);
       document.removeEventListener("mouseup", stopResize);
     };
-  }, [isResizing]);
+  }, [isResizing, isMobile]);
 
   const R1 = 1 - 0.3 * (params.v - params.v0);
   const R2 = 1 / (1 + (0.083 * Math.pow(params.v, 1.8)) / (params.j * Math.pow(params.L, 2 / 3)));
@@ -106,7 +114,7 @@ export default function App() {
 
   return (
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
-      <div className="leftPane" style={{ flexBasis: `${leftWidth}%` }}>
+      <div className="leftPane" style={{ flexBasis: isMobile ? "100%" : `${leftWidth}%` }}>
         <h1>Efficienza Caditoie</h1>
         <button onClick={toggleDarkMode}>
           {isDarkMode ? "Tema Chiaro" : "Tema Scuro"}
@@ -127,7 +135,7 @@ export default function App() {
           </div>
         ))}
       </div>
-      <div className="resizer" onMouseDown={startResize} />
+      {!isMobile && <div className="resizer" onMouseDown={startResize} />}
       <div className="rightPane">
         <div className="chart-box">
           <ResponsiveContainer width="100%" height={300}>
