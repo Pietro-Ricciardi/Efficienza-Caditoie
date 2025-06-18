@@ -24,6 +24,24 @@
   background: #ddd;
 }
 
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .leftPane {
+    flex-basis: 100%;
+  }
+
+  .rightPane {
+    grid-template-columns: 1fr;
+  }
+
+  .resizer {
+    display: none;
+  }
+}
+
 .chart-box {
   border: 1px solid #ccc;
   border-radius: 8px;
