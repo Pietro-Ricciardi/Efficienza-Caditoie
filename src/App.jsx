@@ -17,6 +17,7 @@ import {
   LineChart,
   Line,
   LabelList,
+
 } from "recharts";
 import "./App.css";
 
@@ -130,6 +131,7 @@ export default function App() {
               >
                 <LabelList dataKey="A" formatter={(v) => v.toFixed(2)} />
               </Radar>
+
               <Tooltip />
             </RadarChart>
           </ResponsiveContainer>
@@ -144,6 +146,7 @@ export default function App() {
               <Bar dataKey="value" fill="#82ca9d">
                 <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
               </Bar>
+
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -157,6 +160,7 @@ export default function App() {
                 nameKey="name"
                 outerRadius={80}
                 label={({ name, value }) => `${name}: ${value.toFixed(2)}`}
+
               >
                 {pieData.map((entry, index) => (
                   <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
@@ -176,6 +180,7 @@ export default function App() {
               <Line type="monotone" dataKey="value" stroke="#ff7300">
                 <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
               </Line>
+
             </LineChart>
           </ResponsiveContainer>
         </div>
