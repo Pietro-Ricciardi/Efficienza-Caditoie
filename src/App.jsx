@@ -20,6 +20,7 @@ import {
 
 } from "recharts";
 import "./App.css";
+import { calcR1, calcR2, calcTotalEfficiency } from "./utils/calc";
 
 export default function App() {
   const [params, setParams] = useState({
@@ -75,12 +76,12 @@ export default function App() {
     };
   }, [isResizing, isMobile]);
 
-  const R1 = 1 - 0.3 * (params.v - params.v0);
-  const R2 = 1 / (1 + (0.083 * Math.pow(params.v, 1.8)) / (params.j * Math.pow(params.L, 2 / 3)));
+  const R1 = calcR1(params.v, params.v0);
+  const R2 = calcR2(params.v, params.j, params.L);
   const Q1_star = params.Q1 * R1;
   const Q2 = params.Q - params.Q1;
   const Q2_star = Q2 * R2;
-  const E = (Q1_star + Q2_star) / params.Q;
+  const E = calcTotalEfficiency(params);
   const E_formula = R1 * params.E0 + R2 * (1 - params.E0);
 
   const data = [
