@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.leftPane {
+  overflow: auto;
+  padding: 20px;
+}
+
+.rightPane {
+  flex-grow: 1;
+  overflow: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.resizer {
+  width: 5px;
+  cursor: col-resize;
+  background: #ddd;
+}
+
+.chart-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  height: 100%;
+}
+
+.slider-label {
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.slider-container {
+  margin-bottom: 20px;
+}

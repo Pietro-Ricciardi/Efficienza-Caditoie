@@ -1,5 +1,23 @@
-import React, { useState } from "react";
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Tooltip, ResponsiveContainer } from "recharts";
+import React, { useState, useEffect } from "react";
+import {
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+} from "recharts";
+import "./App.css";
 
 export default function App() {
   const [params, setParams] = useState({
@@ -17,6 +35,26 @@ export default function App() {
     setParams({ ...params, [key]: value });
   };
 
+  const [leftWidth, setLeftWidth] = useState(30);
+  const [isResizing, setIsResizing] = useState(false);
+
+  const startResize = () => setIsResizing(true);
+
+  useEffect(() => {
+    const handleMove = (e) => {
+      if (!isResizing) return;
+      const newWidth = (e.clientX / window.innerWidth) * 100;
+      if (newWidth > 10 && newWidth < 80) setLeftWidth(newWidth);
+    };
+    const stopResize = () => setIsResizing(false);
+    document.addEventListener("mousemove", handleMove);
+    document.addEventListener("mouseup", stopResize);
+    return () => {
+      document.removeEventListener("mousemove", handleMove);
+      document.removeEventListener("mouseup", stopResize);
+    };
+  }, [isResizing]);
+
   const R1 = 1 - 0.3 * (params.v - params.v0);
   const R2 = 1 / (1 + (0.083 * Math.pow(params.v, 1.8)) / (params.j * Math.pow(params.L, 2 / 3)));
   const Q1_star = params.Q1 * R1;
@@ -32,34 +70,106 @@ export default function App() {
     { subject: "Formula Comb.", A: E_formula },
   ];
 
+  const barData = [
+    { name: "R1", value: R1 },
+    { name: "R2", value: R2 },
+  ];
+
+  const pieData = [
+    { name: "Q1*", value: Q1_star },
+    { name: "Q2*", value: Q2_star },
+  ];
+
+  const [lineData, setLineData] = useState([]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setLineData((d) => [
+        ...d.slice(-9),
+        { time: new Date().toLocaleTimeString().split(" ")[0], value: E },
+      ]);
+    }, 1000);
+    return () => clearInterval(id);
+  }, [E]);
+
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Efficienza Caditoie</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
-        <div>
-          {Object.entries(params).map(([key, value]) => (
-            <div key={key} style={{ marginBottom: 10 }}>
-              <label>{key}: {value}</label>
-              <input
-                type="range"
-                min={key === "E0" ? 0 : 0.01}
-                max={key === "E0" ? 1 : key === "v" || key === "v0" ? 5 : 200}
-                step={key === "E0" || key === "j" || key === "L" ? 0.01 : 1}
-                value={value}
-                onChange={(e) => handleChange(key, e)}
-              />
-            </div>
-          ))}
-        </div>
-        <div style={{ width: 500, height: 400 }}>
-          <ResponsiveContainer width="100%" height="100%">
+    <div className="container">
+      <div className="leftPane" style={{ flexBasis: `${leftWidth}%` }}>
+        <h1>Efficienza Caditoie</h1>
+        {Object.entries(params).map(([key, value]) => (
+          <div key={key} className="slider-container">
+            <label className="slider-label">
+              {key}: {value.toFixed(2)}
+            </label>
+            <input
+              type="range"
+              min={key === "E0" ? 0 : 0.01}
+              max={key === "E0" ? 1 : key === "v" || key === "v0" ? 5 : 200}
+              step={key === "E0" || key === "j" || key === "L" ? 0.01 : 1}
+              value={value}
+              onChange={(e) => handleChange(key, e)}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="resizer" onMouseDown={startResize} />
+      <div className="rightPane">
+        <div className="chart-box">
+          <ResponsiveContainer width="100%" height={300}>
             <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
               <PolarGrid />
               <PolarAngleAxis dataKey="subject" />
               <PolarRadiusAxis angle={30} domain={[0, 1]} />
-              <Radar name="Efficienze" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+              <Radar
+                name="Efficienze"
+                dataKey="A"
+                stroke="#8884d8"
+                fill="#8884d8"
+                fillOpacity={0.6}
+              />
               <Tooltip />
             </RadarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="chart-box">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={barData}>
+              <XAxis dataKey="name" />
+              <YAxis domain={[0, 1]} />
+              <Tooltip />
+              <Bar dataKey="value" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="chart-box">
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={80}
+                label
+              >
+                {pieData.map((entry, index) => (
+                  <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="chart-box">
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={lineData}>
+              <XAxis dataKey="time" />
+              <YAxis domain={[0, 1]} />
+              <Tooltip />
+              <Line type="monotone" dataKey="value" stroke="#ff7300" />
+            </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
