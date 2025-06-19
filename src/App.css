@@ -193,9 +193,13 @@
   text-align: left;
 }
 
-.submenu label {
+.submenu button {
   display: block;
   margin-left: 10px;
+  text-align: left;
+}
+.submenu-item span {
+  margin-right: 4px;
 }
 
 .top-bar {
