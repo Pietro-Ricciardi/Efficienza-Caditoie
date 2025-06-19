@@ -24,6 +24,7 @@ Un file Excel di esempio è disponibile nella cartella `excel`.
 - Grafico evolutivo per Q o v su intervalli definiti.
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
+- Esportazione dei dati e dei grafici in **CSV**, **Excel** e come immagini.
 
 ## Avvio locale
 
