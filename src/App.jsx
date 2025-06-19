@@ -451,6 +451,20 @@ export default function App() {
             />
           </svg>
         </a>
+        <a
+          href="https://www.linkedin.com/in/pietro-ricciardi/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <svg
+            className="w-5 h-5"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.708-.52-1.248-1.341-1.248-.822 0-1.358.54-1.358 1.248 0 .694.521 1.248 1.327 1.248h.014zM13.458 13.394v-3.997c0-2.137-1.143-3.129-2.666-3.129-1.23 0-1.788.692-2.098 1.184v.025h-.014a5.19 5.19 0 01.014-.025V6.169h-2.4c.03.653 0 7.225 0 7.225h2.4v-4.035c0-.216.015-.432.079-.586.174-.432.571-.879 1.237-.879.872 0 1.222.663 1.222 1.637v3.863h2.401z" />
+          </svg>
+        </a>
         <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer" className="mr-4">
           Licenza MIT
         </a>
