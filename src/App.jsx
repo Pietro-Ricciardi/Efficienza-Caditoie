@@ -118,6 +118,14 @@ export default function App() {
   ];
 
   const [lineData, setLineData] = useState([]);
+  const [visibleCharts, setVisibleCharts] = useState({
+    radar: true,
+    bar: true,
+    pie: true,
+  });
+
+  const toggleChart = (chart) =>
+    setVisibleCharts((c) => ({ ...c, [chart]: !c[chart] }));
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -164,6 +172,33 @@ export default function App() {
                 />
               </div>
             ))}
+
+            <div className="chart-toggles">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={visibleCharts.radar}
+                  onChange={() => toggleChart("radar")}
+                />
+                Grafico radar
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={visibleCharts.bar}
+                  onChange={() => toggleChart("bar")}
+                />
+                Grafico a barre
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={visibleCharts.pie}
+                  onChange={() => toggleChart("pie")}
+                />
+                Grafico a torta
+              </label>
+            </div>
           </>
         )}
       </div>
@@ -189,7 +224,9 @@ export default function App() {
               </div>
             </div>
 
+            {visibleCharts.radar && (
             <div className="chart-box">
+              <h3>Confronto efficienze</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
                   <PolarGrid />
@@ -209,8 +246,11 @@ export default function App() {
                 </RadarChart>
               </ResponsiveContainer>
             </div>
+            )}
 
+            {visibleCharts.bar && (
             <div className="chart-box">
+              <h3>R1 e R2</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={barData}>
                   <XAxis dataKey="name" />
@@ -223,8 +263,11 @@ export default function App() {
                 </BarChart>
               </ResponsiveContainer>
             </div>
+            )}
 
+            {visibleCharts.pie && (
             <div className="chart-box">
+              <h3>Portate intercettate</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
@@ -243,6 +286,7 @@ export default function App() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
+            )}
           </>
         )}
 
