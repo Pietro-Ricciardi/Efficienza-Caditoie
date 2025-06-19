@@ -9,3 +9,12 @@ export async function fetchRain(city, apiKey) {
   const rain = data.rain?.['1h'] ?? data.rain?.['3h'] ?? 0;
   return rain;
 }
+
+export async function verifyApiKey(apiKey) {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=Rome&appid=${apiKey}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error('Chiave API non valida');
+  }
+  return true;
+}

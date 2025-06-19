@@ -20,7 +20,7 @@ import Toast from "./Toast";
 import ParameterControls from "./components/ParameterControls";
 import Graphs from "./components/Graphs";
 import Sidebar from "./components/Sidebar";
-import { fetchRain } from "./utils/weather";
+import { fetchRain, verifyApiKey } from "./utils/weather";
 
 export default function App() {
   const [params, setParams] = useState({
@@ -75,6 +75,8 @@ export default function App() {
   const [dataSource, setDataSource] = useState('manual');
   const [city, setCity] = useState('');
   const [rain, setRain] = useState(null);
+  const [apiKey, setApiKey] = useState('');
+  const [apiVerified, setApiVerified] = useState(false);
 
   const radarRef = useRef(null);
   const barRef = useRef(null);
@@ -100,6 +102,18 @@ export default function App() {
 
   const toggleSidebar = () => setSidebarOpen((s) => !s);
 
+  const verifyKey = useCallback(() => {
+    verifyApiKey(apiKey)
+      .then(() => {
+        setApiVerified(true);
+        addToast('API key valida');
+      })
+      .catch(() => {
+        setApiVerified(false);
+        addToast('API key non valida');
+      });
+  }, [apiKey, addToast]);
+
 
   const toggleInfo = (key) =>
     setInfoParam((current) => (current === key ? null : key));
@@ -111,16 +125,15 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (dataSource === 'openweather' && city) {
-      const key = import.meta.env.VITE_OPENWEATHER_KEY || 'YOUR_API_KEY';
-      fetchRain(city, key)
+    if (dataSource === 'openweather' && apiVerified && city) {
+      fetchRain(city, apiKey)
         .then((r) => {
           setRain(r);
           setParams((p) => ({ ...p, Q: r, Q1: r * 0.6 }));
         })
         .catch(() => addToast('Errore caricamento dati meteo'));
     }
-  }, [dataSource, city, addToast]);
+  }, [dataSource, apiVerified, city, apiKey, addToast]);
 
 
   const R1 = useMemo(() => calcR1(params.v, params.v0), [params]);
@@ -417,6 +430,10 @@ export default function App() {
             setDataSource={setDataSource}
             city={city}
             setCity={setCity}
+            apiKey={apiKey}
+            setApiKey={setApiKey}
+            apiVerified={apiVerified}
+            verifyKey={verifyKey}
             rain={rain}
           />
         )}

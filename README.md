@@ -34,7 +34,10 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Download dei modelli **CSV**, **Excel** e **JSON** per l'import dei parametri.
 - Opzionalmente è possibile scegliere "OpenWeatherMap" come origine dei dati e
   caricare automaticamente l'intensità di pioggia per una città, con
-  aggiornamento dei grafici in tempo reale.
+  aggiornamento dei grafici in tempo reale. Verrà richiesto di inserire la
+  propria **API key** di OpenWeatherMap; il campo è nascosto e la chiave può
+  essere mostrata temporaneamente tenendo premuta l'icona a forma di occhio.
+  Solo dopo la verifica della chiave sarà possibile specificare la città.
 
 ## Avvio locale
 
