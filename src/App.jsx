@@ -95,6 +95,14 @@ export default function App() {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
   }, [isDarkMode]);
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [isDarkMode]);
+
   const toggleDarkMode = () => setIsDarkMode((d) => !d);
 
   const toggleSidebar = () => setSidebarOpen((s) => !s);
