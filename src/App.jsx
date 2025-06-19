@@ -23,6 +23,16 @@ import "./App.css";
 import { calcR1, calcR2, calcTotalEfficiency } from "./utils/calc";
 import Help from "./Help";
 
+const paramInfo = {
+  Q: "Portata totale del deflusso (l/s).",
+  Q1: "Porzione di Q che raggiunge direttamente la caditoia (l/s).",
+  v: "Velocità del flusso all'ingresso (m/s).",
+  v0: "Velocità di riferimento per il calcolo di R1 (m/s).",
+  j: "Pendenza longitudinale della strada.",
+  L: "Lunghezza della griglia di caduta (m).",
+  E0: "Efficienza geometrica della caditoia.",
+};
+
 export default function App() {
   const [params, setParams] = useState({
     Q: 100,
@@ -47,6 +57,7 @@ export default function App() {
     return saved ? JSON.parse(saved) : false;
   });
   const [showHelp, setShowHelp] = useState(false);
+  const [infoParam, setInfoParam] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
@@ -55,6 +66,9 @@ export default function App() {
   const toggleDarkMode = () => setIsDarkMode((d) => !d);
 
   const startResize = () => setIsResizing(true);
+
+  const toggleInfo = (key) =>
+    setInfoParam((current) => (current === key ? null : key));
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -133,6 +147,12 @@ export default function App() {
               <div key={key} className="slider-container">
                 <label className="slider-label">
                   {key}: {value.toFixed(2)}
+                  <span className="info-icon" onClick={() => toggleInfo(key)}>
+                    i
+                  </span>
+                  {infoParam === key && (
+                    <div className="info-popup">{paramInfo[key]}</div>
+                  )}
                 </label>
                 <input
                   type="range"
