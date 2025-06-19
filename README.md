@@ -42,14 +42,24 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
    npm run dev
    ```
 
-3. Apri il browser su `http://localhost:5173`
+3. (Opzionale) Verifica lo stile del codice:
+   ```bash
+   npm run lint
+   ```
 
-4. (Opzionale) Esegui i test:
+4. (Opzionale) Applica la formattazione:
+   ```bash
+   npm run format
+   ```
+
+5. Apri il browser su `http://localhost:5173`
+
+6. (Opzionale) Esegui i test:
    ```bash
    npm test
    ```
 
-5. (Opzionale) Visualizza l'anteprima della build:
+7. (Opzionale) Visualizza l'anteprima della build:
    ```bash
    npm run preview
    ```

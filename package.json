@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint \"**/*.{js,jsx}\"",
+    "format": "prettier --write \"**/*.{js,jsx,css,md}\""
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -22,6 +24,11 @@
     "babel-jest": "^29.7.0",
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-react": "^7.22.5",
-    "identity-obj-proxy": "^3.0.0"
+    "identity-obj-proxy": "^3.0.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.2.5"
   }
 }
