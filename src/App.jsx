@@ -277,6 +277,23 @@ export default function App() {
   }, []);
 
   const [actionsOpen, setActionsOpen] = useState(false);
+  const [templatesOpen, setTemplatesOpen] = useState(false);
+
+  const downloadFile = (path, name) => {
+    const link = document.createElement('a');
+    link.href = path;
+    link.setAttribute('download', name);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const downloadTemplateCSV = () =>
+    downloadFile('/templates/parametri_template.csv', 'parametri_template.csv');
+  const downloadTemplateExcel = () =>
+    downloadFile('/templates/parametri_template.xls', 'parametri_template.xls');
+  const downloadTemplateJSON = () =>
+    downloadFile('/templates/parametri_template.json', 'parametri_template.json');
 
 
   return (
@@ -347,8 +364,13 @@ export default function App() {
         toggleChart={toggleChart}
         actionsOpen={actionsOpen}
         setActionsOpen={setActionsOpen}
+        templatesOpen={templatesOpen}
+        setTemplatesOpen={setTemplatesOpen}
         downloadCSV={downloadCSV}
         downloadExcel={downloadExcel}
+        downloadTemplateCSV={downloadTemplateCSV}
+        downloadTemplateExcel={downloadTemplateExcel}
+        downloadTemplateJSON={downloadTemplateJSON}
         salvaParametriStorage={salvaParametriStorage}
         caricaParametriStorage={caricaParametriStorage}
         esportaJSON={esportaJSON}

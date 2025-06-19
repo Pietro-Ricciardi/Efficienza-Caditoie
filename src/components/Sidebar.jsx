@@ -13,8 +13,13 @@ export default function Sidebar({
   toggleChart,
   actionsOpen,
   setActionsOpen,
+  templatesOpen,
+  setTemplatesOpen,
   downloadCSV,
   downloadExcel,
+  downloadTemplateCSV,
+  downloadTemplateExcel,
+  downloadTemplateJSON,
   salvaParametriStorage,
   caricaParametriStorage,
   esportaJSON,
@@ -119,6 +124,22 @@ export default function Sidebar({
             </div>
           )}
         </div>
+
+        <div className="templates-menu">
+          <button
+            className="px-4 py-2 text-left hover:bg-gray-100 w-full flex justify-between"
+            onClick={() => setTemplatesOpen((o) => !o)}
+          >
+            Modelli <span>{templatesOpen ? '▲' : '▼'}</span>
+          </button>
+          {templatesOpen && (
+            <div className="submenu ml-4 mt-1 space-y-1 export-buttons">
+              <button onClick={downloadTemplateCSV}>Template CSV</button>
+              <button onClick={downloadTemplateExcel}>Template Excel</button>
+              <button onClick={downloadTemplateJSON}>Template JSON</button>
+            </div>
+          )}
+        </div>
       </nav>
     </aside>
   );
@@ -136,8 +157,13 @@ Sidebar.propTypes = {
   toggleChart: PropTypes.func.isRequired,
   actionsOpen: PropTypes.bool.isRequired,
   setActionsOpen: PropTypes.func.isRequired,
+  templatesOpen: PropTypes.bool.isRequired,
+  setTemplatesOpen: PropTypes.func.isRequired,
   downloadCSV: PropTypes.func.isRequired,
   downloadExcel: PropTypes.func.isRequired,
+  downloadTemplateCSV: PropTypes.func.isRequired,
+  downloadTemplateExcel: PropTypes.func.isRequired,
+  downloadTemplateJSON: PropTypes.func.isRequired,
   salvaParametriStorage: PropTypes.func.isRequired,
   caricaParametriStorage: PropTypes.func.isRequired,
   esportaJSON: PropTypes.func.isRequired,
