@@ -180,6 +180,33 @@
   padding: 5px 10px;
 }
 
+.menu-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.menu-vertical button {
+  padding: 5px 10px;
+  text-align: left;
+}
+
+.submenu label {
+  display: block;
+  margin-left: 10px;
+}
+
+.top-bar {
+  text-align: center;
+  padding: 4px 0;
+  background: #f0f0f0;
+}
+
+.dark-mode .top-bar {
+  background: #333;
+}
+
 .chart-toggles {
   margin: 20px 0;
 }

@@ -68,14 +68,12 @@ export default function App() {
     }
   };
 
-  const [leftWidth, setLeftWidth] = useState(30);
-  const [isResizing, setIsResizing] = useState(false);
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem("darkMode");
     return saved ? JSON.parse(saved) : false;
   });
-  const [showHelp, setShowHelp] = useState(false);
+  const [activePage, setActivePage] = useState('graphs');
   const [infoParam, setInfoParam] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -99,7 +97,6 @@ export default function App() {
 
   const toggleSidebar = () => setSidebarOpen((s) => !s);
 
-  const startResize = () => setIsResizing(true);
 
   const toggleInfo = (key) =>
     setInfoParam((current) => (current === key ? null : key));
@@ -110,21 +107,6 @@ export default function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    if (isMobile) return;
-    const handleMove = (e) => {
-      if (!isResizing) return;
-      const newWidth = (e.clientX / window.innerWidth) * 100;
-      if (newWidth > 10 && newWidth < 80) setLeftWidth(newWidth);
-    };
-    const stopResize = () => setIsResizing(false);
-    document.addEventListener("mousemove", handleMove);
-    document.addEventListener("mouseup", stopResize);
-    return () => {
-      document.removeEventListener("mousemove", handleMove);
-      document.removeEventListener("mouseup", stopResize);
-    };
-  }, [isResizing, isMobile]);
 
   const R1 = calcR1(params.v, params.v0);
   const R2 = calcR2(params.v, params.j, params.L);
@@ -264,56 +246,123 @@ export default function App() {
       btoa(unescape(encodeURIComponent(svgString)));
   };
 
+  const menuItems =
+    activePage === 'graphs'
+      ? [
+          { key: 'parameters', label: 'Parametri' },
+          { key: 'graphs', label: 'Grafici' },
+          { key: 'help', label: 'Help' },
+        ]
+      : [
+          { key: 'graphs', label: 'Grafici' },
+          { key: 'parameters', label: 'Parametri' },
+          { key: 'help', label: 'Help' },
+        ];
+
   return (
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
+      <div className="top-bar">
+        Efficienza Caditoie - Pietro Ricciardi -{' '}
+        <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer">
+          Licenza MIT
+        </a>
+      </div>
       <button className="sidebar-toggle" onClick={toggleSidebar}>
         {sidebarOpen ? "❮" : "❯"}
       </button>
       <div
         className={`leftPane ${sidebarOpen ? "" : "collapsed"}`}
-        style={{
-          flexBasis: sidebarOpen ? (isMobile ? "100%" : `${leftWidth}%`) : "0",
-        }}
+        style={{ flexBasis: sidebarOpen ? (isMobile ? "100%" : "200px") : "0" }}
       >
-        <nav className="menu">
-          <button onClick={() => setShowHelp(false)}>Calcolatore</button>
-          <button onClick={() => setShowHelp(true)}>Help</button>
+        <nav className="menu-vertical">
+          {menuItems.map((item) =>
+            item.key === "graphs" ? (
+              <div key="graphs" className="graphs-menu">
+                <button onClick={() => setActivePage('graphs')}>{item.label}</button>
+                <div className="submenu">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={visibleCharts.radar}
+                      onChange={() => toggleChart('radar')}
+                    />
+                    Grafico radar
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={visibleCharts.bar}
+                      onChange={() => toggleChart('bar')}
+                    />
+                    Grafico a barre
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={visibleCharts.pie}
+                      onChange={() => toggleChart('pie')}
+                    />
+                    Grafico a torta
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={visibleCharts.line}
+                      onChange={() => toggleChart('line')}
+                    />
+                    Grafico a linee
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={visibleCharts.evolution}
+                      onChange={() => toggleChart('evolution')}
+                    />
+                    Grafico evolutivo
+                  </label>
+                </div>
+              </div>
+            ) : (
+              <button key={item.key} onClick={() => setActivePage(item.key)}>
+                {item.label}
+              </button>
+            )
+          )}
         </nav>
         <div className="theme-toggle" onClick={toggleDarkMode}>
-          {isDarkMode ? "☀️" : "🌙"}
+          {isDarkMode ? '☀️' : '🌙'}
         </div>
-        {!showHelp && (
+      </div>
+      <div className="rightPane">
+        {activePage === 'help' && <Help />}
+        {activePage === 'parameters' && (
           <>
             <h1>Efficienza Caditoie</h1>
-            <br />
             {Object.entries(params).map(([key, value]) => {
               const min = 0;
               const max =
-                key === "E0"
+                key === 'E0'
                   ? 1
-                  : key === "v" || key === "v0"
+                  : key === 'v' || key === 'v0'
                   ? 10
-                  : key === "j"
+                  : key === 'j'
                   ? 0.2
-                  : key === "L"
+                  : key === 'L'
                   ? 5
                   : 1000;
               const step =
-                key === "E0" || key === "L"
+                key === 'E0' || key === 'L'
                   ? 0.01
-                  : key === "v" || key === "v0"
+                  : key === 'v' || key === 'v0'
                   ? 0.01
-                  : key === "j"
+                  : key === 'j'
                   ? 0.001
                   : 0.1;
-
               return (
                 <div key={key} className="slider-container">
                   <label className="slider-label">
                     {key}: {value.toFixed(2)}
-                    <span className="info-icon" onClick={() => toggleInfo(key)}>
-                      i
-                    </span>
+                    <span className="info-icon" onClick={() => toggleInfo(key)}>i</span>
                     {infoParam === key && (
                       <div className="info-popup">{paramInfo[key]}</div>
                     )}
@@ -340,113 +389,41 @@ export default function App() {
                 </div>
               );
             })}
-
-            <div className="chart-toggles">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={visibleCharts.radar}
-                  onChange={() => toggleChart("radar")}
-                />
-                Grafico radar
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={visibleCharts.bar}
-                  onChange={() => toggleChart("bar")}
-                />
-                Grafico a barre
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={visibleCharts.pie}
-                  onChange={() => toggleChart("pie")}
-                />
-                Grafico a torta
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={visibleCharts.line}
-                  onChange={() => toggleChart("line")}
-                />
-                Grafico a linee
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={visibleCharts.evolution}
-                  onChange={() => toggleChart("evolution")}
-                />
-                Grafico evolutivo
-              </label>
-            </div>
-
+          </>
+        )}
+        {activePage === 'graphs' && (
+          <>
             <div className="range-selector">
               <label>
                 Variabile:
-                <select
-                  value={rangeVar}
-                  onChange={(e) => setRangeVar(e.target.value)}
-                >
+                <select value={rangeVar} onChange={(e) => setRangeVar(e.target.value)}>
                   <option value="v">v</option>
                   <option value="Q">Q</option>
                 </select>
               </label>
               <label>
                 Min:
-                <input
-                  type="number"
-                  value={rangeMin}
-                  onChange={(e) => setRangeMin(parseFloat(e.target.value))}
-                />
+                <input type="number" value={rangeMin} onChange={(e) => setRangeMin(parseFloat(e.target.value))} />
               </label>
               <label>
                 Max:
-                <input
-                  type="number"
-                  value={rangeMax}
-                  onChange={(e) => setRangeMax(parseFloat(e.target.value))}
-                />
+                <input type="number" value={rangeMax} onChange={(e) => setRangeMax(parseFloat(e.target.value))} />
               </label>
             </div>
-
             <div className="export-buttons">
               <button onClick={downloadCSV}>Esporta CSV</button>
               <button onClick={downloadExcel}>Esporta Excel</button>
               <button onClick={salvaParametriStorage}>Salva parametri</button>
               <button onClick={caricaParametriStorage}>Carica parametri</button>
               <button onClick={esportaJSON}>Esporta JSON</button>
-              <input
-                type="file"
-                accept="application/json"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={importaJSON}
-              />
-              <button onClick={() => fileInputRef.current.click()}>
-                Importa JSON
-              </button>
-              <button onClick={() => downloadImage(radarRef, "radar.png")}>Salva radar</button>
-              <button onClick={() => downloadImage(barRef, "barre.png")}>Salva barre</button>
-              <button onClick={() => downloadImage(pieRef, "torta.png")}>Salva torta</button>
-              <button onClick={() => downloadImage(lineRef, "linee.png")}>Salva linee</button>
-              <button onClick={() => downloadImage(evolutionRef, "evoluzione.png")}>Salva evolutivo</button>
+              <input type="file" accept="application/json" ref={fileInputRef} style={{ display: 'none' }} onChange={importaJSON} />
+              <button onClick={() => fileInputRef.current.click()}>Importa JSON</button>
+              <button onClick={() => downloadImage(radarRef, 'radar.png')}>Salva radar</button>
+              <button onClick={() => downloadImage(barRef, 'barre.png')}>Salva barre</button>
+              <button onClick={() => downloadImage(pieRef, 'torta.png')}>Salva torta</button>
+              <button onClick={() => downloadImage(lineRef, 'linee.png')}>Salva linee</button>
+              <button onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>Salva evolutivo</button>
             </div>
-          </>
-        )}
-      </div>
-      {!showHelp && sidebarOpen && !isMobile && (
-        <div className="resizer" onMouseDown={startResize} />
-      )}
-      {!showHelp && sidebarOpen && isMobile && <div className="divider" />}
-      <div className="rightPane">
-        {showHelp ? (
-          <Help />
-        ) : (
-          <>
             <div className="chart-box">
               <div className="formula-list">
                 <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
