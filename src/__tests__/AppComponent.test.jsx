@@ -24,4 +24,10 @@ describe('App component calculations', () => {
     expect(screen.getByText('E_formula')).toBeInTheDocument();
   });
 
+  test('export buttons are visible', () => {
+    render(<App />);
+    expect(screen.getByText('Esporta CSV')).toBeInTheDocument();
+    expect(screen.getByText('Esporta Excel')).toBeInTheDocument();
+  });
+
 });

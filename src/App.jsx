@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Radar,
   RadarChart,
@@ -70,6 +70,12 @@ export default function App() {
   const [rangeMin, setRangeMin] = useState(0.5);
   const [rangeMax, setRangeMax] = useState(3);
   const [evolutionData, setEvolutionData] = useState([]);
+
+  const radarRef = useRef(null);
+  const barRef = useRef(null);
+  const pieRef = useRef(null);
+  const lineRef = useRef(null);
+  const evolutionRef = useRef(null);
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
@@ -155,6 +161,68 @@ export default function App() {
       generateEfficiencySeries(params, rangeVar, rangeMin, rangeMax, 5)
     );
   }, [params, rangeVar, rangeMin, rangeMax]);
+
+  const downloadCSV = () => {
+    const rows = [
+      ["Parametro", "Valore"],
+      ["R1", R1.toFixed(4)],
+      ["R2", R2.toFixed(4)],
+      ["E", E.toFixed(4)],
+      ["E_formula", E_formula.toFixed(4)],
+    ];
+    const csvContent = rows.map((r) => r.join(",")).join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "efficienze.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const downloadExcel = () => {
+    const rows = [
+      ["Parametro", "Valore"],
+      ["R1", R1.toFixed(4)],
+      ["R2", R2.toFixed(4)],
+      ["E", E.toFixed(4)],
+      ["E_formula", E_formula.toFixed(4)],
+    ];
+    const csvContent = "sep=,\n" + rows.map((r) => r.join(",")).join("\n");
+    const blob = new Blob([csvContent], {
+      type: "application/vnd.ms-excel",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "efficienze.xls");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const downloadImage = (ref, name) => {
+    const svg = ref.current?.querySelector("svg");
+    if (!svg) return;
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(svg);
+    const canvas = document.createElement("canvas");
+    canvas.width = svg.clientWidth;
+    canvas.height = svg.clientHeight;
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      const link = document.createElement("a");
+      link.download = name;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    };
+    img.src =
+      "data:image/svg+xml;base64," +
+      btoa(unescape(encodeURIComponent(svgString)));
+  };
 
   return (
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
@@ -296,6 +364,16 @@ export default function App() {
                 />
               </label>
             </div>
+
+            <div className="export-buttons">
+              <button onClick={downloadCSV}>Esporta CSV</button>
+              <button onClick={downloadExcel}>Esporta Excel</button>
+              <button onClick={() => downloadImage(radarRef, "radar.png")}>Salva radar</button>
+              <button onClick={() => downloadImage(barRef, "barre.png")}>Salva barre</button>
+              <button onClick={() => downloadImage(pieRef, "torta.png")}>Salva torta</button>
+              <button onClick={() => downloadImage(lineRef, "linee.png")}>Salva linee</button>
+              <button onClick={() => downloadImage(evolutionRef, "evoluzione.png")}>Salva evolutivo</button>
+            </div>
           </>
         )}
       </div>
@@ -322,7 +400,7 @@ export default function App() {
             </div>
 
             {visibleCharts.radar && (
-            <div className="chart-box">
+            <div className="chart-box" ref={radarRef}>
               <h3>Confronto efficienze</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
@@ -346,7 +424,7 @@ export default function App() {
             )}
 
             {visibleCharts.bar && (
-            <div className="chart-box">
+            <div className="chart-box" ref={barRef}>
               <h3>R1 e R2</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={barData}>
@@ -363,7 +441,7 @@ export default function App() {
             )}
 
             {visibleCharts.pie && (
-            <div className="chart-box">
+            <div className="chart-box" ref={pieRef}>
               <h3>Portate intercettate</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
@@ -386,7 +464,7 @@ export default function App() {
             )}
 
             {visibleCharts.line && (
-            <div className="chart-box">
+            <div className="chart-box" ref={lineRef}>
               <h3>Andamento efficienza</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={lineData}>
@@ -403,7 +481,7 @@ export default function App() {
             )}
 
             {visibleCharts.evolution && (
-            <div className="chart-box">
+            <div className="chart-box" ref={evolutionRef}>
               <h3>Grafico evolutivo ({rangeVar})</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={evolutionData}>
