@@ -22,7 +22,18 @@ import {
 } from "recharts";
 import "./App.css";
 import { validaParametri } from "./utils/validate";
-import { calcR1, calcR2, calcTotalEfficiency, generateEfficiencySeries } from "./utils/calc";
+import {
+  calcR1,
+  calcR2,
+  calcTotalEfficiency,
+  generateEfficiencySeries,
+} from "./utils/calc";
+import {
+  salvaParametri,
+  caricaParametri,
+  esportaParametri,
+  importaParametri,
+} from "./utils/storage";
 import Help from "./Help";
 
 const paramInfo = {
@@ -76,6 +87,7 @@ export default function App() {
   const pieRef = useRef(null);
   const lineRef = useRef(null);
   const evolutionRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
@@ -200,6 +212,30 @@ export default function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const salvaParametriStorage = () => {
+    salvaParametri('savedParams', params);
+  };
+
+  const caricaParametriStorage = () => {
+    const loaded = caricaParametri('savedParams');
+    if (loaded) {
+      setParams(loaded);
+    }
+  };
+
+  const esportaJSON = () => {
+    esportaParametri(params);
+  };
+
+  const importaJSON = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      importaParametri(file)
+        .then((p) => setParams(p))
+        .catch(() => alert('File JSON non valido'));
+    }
   };
 
   const downloadImage = (ref, name) => {
@@ -368,6 +404,19 @@ export default function App() {
             <div className="export-buttons">
               <button onClick={downloadCSV}>Esporta CSV</button>
               <button onClick={downloadExcel}>Esporta Excel</button>
+              <button onClick={salvaParametriStorage}>Salva parametri</button>
+              <button onClick={caricaParametriStorage}>Carica parametri</button>
+              <button onClick={esportaJSON}>Esporta JSON</button>
+              <input
+                type="file"
+                accept="application/json"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={importaJSON}
+              />
+              <button onClick={() => fileInputRef.current.click()}>
+                Importa JSON
+              </button>
               <button onClick={() => downloadImage(radarRef, "radar.png")}>Salva radar</button>
               <button onClick={() => downloadImage(barRef, "barre.png")}>Salva barre</button>
               <button onClick={() => downloadImage(pieRef, "torta.png")}>Salva torta</button>
