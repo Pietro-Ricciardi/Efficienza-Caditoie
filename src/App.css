@@ -48,8 +48,6 @@
 }
 
 .sidebar-toggle {
-  position: fixed;
-  z-index: 100;
   background: #007bff;
   color: #fff;
   border: none;
@@ -60,6 +58,12 @@
 
 .dark-mode .sidebar-toggle {
   background: #0056b3;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 768px) {
@@ -240,10 +244,15 @@
 .export-buttons {
   margin: 20px 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .export-buttons button {
-  padding: 5px 10px;
+  background: none;
+  border: none;
+  padding: 2px 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
 }
