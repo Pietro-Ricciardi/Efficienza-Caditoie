@@ -438,6 +438,7 @@ export default function App() {
           href="https://github.com/Pietro-Ricciardi"
           target="_blank"
           rel="noreferrer"
+          aria-label="GitHub"
         >
           <svg
             className="w-5 h-5"
@@ -455,6 +456,7 @@ export default function App() {
           href="https://www.linkedin.com/in/pietro-ricciardi/"
           target="_blank"
           rel="noreferrer"
+          aria-label="LinkedIn"
         >
           <svg
             className="w-5 h-5"
