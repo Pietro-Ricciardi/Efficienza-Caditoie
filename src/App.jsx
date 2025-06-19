@@ -132,11 +132,17 @@ export default function App() {
     const id = setInterval(() => {
       setLineData((d) => [
         ...d.slice(-9),
-        { time: new Date().toLocaleTimeString().split(" ")[0], value: E },
+        {
+          time: new Date().toLocaleTimeString().split(" ")[0],
+          R1,
+          R2,
+          E,
+          E_formula,
+        },
       ]);
     }, 1000);
     return () => clearInterval(id);
-  }, [E]);
+  }, [E, R1, R2, E_formula]);
 
   return (
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
@@ -305,7 +311,12 @@ export default function App() {
                   <XAxis dataKey="time" />
                   <YAxis domain={[0, 1]} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                  <Legend />
+                  <Line type="monotone" dataKey="R1" stroke="#82ca9d" />
+                  <Line type="monotone" dataKey="R2" stroke="#8884d8" />
+                  <Line type="monotone" dataKey="E" stroke="#ffc658" />
+                  <Line type="monotone" dataKey="E_formula" stroke="#ff7300" />
+
                 </LineChart>
               </ResponsiveContainer>
             </div>
