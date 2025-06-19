@@ -3,20 +3,31 @@ export function salvaParametri(key, params) {
   localStorage.setItem(key, JSON.stringify(params));
 }
 
-export function caricaParametri(key) {
-  if (!key) return null;
-  const data = localStorage.getItem(key);
-  if (!data) return null;
+function parseJsonSafe(text, source) {
   try {
-    return JSON.parse(data);
-  } catch (e) {
-    return null;
+    return { data: JSON.parse(text), error: null };
+  } catch (err) {
+    return {
+      data: null,
+      error: new Error(`Errore parsing JSON da ${source}: ${err.message}`)
+    };
   }
+}
+
+export function caricaParametri(key) {
+  if (!key) {
+    return { data: null, error: new Error('Chiave non valida') };
+  }
+  const data = localStorage.getItem(key);
+  if (!data) {
+    return { data: null, error: new Error(`Nessun dato trovato per ${key}`) };
+  }
+  return parseJsonSafe(data, 'localStorage');
 }
 
 export function esportaParametri(params) {
   const blob = new Blob([JSON.stringify(params, null, 2)], {
-    type: 'application/json',
+    type: 'application/json'
   });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
@@ -35,7 +46,7 @@ export function importaParametri(file) {
         const params = JSON.parse(e.target.result);
         resolve(params);
       } catch (err) {
-        reject(err);
+        reject(new Error(`Errore parsing JSON dal file: ${err.message}`));
       }
     };
     reader.onerror = () => reject(new Error('Errore lettura file'));
