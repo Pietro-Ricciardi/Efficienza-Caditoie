@@ -30,13 +30,3 @@
   height: auto;
 }
 
-.widget::after {
-  content: '';
-  position: absolute;
-  right: 2px;
-  bottom: 2px;
-  width: 24px;
-  height: 24px;
-  background: repeating-linear-gradient(45deg, #aaa, #aaa 2px, transparent 2px, transparent 4px);
-  pointer-events: none;
-}
