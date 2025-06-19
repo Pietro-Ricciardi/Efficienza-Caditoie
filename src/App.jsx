@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   Radar,
   RadarChart,
@@ -118,13 +118,16 @@ export default function App() {
   }, []);
 
 
-  const R1 = calcR1(params.v, params.v0);
-  const R2 = calcR2(params.v, params.j, params.L);
-  const Q1_star = params.Q1 * R1;
+  const R1 = useMemo(() => calcR1(params.v, params.v0), [params]);
+  const R2 = useMemo(() => calcR2(params.v, params.j, params.L), [params]);
+  const Q1_star = useMemo(() => params.Q1 * R1, [params, R1]);
   const Q2 = params.Q - params.Q1;
-  const Q2_star = Q2 * R2;
-  const E = calcTotalEfficiency(params);
-  const E_formula = R1 * params.E0 + R2 * (1 - params.E0);
+  const Q2_star = useMemo(() => Q2 * R2, [params, R2]);
+  const E = useMemo(() => calcTotalEfficiency(params), [params]);
+  const E_formula = useMemo(
+    () => R1 * params.E0 + R2 * (1 - params.E0),
+    [params, R1, R2]
+  );
 
   const data = [
     { subject: "R1", A: R1 },
