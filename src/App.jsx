@@ -21,6 +21,7 @@ import {
 
 } from "recharts";
 import "./App.css";
+import { validaParametri } from "./utils/validate";
 import { calcR1, calcR2, calcTotalEfficiency, generateEfficiencySeries } from "./utils/calc";
 import Help from "./Help";
 
@@ -47,7 +48,12 @@ export default function App() {
 
   const handleChange = (key, event) => {
     const value = parseFloat(event.target.value);
-    setParams({ ...params, [key]: value });
+    const newParams = { ...params, [key]: value };
+    const warnings = validaParametri(newParams);
+    setParams(newParams);
+    if (warnings.length) {
+      alert(warnings.join("\n"));
+    }
   };
 
   const [leftWidth, setLeftWidth] = useState(30);
