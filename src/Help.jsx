@@ -20,7 +20,7 @@ export default function Help() {
         <ul className="list-disc pl-6">
           <li>ridimensionare trascinando l'angolo in basso a destra;</li>
           <li>trascinare per modificare l'ordine dei grafici;</li>
-          <li>minimizzare o espandere con il pulsante '-'/'+' nella barra del widget.</li>
+          <li>minimizzare o espandere con il pulsante '➖'/'➕' nella barra del widget.</li>
         </ul>
         <li>
           Nella sidebar puoi attivare o disattivare i singoli grafici dalla sezione

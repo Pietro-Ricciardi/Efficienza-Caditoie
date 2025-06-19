@@ -23,7 +23,7 @@ const Widget = forwardRef(function Widget(
       <div className="widget-header">
         <span>{title}</span>
         <button onClick={() => setCollapsed((c) => !c)} aria-label="toggle widget">
-          {collapsed ? '+' : '-'}
+          {collapsed ? '➕' : '➖'}
         </button>
       </div>
       {!collapsed && (
