@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from '../App';
 import '@testing-library/jest-dom';
 
@@ -12,6 +12,7 @@ describe('App component calculations', () => {
 
   test('shows line chart toggle', () => {
     render(<App />);
+    fireEvent.click(screen.getByText('Aspetto'));
     expect(screen.getByText(/Grafico a linee/)).toBeInTheDocument();
   });
 
@@ -31,6 +32,7 @@ describe('App component calculations', () => {
 
   test('export buttons are visible', () => {
     render(<App />);
+    fireEvent.click(screen.getByText('Azioni'));
     expect(screen.getByText('Esporta CSV')).toBeInTheDocument();
     expect(screen.getByText('Esporta Excel')).toBeInTheDocument();
     expect(screen.getByText('Salva parametri')).toBeInTheDocument();
