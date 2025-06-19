@@ -76,6 +76,7 @@ export default function App() {
   });
   const [showHelp, setShowHelp] = useState(false);
   const [infoParam, setInfoParam] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const [rangeVar, setRangeVar] = useState("v");
   const [rangeMin, setRangeMin] = useState(0.5);
@@ -94,6 +95,8 @@ export default function App() {
   }, [isDarkMode]);
 
   const toggleDarkMode = () => setIsDarkMode((d) => !d);
+
+  const toggleSidebar = () => setSidebarOpen((s) => !s);
 
   const startResize = () => setIsResizing(true);
 
@@ -262,7 +265,15 @@ export default function App() {
 
   return (
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
-      <div className="leftPane" style={{ flexBasis: isMobile ? "100%" : `${leftWidth}%` }}>
+      <button className="sidebar-toggle" onClick={toggleSidebar}>
+        {sidebarOpen ? "❮" : "❯"}
+      </button>
+      <div
+        className={`leftPane ${sidebarOpen ? "" : "collapsed"}`}
+        style={{
+          flexBasis: sidebarOpen ? (isMobile ? "100%" : `${leftWidth}%`) : "0",
+        }}
+      >
         <nav className="menu">
           <button onClick={() => setShowHelp(false)}>Calcolatore</button>
           <button onClick={() => setShowHelp(true)}>Help</button>
@@ -426,8 +437,10 @@ export default function App() {
           </>
         )}
       </div>
-      {!showHelp && !isMobile && <div className="resizer" onMouseDown={startResize} />}
-      {!showHelp && isMobile && <div className="divider" />}
+      {!showHelp && sidebarOpen && !isMobile && (
+        <div className="resizer" onMouseDown={startResize} />
+      )}
+      {!showHelp && sidebarOpen && isMobile && <div className="divider" />}
       <div className="rightPane">
         {showHelp ? (
           <Help />
