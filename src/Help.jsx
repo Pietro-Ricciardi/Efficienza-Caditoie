@@ -17,6 +17,12 @@ export default function Help() {
           Osserva come cambiano i risultati e i grafici in tempo reale nella
           pagina del calcolatore.
         </li>
+        <li>
+          Utilizza i pulsanti di esportazione per scaricare dati e grafici o per
+          salvare e caricare i parametri.
+        </li>
+        <li>Puoi attivare la modalità chiaro/scuro con l'icona in alto a destra.</li>
+        <li>Su desktop è possibile ridimensionare i pannelli trascinando la barra centrale.</li>
       </ul>
       <h2>Valori in ingresso</h2>
       <ul>
@@ -62,7 +68,8 @@ export default function Help() {
       <p>
         Il grafico radar confronta le diverse efficienze, il grafico a barre
         mostra R1 e R2 mentre il grafico a torta evidenzia le portate
-        intercettate dalla caditoia.
+        intercettate dalla caditoia. 
+        È disponibile anche un grafico evolutivo che mostra l'andamento di Q o v su intervalli definiti.
       </p>
     </div>
   );

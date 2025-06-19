@@ -3,6 +3,8 @@
 Questo è un progetto React che consente di calcolare e visualizzare l'efficienza idraulica delle caditoie stradali.
 Un file Excel di esempio è disponibile nella cartella `excel`.
 
+Per una guida rapida all'interfaccia è possibile aprire la sezione **Help** direttamente dall'applicazione.
+
 ## Funzionalità
 
 - Inserimento dei parametri tramite **slider interattivi**:
@@ -40,6 +42,16 @@ Un file Excel di esempio è disponibile nella cartella `excel`.
    ```
 
 3. Apri il browser su `http://localhost:5173`
+
+4. (Opzionale) Esegui i test:
+   ```bash
+   npm test
+   ```
+
+5. (Opzionale) Visualizza l'anteprima della build:
+   ```bash
+   npm run preview
+   ```
 
 ## Deploy (consigliato: Vercel)
 
