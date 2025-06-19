@@ -21,7 +21,7 @@ import {
 
 } from "recharts";
 import "./App.css";
-import { calcR1, calcR2, calcTotalEfficiency } from "./utils/calc";
+import { calcR1, calcR2, calcTotalEfficiency, generateEfficiencySeries } from "./utils/calc";
 import Help from "./Help";
 
 const paramInfo = {
@@ -59,6 +59,11 @@ export default function App() {
   });
   const [showHelp, setShowHelp] = useState(false);
   const [infoParam, setInfoParam] = useState(null);
+
+  const [rangeVar, setRangeVar] = useState("v");
+  const [rangeMin, setRangeMin] = useState(0.5);
+  const [rangeMax, setRangeMax] = useState(3);
+  const [evolutionData, setEvolutionData] = useState([]);
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
@@ -124,6 +129,7 @@ export default function App() {
     bar: true,
     pie: true,
     line: true,
+    evolution: true,
   });
 
   const toggleChart = (chart) =>
@@ -137,6 +143,12 @@ export default function App() {
       { label: "E_formula", value: E_formula },
     ]);
   }, [E, R1, R2, E_formula]);
+
+  useEffect(() => {
+    setEvolutionData(
+      generateEfficiencySeries(params, rangeVar, rangeMin, rangeMax, 5)
+    );
+  }, [params, rangeVar, rangeMin, rangeMax]);
 
   return (
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
@@ -240,6 +252,43 @@ export default function App() {
                 />
                 Grafico a linee
               </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={visibleCharts.evolution}
+                  onChange={() => toggleChart("evolution")}
+                />
+                Grafico evolutivo
+              </label>
+            </div>
+
+            <div className="range-selector">
+              <label>
+                Variabile:
+                <select
+                  value={rangeVar}
+                  onChange={(e) => setRangeVar(e.target.value)}
+                >
+                  <option value="v">v</option>
+                  <option value="Q">Q</option>
+                </select>
+              </label>
+              <label>
+                Min:
+                <input
+                  type="number"
+                  value={rangeMin}
+                  onChange={(e) => setRangeMin(parseFloat(e.target.value))}
+                />
+              </label>
+              <label>
+                Max:
+                <input
+                  type="number"
+                  value={rangeMax}
+                  onChange={(e) => setRangeMax(parseFloat(e.target.value))}
+                />
+              </label>
             </div>
           </>
         )}
@@ -342,6 +391,22 @@ export default function App() {
                     <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
                   </Line>
 
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            )}
+
+            {visibleCharts.evolution && (
+            <div className="chart-box">
+              <h3>Grafico evolutivo ({rangeVar})</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={evolutionData}>
+                  <XAxis dataKey={rangeVar} />
+                  <YAxis domain={[0, 1]} />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="efficiency" stroke="#ff7300">
+                    <LabelList dataKey="efficiency" position="top" formatter={(v) => v.toFixed(2)} />
+                  </Line>
                 </LineChart>
               </ResponsiveContainer>
             </div>

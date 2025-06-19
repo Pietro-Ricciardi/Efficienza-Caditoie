@@ -1,4 +1,4 @@
-import { calcR1, calcR2, calcTotalEfficiency } from '../utils/calc';
+import { calcR1, calcR2, calcTotalEfficiency, generateEfficiencySeries } from '../utils/calc';
 
 describe('calculation helpers', () => {
   test('default parameter set', () => {
@@ -19,5 +19,25 @@ describe('calculation helpers', () => {
     expect(r1).toBeCloseTo(0.7, 2);
     expect(r2).toBeCloseTo(0.0517, 3);
     expect(e).toBeCloseTo(0.1814, 3);
+  });
+
+  test('generate series for varying v', () => {
+    const params = { Q: 100, Q1: 60, v: 1.5, v0: 1.0, j: 0.01, L: 0.5, E0: 0.7 };
+    const series = generateEfficiencySeries(params, 'v', 1, 2, 3);
+    expect(series).toHaveLength(3);
+    expect(series[0].v).toBeCloseTo(1);
+    expect(series[2].v).toBeCloseTo(2);
+    expect(series[1].efficiency).toBeCloseTo(
+      calcTotalEfficiency({ ...params, v: series[1].v }),
+      5
+    );
+  });
+
+  test('generate series for varying Q', () => {
+    const params = { Q: 100, Q1: 60, v: 1.5, v0: 1.0, j: 0.01, L: 0.5, E0: 0.7 };
+    const series = generateEfficiencySeries(params, 'Q', 50, 150, 5);
+    expect(series).toHaveLength(5);
+    expect(series[0].Q).toBeCloseTo(50);
+    expect(series[4].Q).toBeCloseTo(150);
   });
 });
