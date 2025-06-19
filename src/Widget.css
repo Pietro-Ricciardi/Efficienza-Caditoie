@@ -2,7 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 5px;
   margin-bottom: 5px;
+  border-bottom: 1px solid #ccc;
 }
 
 .widget-header button {
@@ -21,6 +23,11 @@
   min-width: 300px;
   min-height: 350px;
   position: relative;
+}
+
+.widget.collapsed {
+  min-height: 50px;
+  height: auto;
 }
 
 .widget::after {
