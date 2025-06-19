@@ -20,6 +20,7 @@ import {
   LabelList,
 } from 'recharts';
 import Widget from '../Widget';
+import EvolutionTable from './EvolutionTable';
 
 export default function Graphs({
   R1,
@@ -180,6 +181,16 @@ export default function Graphs({
             </Line>
           </LineChart>
         </ResponsiveContainer>
+      </Widget>
+    ),
+    evolutionTable: (
+      <Widget
+        id="evolutionTable"
+        title={`Tabella evolutiva (${rangeVar})`}
+        onDragStart={handleDragStart}
+        onDrop={handleDrop}
+      >
+        <EvolutionTable evolutionData={evolutionData} rangeVar={rangeVar} />
       </Widget>
     ),
   };
