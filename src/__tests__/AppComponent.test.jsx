@@ -9,4 +9,20 @@ describe('App component calculations', () => {
     expect(screen.getByText(/Q2\* = Q2 × R2 =/)).toBeInTheDocument();
     expect(screen.getByText(/E = \(Q1\* \+ Q2\*\) \/ Q = 0.52/)).toBeInTheDocument();
   });
+
+  test('shows line chart toggle', () => {
+    render(<App />);
+    expect(screen.getByLabelText('Grafico a linee')).toBeInTheDocument();
+  });
+
+  test('line chart displays formula values over time', () => {
+    jest.useFakeTimers();
+    render(<App />);
+    jest.advanceTimersByTime(1100);
+    expect(screen.getByText('R1')).toBeInTheDocument();
+    expect(screen.getByText('R2')).toBeInTheDocument();
+    expect(screen.getByText('E')).toBeInTheDocument();
+    expect(screen.getByText('E_formula')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
 });

@@ -122,6 +122,7 @@ export default function App() {
     radar: true,
     bar: true,
     pie: true,
+    line: true,
   });
 
   const toggleChart = (chart) =>
@@ -131,11 +132,17 @@ export default function App() {
     const id = setInterval(() => {
       setLineData((d) => [
         ...d.slice(-9),
-        { time: new Date().toLocaleTimeString().split(" ")[0], value: E },
+        {
+          time: new Date().toLocaleTimeString().split(" ")[0],
+          R1,
+          R2,
+          E,
+          E_formula,
+        },
       ]);
     }, 1000);
     return () => clearInterval(id);
-  }, [E]);
+  }, [E, R1, R2, E_formula]);
 
   return (
     <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
@@ -197,6 +204,14 @@ export default function App() {
                   onChange={() => toggleChart("pie")}
                 />
                 Grafico a torta
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={visibleCharts.line}
+                  onChange={() => toggleChart("line")}
+                />
+                Grafico a linee
               </label>
             </div>
           </>
@@ -284,6 +299,24 @@ export default function App() {
                   </Pie>
                   <Tooltip />
                 </PieChart>
+              </ResponsiveContainer>
+            </div>
+            )}
+
+            {visibleCharts.line && (
+            <div className="chart-box">
+              <h3>Andamento efficienza</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={lineData}>
+                  <XAxis dataKey="time" />
+                  <YAxis domain={[0, 1]} />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="R1" stroke="#82ca9d" />
+                  <Line type="monotone" dataKey="R2" stroke="#8884d8" />
+                  <Line type="monotone" dataKey="E" stroke="#ffc658" />
+                  <Line type="monotone" dataKey="E_formula" stroke="#ff7300" />
+                </LineChart>
               </ResponsiveContainer>
             </div>
             )}
