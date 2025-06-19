@@ -271,6 +271,122 @@ export default function App() {
 
   const [actionsOpen, setActionsOpen] = useState(true);
 
+  const widgetMap = {
+    radar: (
+      <Widget
+        id="radar"
+        title="Confronto efficienze"
+        ref={radarRef}
+        onDragStart={handleDragStart}
+        onDrop={handleDrop}
+      >
+        <ResponsiveContainer width="100%" height={300}>
+          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="subject" />
+            <PolarRadiusAxis angle={30} domain={[0, 1]} />
+            <Radar
+              name="Efficienze"
+              dataKey="A"
+              stroke="#8884d8"
+              fill="#8884d8"
+              fillOpacity={0.6}
+            >
+              <LabelList dataKey="A" formatter={(v) => v.toFixed(2)} />
+            </Radar>
+            <Tooltip />
+          </RadarChart>
+        </ResponsiveContainer>
+      </Widget>
+    ),
+    bar: (
+      <Widget
+        id="bar"
+        title="R1 e R2"
+        ref={barRef}
+        onDragStart={handleDragStart}
+        onDrop={handleDrop}
+      >
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={barData}>
+            <XAxis dataKey="name" />
+            <YAxis domain={[0, 1]} />
+            <Tooltip />
+            <Bar dataKey="value" fill="#82ca9d">
+              <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Widget>
+    ),
+    pie: (
+      <Widget
+        id="pie"
+        title="Portate intercettate"
+        ref={pieRef}
+        onDragStart={handleDragStart}
+        onDrop={handleDrop}
+      >
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={pieData}
+              dataKey="value"
+              nameKey="name"
+              outerRadius={80}
+              label={({ name, value }) => `${name}: ${value.toFixed(2)}`}
+            >
+              {pieData.map((entry, index) => (
+                <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </Widget>
+    ),
+    line: (
+      <Widget
+        id="line"
+        title="Andamento efficienza"
+        ref={lineRef}
+        onDragStart={handleDragStart}
+        onDrop={handleDrop}
+      >
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={lineData}>
+            <XAxis dataKey="label" />
+            <YAxis domain={[0, 1]} />
+            <Tooltip />
+            <Line type="monotone" dataKey="value" stroke="#8884d8">
+              <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
+            </Line>
+          </LineChart>
+        </ResponsiveContainer>
+      </Widget>
+    ),
+    evolution: (
+      <Widget
+        id="evolution"
+        title={`Grafico evolutivo (${rangeVar})`}
+        ref={evolutionRef}
+        onDragStart={handleDragStart}
+        onDrop={handleDrop}
+      >
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={evolutionData}>
+            <XAxis dataKey={rangeVar} />
+            <YAxis domain={[0, 1]} />
+            <Tooltip />
+            <Line type="monotone" dataKey="efficiency" stroke="#ff7300">
+              <LabelList dataKey="efficiency" position="top" formatter={(v) => v.toFixed(2)} />
+            </Line>
+          </LineChart>
+        </ResponsiveContainer>
+      </Widget>
+    ),
+  };
+
   return (
     <div
       className={`container flex min-h-screen bg-gray-100 ${
@@ -513,127 +629,10 @@ export default function App() {
               </div>
             </div>
 
-            const widgetMap = {
-              radar: (
-                <Widget
-                  id="radar"
-                  title="Confronto efficienze"
-                  ref={radarRef}
-                  onDragStart={handleDragStart}
-                  onDrop={handleDrop}
-                >
-                  <ResponsiveContainer width="100%" height={300}>
-                    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                      <PolarGrid />
-                      <PolarAngleAxis dataKey="subject" />
-                      <PolarRadiusAxis angle={30} domain={[0, 1]} />
-                      <Radar
-                        name="Efficienze"
-                        dataKey="A"
-                        stroke="#8884d8"
-                        fill="#8884d8"
-                        fillOpacity={0.6}
-                      >
-                        <LabelList dataKey="A" formatter={(v) => v.toFixed(2)} />
-                      </Radar>
 
-                      <Tooltip />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </Widget>
-              ),
-              bar: (
-                <Widget
-                  id="bar"
-                  title="R1 e R2"
-                  ref={barRef}
-                  onDragStart={handleDragStart}
-                  onDrop={handleDrop}
-                >
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={barData}>
-                      <XAxis dataKey="name" />
-                      <YAxis domain={[0, 1]} />
-                      <Tooltip />
-                      <Bar dataKey="value" fill="#82ca9d">
-                        <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
-                      </Bar>
+            {widgetOrder.map((w) => (visibleCharts[w] ? widgetMap[w] : null))}
 
-                    </BarChart>
-                  </ResponsiveContainer>
-                </Widget>
-              ),
-              pie: (
-                <Widget
-                  id="pie"
-                  title="Portate intercettate"
-                  ref={pieRef}
-                  onDragStart={handleDragStart}
-                  onDrop={handleDrop}
-                >
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={pieData}
-                        dataKey="value"
-                        nameKey="name"
-                        outerRadius={80}
-                        label={({ name, value }) => `${name}: ${value.toFixed(2)}`}
 
-                      >
-                        {pieData.map((entry, index) => (
-                          <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </Widget>
-              ),
-              line: (
-                <Widget
-                  id="line"
-                  title="Andamento efficienza"
-                  ref={lineRef}
-                  onDragStart={handleDragStart}
-                  onDrop={handleDrop}
-                >
-                  <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={lineData}>
-                      <XAxis dataKey="label" />
-                      <YAxis domain={[0, 1]} />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="value" stroke="#8884d8">
-                        <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
-                      </Line>
-
-                    </LineChart>
-                  </ResponsiveContainer>
-                </Widget>
-              ),
-              evolution: (
-                <Widget
-                  id="evolution"
-                  title={`Grafico evolutivo (${rangeVar})`}
-                  ref={evolutionRef}
-                  onDragStart={handleDragStart}
-                  onDrop={handleDrop}
-                >
-                  <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={evolutionData}>
-                      <XAxis dataKey={rangeVar} />
-                      <YAxis domain={[0, 1]} />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="efficiency" stroke="#ff7300">
-                        <LabelList dataKey="efficiency" position="top" formatter={(v) => v.toFixed(2)} />
-                      </Line>
-                    </LineChart>
-                  </ResponsiveContainer>
-                </Widget>
-              ),
-            };
-
-            {widgetOrder.map((w) => visibleCharts[w] ? widgetMap[w] : null)}
           </>
         )}
 

@@ -3,7 +3,7 @@
 Questo è un progetto React che consente di calcolare e visualizzare l'efficienza idraulica delle caditoie stradali.
 Un file Excel di esempio è disponibile nella cartella `excel`.
 
-Per una guida rapida all'interfaccia è possibile aprire la sezione **Help** direttamente dall'applicazione.
+Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o la sezione **Help** dell'applicazione.
 
 ## Funzionalità
 
@@ -26,6 +26,7 @@ Per una guida rapida all'interfaccia è possibile aprire la sezione **Help** dir
 - Grafico evolutivo per Q o v su intervalli definiti.
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
+- Widget grafici minimizzabili, spostabili e ridimensionabili.
 - Esportazione dei dati e dei grafici in **CSV**, **Excel** e come immagini.
 - Salvataggio e caricamento dei parametri in locale o tramite file JSON.
 
