@@ -316,6 +316,7 @@ export default function App() {
                   <Line type="monotone" dataKey="R2" stroke="#8884d8" />
                   <Line type="monotone" dataKey="E" stroke="#ffc658" />
                   <Line type="monotone" dataKey="E_formula" stroke="#ff7300" />
+
                 </LineChart>
               </ResponsiveContainer>
             </div>

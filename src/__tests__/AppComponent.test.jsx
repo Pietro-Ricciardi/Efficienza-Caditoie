@@ -15,6 +15,7 @@ describe('App component calculations', () => {
     expect(screen.getByLabelText('Grafico a linee')).toBeInTheDocument();
   });
 
+
   test('line chart displays formula values over time', () => {
     jest.useFakeTimers();
     render(<App />);
@@ -25,4 +26,5 @@ describe('App component calculations', () => {
     expect(screen.getByText('E_formula')).toBeInTheDocument();
     jest.useRealTimers();
   });
+
 });
