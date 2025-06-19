@@ -13,8 +13,7 @@
   overflow: auto;
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
@@ -145,6 +144,15 @@
 
 .menu button {
   padding: 5px 10px;
+}
+
+.chart-toggles {
+  margin: 20px 0;
+}
+
+.chart-toggles label {
+  display: block;
+  margin-bottom: 5px;
 }
 
 .help-page {
