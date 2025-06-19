@@ -24,6 +24,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 
 - Visualizzazione su **grafico radar** dinamico.
 - Grafico evolutivo per Q o v su intervalli definiti.
+- Tabella dell'andamento per Q o v sugli stessi intervalli.
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
 - Widget grafici minimizzabili, spostabili e ridimensionabili.

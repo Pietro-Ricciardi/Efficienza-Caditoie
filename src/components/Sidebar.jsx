@@ -81,6 +81,10 @@ export default function Sidebar({
                 <span className="w-4">{visibleCharts.evolution ? '✓' : ''}</span>
                 Grafico evolutivo
               </button>
+              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('evolutionTable')}>
+                <span className="w-4">{visibleCharts.evolutionTable ? '✓' : ''}</span>
+                Tabella evolutiva
+              </button>
             </div>
           )}
         </div>
