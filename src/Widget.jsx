@@ -9,8 +9,6 @@ const Widget = forwardRef(function Widget(
   return (
     <div
       className={`chart-box widget${collapsed ? ' collapsed' : ''}`}
-      draggable
-      onDragStart={() => onDragStart && onDragStart(id)}
       onDrop={(e) => {
         e.preventDefault();
         onDrop && onDrop(id);
@@ -20,7 +18,11 @@ const Widget = forwardRef(function Widget(
         onDragOver && onDragOver(id);
       }}
     >
-      <div className="widget-header">
+      <div
+        className="widget-header"
+        draggable
+        onDragStart={() => onDragStart && onDragStart(id)}
+      >
         <span>{title}</span>
         <button onClick={() => setCollapsed((c) => !c)} aria-label="toggle widget">
           {collapsed ? '+' : '-'}
