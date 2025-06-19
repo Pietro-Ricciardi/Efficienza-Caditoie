@@ -1,4 +1,5 @@
 import React, { useState, forwardRef } from 'react';
+import PropTypes from 'prop-types';
 import './Widget.css';
 
 const Widget = forwardRef(function Widget(
@@ -36,5 +37,14 @@ const Widget = forwardRef(function Widget(
     </div>
   );
 });
+
+Widget.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  title: PropTypes.node.isRequired,
+  children: PropTypes.node,
+  onDragStart: PropTypes.func,
+  onDrop: PropTypes.func,
+  onDragOver: PropTypes.func,
+};
 
 export default Widget;
