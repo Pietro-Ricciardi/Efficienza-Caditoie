@@ -28,6 +28,7 @@ describe('App component calculations', () => {
     render(<App />);
     expect(screen.getByText('Esporta CSV')).toBeInTheDocument();
     expect(screen.getByText('Esporta Excel')).toBeInTheDocument();
+    expect(screen.getByText('Salva parametri')).toBeInTheDocument();
   });
 
 });
