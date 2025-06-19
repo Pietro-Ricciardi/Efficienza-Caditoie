@@ -1,7 +1,9 @@
 .container {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 40px);
   position: relative;
+  padding-top: 40px;
+  box-sizing: border-box;
 }
 
 .leftPane {
@@ -201,6 +203,11 @@
   text-align: center;
   padding: 4px 0;
   background: #f0f0f0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .dark-mode .top-bar {
