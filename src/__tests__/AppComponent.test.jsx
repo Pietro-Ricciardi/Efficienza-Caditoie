@@ -16,15 +16,12 @@ describe('App component calculations', () => {
   });
 
 
-  test('line chart displays formula values over time', () => {
-    jest.useFakeTimers();
+  test('line chart displays calculated values', () => {
     render(<App />);
-    jest.advanceTimersByTime(1100);
     expect(screen.getByText('R1')).toBeInTheDocument();
     expect(screen.getByText('R2')).toBeInTheDocument();
     expect(screen.getByText('E')).toBeInTheDocument();
     expect(screen.getByText('E_formula')).toBeInTheDocument();
-    jest.useRealTimers();
   });
 
 });
