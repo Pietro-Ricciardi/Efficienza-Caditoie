@@ -255,9 +255,11 @@ export default function App() {
   };
 
   const caricaParametriStorage = () => {
-    const loaded = caricaParametri('savedParams');
-    if (loaded) {
-      setParams(loaded);
+    const { data, error } = caricaParametri('savedParams');
+    if (data) {
+      setParams(data);
+    } else if (error) {
+      addToast(error.message);
     }
   };
 
