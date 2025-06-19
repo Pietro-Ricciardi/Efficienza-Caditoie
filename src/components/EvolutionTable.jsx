@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function EvolutionTable({ evolutionData, rangeVar }) {
   const header = rangeVar === 'Q' ? 'Q (l/s)' : 'v (m/s)';
+
   return (
     <table>
       <thead>
