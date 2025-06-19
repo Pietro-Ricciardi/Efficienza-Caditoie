@@ -72,6 +72,8 @@ export default function App() {
   const [rangeMax, setRangeMax] = useState(3);
   const [evolutionData, setEvolutionData] = useState([]);
   const [dataSource, setDataSource] = useState('manual');
+  const [apiKey, setApiKey] = useState(() => import.meta.env.VITE_OPENWEATHER_KEY || '');
+  const [apiKeyValid, setApiKeyValid] = useState(false);
   const [city, setCity] = useState('');
   const [rain, setRain] = useState(null);
 
@@ -110,16 +112,28 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (dataSource === 'openweather' && city) {
-      const key = import.meta.env.VITE_OPENWEATHER_KEY || 'YOUR_API_KEY';
-      fetchRain(city, key)
+    if (dataSource === 'openweather' && apiKey) {
+      fetchRain('Rome', apiKey)
+        .then(() => setApiKeyValid(true))
+        .catch(() => {
+          setApiKeyValid(false);
+          addToast('API key non valida');
+        });
+    } else {
+      setApiKeyValid(false);
+    }
+  }, [dataSource, apiKey, addToast]);
+
+  useEffect(() => {
+    if (dataSource === 'openweather' && apiKeyValid && city) {
+      fetchRain(city, apiKey)
         .then((r) => {
           setRain(r);
           setParams((p) => ({ ...p, Q: r, Q1: r * 0.6 }));
         })
         .catch(() => addToast('Errore caricamento dati meteo'));
     }
-  }, [dataSource, city, addToast]);
+  }, [dataSource, apiKeyValid, city, apiKey, addToast]);
 
 
   const R1 = useMemo(() => calcR1(params.v, params.v0), [params]);
@@ -414,6 +428,9 @@ export default function App() {
             setRangeMax={setRangeMax}
             dataSource={dataSource}
             setDataSource={setDataSource}
+            apiKey={apiKey}
+            setApiKey={setApiKey}
+            apiKeyValid={apiKeyValid}
             city={city}
             setCity={setCity}
             rain={rain}

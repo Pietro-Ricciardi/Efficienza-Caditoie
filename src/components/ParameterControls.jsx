@@ -24,10 +24,14 @@ export default function ParameterControls({
   setRangeMax,
   dataSource,
   setDataSource,
+  apiKey,
+  setApiKey,
+  apiKeyValid,
   city,
   setCity,
   rain
 }) {
+  const [showKey, setShowKey] = React.useState(false);
   return (
     <>
       <div className="data-source">
@@ -50,17 +54,44 @@ export default function ParameterControls({
           OpenWeatherMap
         </label>
         {dataSource === 'openweather' && (
-          <div className="weather-input">
-            <input
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="Città"
-            />
-            <span>
-              Pioggia: {rain != null ? `${rain.toFixed(2)} mm/h` : 'n/d'}
-            </span>
-          </div>
+          <>
+            <div className="weather-input">
+              <div className="api-key-field">
+                <input
+                  type={showKey ? 'text' : 'password'}
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="API key"
+                />
+                <span
+                  className="eye-icon"
+                  onMouseDown={() => setShowKey(true)}
+                  onMouseUp={() => setShowKey(false)}
+                  onMouseLeave={() => setShowKey(false)}
+                >
+                  👁
+                </span>
+              </div>
+              {apiKey && (
+                <span className={apiKeyValid ? 'api-ok' : 'api-warn'}>
+                  {apiKeyValid ? 'API key valida' : 'API key non valida'}
+                </span>
+              )}
+            </div>
+            {apiKeyValid && (
+              <div className="weather-input">
+                <input
+                  type="text"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder="Città"
+                />
+                <span>
+                  Pioggia: {rain != null ? `${rain.toFixed(2)} mm/h` : 'n/d'}
+                </span>
+              </div>
+            )}
+          </>
         )}
       </div>
       {Object.entries(params).map(([key, value]) => {
@@ -164,6 +195,9 @@ ParameterControls.propTypes = {
   setRangeMax: PropTypes.func.isRequired,
   dataSource: PropTypes.string.isRequired,
   setDataSource: PropTypes.func.isRequired,
+  apiKey: PropTypes.string.isRequired,
+  setApiKey: PropTypes.func.isRequired,
+  apiKeyValid: PropTypes.bool.isRequired,
   city: PropTypes.string.isRequired,
   setCity: PropTypes.func.isRequired,
   rain: PropTypes.number

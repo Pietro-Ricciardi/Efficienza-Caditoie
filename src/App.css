@@ -293,3 +293,22 @@ body.dark-mode {
 .data-source .weather-input {
   margin-top: 4px;
 }
+
+.api-key-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.eye-icon {
+  cursor: pointer;
+  user-select: none;
+}
+
+.api-ok {
+  color: green;
+}
+
+.api-warn {
+  color: red;
+}

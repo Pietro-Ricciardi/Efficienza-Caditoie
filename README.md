@@ -36,6 +36,10 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Opzionalmente è possibile scegliere "OpenWeatherMap" come origine dei dati e
   caricare automaticamente l'intensità di pioggia per una città, con
   aggiornamento dei grafici in tempo reale.
+  L'API key di OpenWeatherMap va inserita in un apposito campo password
+  dell'interfaccia. Tenendo premuta l'icona a forma di occhio si può
+  visualizzare temporaneamente la chiave per verificarne la correttezza. Solo
+  dopo la convalida della key è possibile specificare la città.
 
 ## Avvio locale
 
@@ -46,7 +50,8 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
    ```
 
 2. (Opzionale) copia `env.example` in `.env.local` e imposta `VITE_OPENWEATHER_KEY`
-   con la tua API key di OpenWeatherMap per abilitare i dati meteo.
+   con la tua API key di OpenWeatherMap: l'app la caricherà come valore
+   predefinito del campo nell'interfaccia.
 
 3. Avvia il progetto:
 
