@@ -9,7 +9,7 @@
 .leftPane {
   overflow: auto;
   padding: 20px;
-  padding-top: 60px;
+  padding-top: 80px;
   transition: transform 0.3s ease, flex-basis 0.3s ease;
 }
 
@@ -126,6 +126,11 @@
   line-height: 16px;
   text-align: center;
   cursor: pointer;
+}
+
+.info-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
 .info-popup {

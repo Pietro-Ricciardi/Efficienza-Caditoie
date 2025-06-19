@@ -247,16 +247,7 @@ export default function App() {
       btoa(unescape(encodeURIComponent(svgString)));
   };
 
-  const menuItems =
-    activePage === 'graphs'
-      ? [
-          { key: 'parameters', label: 'Parametri' },
-          { key: 'graphs', label: 'Aspetto' },
-        ]
-      : [
-          { key: 'graphs', label: 'Aspetto' },
-          { key: 'parameters', label: 'Parametri' },
-        ];
+  const [actionsOpen, setActionsOpen] = useState(true);
 
   return (
     <div
@@ -289,96 +280,121 @@ export default function App() {
         style={{ flexBasis: sidebarOpen ? (isMobile ? "100%" : "200px") : "0" }}
       >
         <nav className="menu-vertical flex flex-col space-y-2">
-          {menuItems.map((item) =>
-            item.key === "graphs" ? (
-              <div key="graphs" className="graphs-menu">
+          <button
+            className="px-4 py-2 text-left hover:bg-gray-100 w-full"
+            onClick={() =>
+              setActivePage(activePage === 'parameters' ? 'graphs' : 'parameters')
+            }
+          >
+            {activePage === 'parameters' ? 'Simulazione' : 'Parametri'}
+          </button>
+
+          <div className="graphs-menu">
+            <button
+              className="px-4 py-2 text-left hover:bg-gray-100 w-full flex justify-between"
+              onClick={() => setAppearanceOpen((o) => !o)}
+            >
+              Aspetto <span>{appearanceOpen ? '▲' : '▼'}</span>
+            </button>
+            {appearanceOpen && (
+              <div className="submenu ml-4 mt-1 space-y-1">
                 <button
-                  className="px-4 py-2 text-left hover:bg-gray-100 w-full flex justify-between"
-                  onClick={() => {
-                    setActivePage('graphs');
-                    setAppearanceOpen((o) => !o);
-                  }}
+                  className="submenu-item w-full text-left flex items-center"
+                  onClick={() => toggleChart('radar')}
                 >
-                  {item.label}
-                  <span>{appearanceOpen ? '▲' : '▼'}</span>
+                  <span className="w-4">{visibleCharts.radar ? '✓' : ''}</span>
+                  Grafico radar
                 </button>
-                {appearanceOpen && (
-                  <div className="submenu ml-4 mt-1 space-y-1">
-                    <button
-                      className="submenu-item w-full text-left flex items-center"
-                      onClick={() => toggleChart('radar')}
-                    >
-                      <span className="w-4">{visibleCharts.radar ? '✓' : ''}</span>
-                      Grafico radar
-                    </button>
-                    <button
-                      className="submenu-item w-full text-left flex items-center"
-                      onClick={() => toggleChart('bar')}
-                    >
-                      <span className="w-4">{visibleCharts.bar ? '✓' : ''}</span>
-                      Grafico a barre
-                    </button>
-                    <button
-                      className="submenu-item w-full text-left flex items-center"
-                      onClick={() => toggleChart('pie')}
-                    >
-                      <span className="w-4">{visibleCharts.pie ? '✓' : ''}</span>
-                      Grafico a torta
-                    </button>
-                    <button
-                      className="submenu-item w-full text-left flex items-center"
-                      onClick={() => toggleChart('line')}
-                    >
-                      <span className="w-4">{visibleCharts.line ? '✓' : ''}</span>
-                      Grafico a linee
-                    </button>
-                    <button
-                      className="submenu-item w-full text-left flex items-center"
-                      onClick={() => toggleChart('evolution')}
-                    >
-                      <span className="w-4">{visibleCharts.evolution ? '✓' : ''}</span>
-                      Grafico evolutivo
-                    </button>
-                  </div>
-                )}
+                <button
+                  className="submenu-item w-full text-left flex items-center"
+                  onClick={() => toggleChart('bar')}
+                >
+                  <span className="w-4">{visibleCharts.bar ? '✓' : ''}</span>
+                  Grafico a barre
+                </button>
+                <button
+                  className="submenu-item w-full text-left flex items-center"
+                  onClick={() => toggleChart('pie')}
+                >
+                  <span className="w-4">{visibleCharts.pie ? '✓' : ''}</span>
+                  Grafico a torta
+                </button>
+                <button
+                  className="submenu-item w-full text-left flex items-center"
+                  onClick={() => toggleChart('line')}
+                >
+                  <span className="w-4">{visibleCharts.line ? '✓' : ''}</span>
+                  Grafico a linee
+                </button>
+                <button
+                  className="submenu-item w-full text-left flex items-center"
+                  onClick={() => toggleChart('evolution')}
+                >
+                  <span className="w-4">{visibleCharts.evolution ? '✓' : ''}</span>
+                  Grafico evolutivo
+                </button>
               </div>
-            ) : (
-              <button
-                key={item.key}
-                onClick={() => setActivePage(item.key)}
-                className="px-4 py-2 text-left hover:bg-gray-100 w-full"
-              >
-                {item.label}
-              </button>
-            )
-          )}
+            )}
+          </div>
+
+          <div className="actions-menu">
+            <button
+              className="px-4 py-2 text-left hover:bg-gray-100 w-full flex justify-between"
+              onClick={() => setActionsOpen((o) => !o)}
+            >
+              Azioni <span>{actionsOpen ? '▲' : '▼'}</span>
+            </button>
+            {actionsOpen && (
+              <div className="submenu ml-4 mt-1 space-y-1 export-buttons">
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadCSV}>
+                  Esporta CSV
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadExcel}>
+                  Esporta Excel
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={salvaParametriStorage}>
+                  Salva parametri
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={caricaParametriStorage}>
+                  Carica parametri
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={esportaJSON}>
+                  Esporta JSON
+                </button>
+                <input
+                  type="file"
+                  accept="application/json"
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  onChange={importaJSON}
+                />
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => fileInputRef.current.click()}>
+                  Importa JSON
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(radarRef, 'radar.png')}>
+                  Salva radar
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(barRef, 'barre.png')}>
+                  Salva barre
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(pieRef, 'torta.png')}>
+                  Salva torta
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(lineRef, 'linee.png')}>
+                  Salva linee
+                </button>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>
+                  Salva evolutivo
+                </button>
+              </div>
+            )}
+          </div>
         </nav>
 
-        <div className="export-buttons flex flex-wrap gap-2 mt-4">
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadCSV}>Esporta CSV</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadExcel}>Esporta Excel</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={salvaParametriStorage}>Salva parametri</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={caricaParametriStorage}>Carica parametri</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={esportaJSON}>Esporta JSON</button>
-          <input
-            type="file"
-            accept="application/json"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            onChange={importaJSON}
-          />
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => fileInputRef.current.click()}>Importa JSON</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(radarRef, 'radar.png')}>Salva radar</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(barRef, 'barre.png')}>Salva barre</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(pieRef, 'torta.png')}>Salva torta</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(lineRef, 'linee.png')}>Salva linee</button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>Salva evolutivo</button>
-        </div>
       </aside>
       <div className="rightPane flex-1 p-6 overflow-auto grid gap-4">
         {activePage === 'parameters' && (
           <>
-            <h1>Efficienza Caditoie</h1>
             {Object.entries(params).map(([key, value]) => {
               const min = 0;
               const max =
@@ -403,10 +419,12 @@ export default function App() {
                 <div key={key} className="slider-container">
                   <label className="slider-label">
                     {key}: {value.toFixed(2)}
-                    <span className="info-icon" onClick={() => toggleInfo(key)}>i</span>
-                    {infoParam === key && (
-                      <div className="info-popup">{paramInfo[key]}</div>
-                    )}
+                    <span className="info-wrapper">
+                      <span className="info-icon" onClick={() => toggleInfo(key)}>i</span>
+                      {infoParam === key && (
+                        <div className="info-popup">{paramInfo[key]}</div>
+                      )}
+                    </span>
                   </label>
                   <div className="slider-wrapper">
                     <input
@@ -430,10 +448,7 @@ export default function App() {
                 </div>
               );
             })}
-          </>
-        )}
-        {activePage === 'graphs' && (
-          <>
+
             <div className="range-selector">
               <label>
                 Variabile:
@@ -444,13 +459,25 @@ export default function App() {
               </label>
               <label>
                 Min:
-                <input type="number" value={rangeMin} onChange={(e) => setRangeMin(parseFloat(e.target.value))} />
+                <input
+                  type="number"
+                  value={rangeMin}
+                  onChange={(e) => setRangeMin(parseFloat(e.target.value))}
+                />
               </label>
               <label>
                 Max:
-                <input type="number" value={rangeMax} onChange={(e) => setRangeMax(parseFloat(e.target.value))} />
+                <input
+                  type="number"
+                  value={rangeMax}
+                  onChange={(e) => setRangeMax(parseFloat(e.target.value))}
+                />
               </label>
             </div>
+          </>
+        )}
+        {activePage === 'graphs' && (
+          <>
             <div className="chart-box">
               <div className="formula-list">
                 <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
