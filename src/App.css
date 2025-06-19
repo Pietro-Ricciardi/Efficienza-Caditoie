@@ -21,7 +21,7 @@
 .rightPane {
   flex-grow: 1;
   overflow: auto;
-  padding: 20px;
+  padding: 80px 20px 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
@@ -58,6 +58,13 @@
 
 .dark-mode .sidebar-toggle {
   background: #0056b3;
+}
+
+.fixed-toggle {
+  position: fixed;
+  top: 60px;
+  left: 10px;
+  z-index: 1000;
 }
 
 .sidebar-header {

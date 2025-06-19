@@ -36,6 +36,7 @@ import {
   importaParametri,
 } from "./utils/storage";
 import Widget from "./Widget";
+import Help from "./Help";
 
 const paramInfo = {
   Q: "Portata totale del deflusso (l/s).",
@@ -87,6 +88,7 @@ export default function App() {
   const pieRef = useRef(null);
   const lineRef = useRef(null);
   const evolutionRef = useRef(null);
+  const resultsRef = useRef(null);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -140,8 +142,10 @@ export default function App() {
     pie: true,
     line: true,
     evolution: true,
+    results: true,
   });
   const [widgetOrder, setWidgetOrder] = useState([
+    'results',
     'radar',
     'bar',
     'pie',
@@ -149,7 +153,7 @@ export default function App() {
     'evolution',
   ]);
   const [dragging, setDragging] = useState(null);
-  const [appearanceOpen, setAppearanceOpen] = useState(true);
+  const [appearanceOpen, setAppearanceOpen] = useState(false);
 
   const toggleChart = (chart) =>
     setVisibleCharts((c) => ({ ...c, [chart]: !c[chart] }));
@@ -269,9 +273,31 @@ export default function App() {
       btoa(unescape(encodeURIComponent(svgString)));
   };
 
-  const [actionsOpen, setActionsOpen] = useState(true);
+  const [actionsOpen, setActionsOpen] = useState(false);
 
   const widgetMap = {
+    results: (
+      <Widget
+        id="results"
+        title="Risultati"
+        ref={resultsRef}
+        onDragStart={handleDragStart}
+        onDrop={handleDrop}
+      >
+        <div className="formula-list">
+          <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
+          <p>
+            R2 = 1 / (1 + (0.083 * v<sup>1.8</sup>) / (j * L<sup>2/3</sup>)) =
+            {R2.toFixed(2)}
+          </p>
+          <p>Q1* = Q1 × R1 = {Q1_star.toFixed(2)}</p>
+          <p>Q2 = Q - Q1 = {Q2.toFixed(2)}</p>
+          <p>Q2* = Q2 × R2 = {Q2_star.toFixed(2)}</p>
+          <p>E = (Q1* + Q2*) / Q = {E.toFixed(2)}</p>
+          <p>E formula = R1 × E0 + R2 × (1 - E0) = {E_formula.toFixed(2)}</p>
+        </div>
+      </Widget>
+    ),
     radar: (
       <Widget
         id="radar"
@@ -404,6 +430,14 @@ export default function App() {
           {isDarkMode ? '☀️' : '🌙'}
         </button>
       </header>
+      {!sidebarOpen && (
+        <button
+          className="sidebar-toggle fixed-toggle"
+          onClick={toggleSidebar}
+        >
+          ❯
+        </button>
+      )}
       <aside
         className={`leftPane bg-white shadow-md p-4 ${
           sidebarOpen ? "" : "collapsed"
@@ -423,6 +457,13 @@ export default function App() {
             }
           >
             {activePage === 'parameters' ? 'Simulazione' : 'Parametri'}
+          </button>
+
+          <button
+            className="px-4 py-2 text-left hover:bg-gray-100 w-full"
+            onClick={() => setActivePage('help')}
+          >
+            Help
           </button>
 
           <div className="graphs-menu">
@@ -614,27 +655,10 @@ export default function App() {
         )}
         {activePage === 'graphs' && (
           <>
-            <div className="chart-box">
-              <div className="formula-list">
-                <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
-                <p>
-                  R2 = 1 / (1 + (0.083 * v<sup>1.8</sup>) / (j * L<sup>2/3</sup>)) =
-                  {R2.toFixed(2)}
-                </p>
-                <p>Q1* = Q1 × R1 = {Q1_star.toFixed(2)}</p>
-                <p>Q2 = Q - Q1 = {Q2.toFixed(2)}</p>
-                <p>Q2* = Q2 × R2 = {Q2_star.toFixed(2)}</p>
-                <p>E = (Q1* + Q2*) / Q = {E.toFixed(2)}</p>
-                <p>E formula = R1 × E0 + R2 × (1 - E0) = {E_formula.toFixed(2)}</p>
-              </div>
-            </div>
-
-
             {widgetOrder.map((w) => (visibleCharts[w] ? widgetMap[w] : null))}
-
-
           </>
         )}
+        {activePage === 'help' && <Help />}
 
       </div>
     </div>
