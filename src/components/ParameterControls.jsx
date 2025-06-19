@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Widget from '../Widget';
 
 const paramInfo = {
-  Q: "Portata totale del deflusso (l/s).",
-  Q1: "Porzione di Q che raggiunge direttamente la caditoia (l/s).",
+  Q: 'Portata totale del deflusso (l/s).',
+  Q1: 'Porzione di Q che raggiunge direttamente la caditoia (l/s).',
   v: "Velocità del flusso all'ingresso (m/s).",
-  v0: "Velocità di riferimento per il calcolo di R1 (m/s).",
-  j: "Pendenza longitudinale della strada.",
-  L: "Lunghezza della griglia di caduta (m).",
-  E0: "Efficienza geometrica della caditoia.",
+  v0: 'Velocità di riferimento per il calcolo di R1 (m/s).',
+  j: 'Pendenza longitudinale della strada.',
+  L: 'Lunghezza della griglia di caduta (m).',
+  E0: 'Efficienza geometrica della caditoia.'
 };
 
 export default function ParameterControls({
@@ -30,7 +31,7 @@ export default function ParameterControls({
   setApiKey,
   apiVerified,
   verifyKey,
-  rain,
+  rain
 }) {
   const [showKey, setShowKey] = useState(false);
   return (
@@ -54,69 +55,71 @@ export default function ParameterControls({
           />
           OpenWeatherMap
         </label>
-        {dataSource === 'openweather' && (
-          <>
-            <div className="api-key-input">
-              <div className="password-wrapper">
-                <input
-                  type={showKey ? 'text' : 'password'}
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  placeholder="API Key"
-                />
-                <span
-                  className="eye-icon"
-                  onMouseDown={() => setShowKey(true)}
-                  onMouseUp={() => setShowKey(false)}
-                  onMouseLeave={() => setShowKey(false)}
-                >
-                  &#128065;
-                </span>
-              </div>
-              {!apiVerified && <button onClick={verifyKey}>Verifica</button>}
-            </div>
-            {apiVerified && (
-              <div className="weather-input">
-                <input
-                  type="text"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  placeholder="Città"
-                />
-                <span>
-                  Pioggia: {rain != null ? `${rain.toFixed(2)} mm/h` : 'n/d'}
-                </span>
-              </div>
-            )}
-          </>
-        )}
       </div>
+      {dataSource === 'openweather' && (
+        <Widget id="owm" title="OpenWeatherMap">
+          <div className="api-key-input">
+            <div className="password-wrapper">
+              <input
+                type={showKey ? 'text' : 'password'}
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                placeholder="API Key"
+              />
+              <span
+                className="eye-icon"
+                onMouseDown={() => setShowKey(true)}
+                onMouseUp={() => setShowKey(false)}
+                onMouseLeave={() => setShowKey(false)}
+              >
+                &#128065;
+              </span>
+            </div>
+            {!apiVerified && <button onClick={verifyKey}>Verifica</button>}
+          </div>
+          {apiVerified && (
+            <div className="weather-input">
+              <input
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="Città"
+              />
+              <span>
+                Pioggia: {rain != null ? `${rain.toFixed(2)} mm/h` : 'n/d'}
+              </span>
+            </div>
+          )}
+        </Widget>
+      )}
       {Object.entries(params).map(([key, value]) => {
         const min = 0;
         const max =
           key === 'E0'
             ? 1
             : key === 'v' || key === 'v0'
-            ? 10
-            : key === 'j'
-            ? 0.2
-            : key === 'L'
-            ? 5
-            : 1000;
+              ? 10
+              : key === 'j'
+                ? 0.2
+                : key === 'L'
+                  ? 5
+                  : 1000;
         const step =
           key === 'E0' || key === 'L'
             ? 0.01
             : key === 'v' || key === 'v0'
-            ? 0.01
-            : key === 'j'
-            ? 0.001
-            : 0.1;
+              ? 0.01
+              : key === 'j'
+                ? 0.001
+                : 0.1;
         return (
           <div key={key} className="slider-container">
             <label className="slider-label">
               {key}: {value.toFixed(2)}
               <span className="info-wrapper">
-                <span className="info-icon" onClick={() => toggleInfo(key)}>i</span>
+                <span className="info-icon" onClick={() => toggleInfo(key)}>
+                  i
+                </span>
                 {infoParam === key && (
                   <div className="info-popup">{paramInfo[key]}</div>
                 )}
@@ -148,7 +151,10 @@ export default function ParameterControls({
       <div className="range-selector">
         <label>
           Variabile:
-          <select value={rangeVar} onChange={(e) => setRangeVar(e.target.value)}>
+          <select
+            value={rangeVar}
+            onChange={(e) => setRangeVar(e.target.value)}
+          >
             <option value="v">v</option>
             <option value="Q">Q</option>
           </select>
@@ -193,5 +199,5 @@ ParameterControls.propTypes = {
   setApiKey: PropTypes.func.isRequired,
   apiVerified: PropTypes.bool.isRequired,
   verifyKey: PropTypes.func.isRequired,
-  rain: PropTypes.number,
+  rain: PropTypes.number
 };
