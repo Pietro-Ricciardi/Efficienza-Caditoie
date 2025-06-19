@@ -21,6 +21,7 @@ import {
 
 } from "recharts";
 import "./App.css";
+import logo from "./logo.svg";
 import { validaParametri } from "./utils/validate";
 import {
   calcR1,
@@ -263,11 +264,16 @@ export default function App() {
         isDarkMode ? "dark-mode" : ""
       }`}
     >
-      <header className="top-bar flex items-center justify-center bg-white shadow fixed w-full z-50">
-        Efficienza Caditoie - Pietro Ricciardi -{' '}
-        <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer">
+      <header className="top-bar flex items-center justify-start bg-white shadow fixed w-full z-50 p-2 space-x-2">
+        <img src={logo} alt="Logo" className="w-6 h-6" />
+        <span className="font-semibold">Efficienza Caditoie</span>
+        <span>- Pietro Ricciardi -</span>
+        <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer" className="mr-4">
           Licenza MIT
         </a>
+        <button className="theme-toggle text-2xl cursor-pointer" onClick={toggleDarkMode}>
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
       </header>
       <button
         className="sidebar-toggle bg-blue-600 text-white px-2 py-1 rounded fixed top-12 z-50"
@@ -347,9 +353,6 @@ export default function App() {
             )
           )}
         </nav>
-        <div className="theme-toggle text-2xl cursor-pointer text-center my-4" onClick={toggleDarkMode}>
-          {isDarkMode ? '☀️' : '🌙'}
-        </div>
 
         <div className="export-buttons flex flex-wrap gap-2 mt-4">
           <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadCSV}>Esporta CSV</button>

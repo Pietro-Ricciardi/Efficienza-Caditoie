@@ -203,8 +203,8 @@
 }
 
 .top-bar {
-  text-align: center;
-  padding: 4px 0;
+  text-align: left;
+  padding: 4px 8px;
   background: #f0f0f0;
   position: fixed;
   top: 0;
