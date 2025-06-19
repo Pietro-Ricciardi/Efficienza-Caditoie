@@ -152,27 +152,60 @@ export default function App() {
           <>
             <h1>Efficienza Caditoie</h1>
             <br />
-            {Object.entries(params).map(([key, value]) => (
-              <div key={key} className="slider-container">
-                <label className="slider-label">
-                  {key}: {value.toFixed(2)}
-                  <span className="info-icon" onClick={() => toggleInfo(key)}>
-                    i
-                  </span>
-                  {infoParam === key && (
-                    <div className="info-popup">{paramInfo[key]}</div>
-                  )}
-                </label>
-                <input
-                  type="range"
-                  min={key === "E0" ? 0 : 0.01}
-                  max={key === "E0" ? 1 : key === "v" || key === "v0" ? 5 : 200}
-                  step={key === "E0" || key === "j" || key === "L" ? 0.01 : 1}
-                  value={value}
-                  onChange={(e) => handleChange(key, e)}
-                />
-              </div>
-            ))}
+            {Object.entries(params).map(([key, value]) => {
+              const min = 0;
+              const max =
+                key === "E0"
+                  ? 1
+                  : key === "v" || key === "v0"
+                  ? 10
+                  : key === "j"
+                  ? 0.2
+                  : key === "L"
+                  ? 5
+                  : 1000;
+              const step =
+                key === "E0" || key === "L"
+                  ? 0.01
+                  : key === "v" || key === "v0"
+                  ? 0.01
+                  : key === "j"
+                  ? 0.001
+                  : 0.1;
+
+              return (
+                <div key={key} className="slider-container">
+                  <label className="slider-label">
+                    {key}: {value.toFixed(2)}
+                    <span className="info-icon" onClick={() => toggleInfo(key)}>
+                      i
+                    </span>
+                    {infoParam === key && (
+                      <div className="info-popup">{paramInfo[key]}</div>
+                    )}
+                  </label>
+                  <div className="slider-wrapper">
+                    <input
+                      type="range"
+                      min={min}
+                      max={max}
+                      step={step}
+                      value={value}
+                      onChange={(e) => handleChange(key, e)}
+                    />
+                    <input
+                      type="number"
+                      className="slider-input"
+                      min={min}
+                      max={max}
+                      step={step}
+                      value={value}
+                      onChange={(e) => handleChange(key, e)}
+                    />
+                  </div>
+                </div>
+              );
+            })}
 
             <div className="chart-toggles">
               <label>

@@ -79,6 +79,16 @@
   position: relative;
 }
 
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slider-input {
+  width: 80px;
+}
+
 .info-icon {
   display: inline-block;
   margin-left: 6px;
