@@ -629,7 +629,10 @@ export default function App() {
               </div>
             </div>
 
+
             {widgetOrder.map((w) => (visibleCharts[w] ? widgetMap[w] : null))}
+
+
           </>
         )}
 
