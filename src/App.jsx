@@ -35,6 +35,7 @@ import {
   importaParametri,
 } from "./utils/storage";
 import Help from "./Help";
+import Widget from "./Widget";
 
 const paramInfo = {
   Q: "Portata totale del deflusso (l/s).",
@@ -462,8 +463,7 @@ export default function App() {
             </div>
 
             {visibleCharts.radar && (
-            <div className="chart-box" ref={radarRef}>
-              <h3>Confronto efficienze</h3>
+            <Widget title="Confronto efficienze" ref={radarRef}>
               <ResponsiveContainer width="100%" height={300}>
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
                   <PolarGrid />
@@ -482,12 +482,11 @@ export default function App() {
                   <Tooltip />
                 </RadarChart>
               </ResponsiveContainer>
-            </div>
+            </Widget>
             )}
 
             {visibleCharts.bar && (
-            <div className="chart-box" ref={barRef}>
-              <h3>R1 e R2</h3>
+            <Widget title="R1 e R2" ref={barRef}>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={barData}>
                   <XAxis dataKey="name" />
@@ -499,12 +498,11 @@ export default function App() {
 
                 </BarChart>
               </ResponsiveContainer>
-            </div>
+            </Widget>
             )}
 
             {visibleCharts.pie && (
-            <div className="chart-box" ref={pieRef}>
-              <h3>Portate intercettate</h3>
+            <Widget title="Portate intercettate" ref={pieRef}>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
@@ -522,12 +520,11 @@ export default function App() {
                   <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
-            </div>
+            </Widget>
             )}
 
             {visibleCharts.line && (
-            <div className="chart-box" ref={lineRef}>
-              <h3>Andamento efficienza</h3>
+            <Widget title="Andamento efficienza" ref={lineRef}>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={lineData}>
                   <XAxis dataKey="label" />
@@ -539,12 +536,11 @@ export default function App() {
 
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </Widget>
             )}
 
             {visibleCharts.evolution && (
-            <div className="chart-box" ref={evolutionRef}>
-              <h3>Grafico evolutivo ({rangeVar})</h3>
+            <Widget title={`Grafico evolutivo (${rangeVar})`} ref={evolutionRef}>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={evolutionData}>
                   <XAxis dataKey={rangeVar} />
@@ -555,7 +551,7 @@ export default function App() {
                   </Line>
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </Widget>
             )}
           </>
         )}

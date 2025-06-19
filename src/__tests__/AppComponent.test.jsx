@@ -15,6 +15,11 @@ describe('App component calculations', () => {
     expect(screen.getByLabelText('Grafico a linee')).toBeInTheDocument();
   });
 
+  test('widget toggle button exists', () => {
+    render(<App />);
+    expect(screen.getAllByLabelText('toggle widget')[0]).toBeInTheDocument();
+  });
+
 
   test('line chart displays calculated values', () => {
     render(<App />);
