@@ -1,25 +1,4 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  PieChart,
-  Pie,
-  Cell,
-  LineChart,
-  Line,
-  LabelList,
-  Legend,
-
-} from "recharts";
 import "./App.css";
 import logo from "./logo.svg";
 import { validaParametri } from "./utils/validate";
@@ -35,19 +14,11 @@ import {
   esportaParametri,
   importaParametri,
 } from "./utils/storage";
-import Widget from "./Widget";
 import Help from "./Help";
 import Toast from "./Toast";
-
-const paramInfo = {
-  Q: "Portata totale del deflusso (l/s).",
-  Q1: "Porzione di Q che raggiunge direttamente la caditoia (l/s).",
-  v: "Velocità del flusso all'ingresso (m/s).",
-  v0: "Velocità di riferimento per il calcolo di R1 (m/s).",
-  j: "Pendenza longitudinale della strada.",
-  L: "Lunghezza della griglia di caduta (m).",
-  E0: "Efficienza geometrica della caditoia.",
-};
+import ParameterControls from "./components/ParameterControls";
+import Graphs from "./components/Graphs";
+import Sidebar from "./components/Sidebar";
 
 export default function App() {
   const [params, setParams] = useState({
@@ -305,143 +276,6 @@ export default function App() {
 
   const [actionsOpen, setActionsOpen] = useState(false);
 
-  const widgetMap = {
-    results: (
-      <Widget
-        id="results"
-        title="Risultati"
-        ref={resultsRef}
-        onDragStart={handleDragStart}
-        onDrop={handleDrop}
-      >
-        <div className="formula-list">
-          <p>R1 = 1 - 0.3 (v - v0) = {R1.toFixed(2)}</p>
-          <p>
-            R2 = 1 / (1 + (0.083 * v<sup>1.8</sup>) / (j * L<sup>2/3</sup>)) =
-            {R2.toFixed(2)}
-          </p>
-          <p>Q1* = Q1 × R1 = {Q1_star.toFixed(2)}</p>
-          <p>Q2 = Q - Q1 = {Q2.toFixed(2)}</p>
-          <p>Q2* = Q2 × R2 = {Q2_star.toFixed(2)}</p>
-          <p>E = (Q1* + Q2*) / Q = {E.toFixed(2)}</p>
-          <p>E formula = R1 × E0 + R2 × (1 - E0) = {E_formula.toFixed(2)}</p>
-        </div>
-      </Widget>
-    ),
-    radar: (
-      <Widget
-        id="radar"
-        title="Confronto efficienze"
-        ref={radarRef}
-        onDragStart={handleDragStart}
-        onDrop={handleDrop}
-      >
-        <ResponsiveContainer width="100%" height={300}>
-          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-            <PolarGrid />
-            <PolarAngleAxis dataKey="subject" />
-            <PolarRadiusAxis angle={30} domain={[0, 1]} />
-            <Radar
-              name="Efficienze"
-              dataKey="A"
-              stroke="#8884d8"
-              fill="#8884d8"
-              fillOpacity={0.6}
-            >
-              <LabelList dataKey="A" formatter={(v) => v.toFixed(2)} />
-            </Radar>
-            <Tooltip />
-          </RadarChart>
-        </ResponsiveContainer>
-      </Widget>
-    ),
-    bar: (
-      <Widget
-        id="bar"
-        title="R1 e R2"
-        ref={barRef}
-        onDragStart={handleDragStart}
-        onDrop={handleDrop}
-      >
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={barData}>
-            <XAxis dataKey="name" />
-            <YAxis domain={[0, 1]} />
-            <Tooltip />
-            <Bar dataKey="value" fill="#82ca9d">
-              <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </Widget>
-    ),
-    pie: (
-      <Widget
-        id="pie"
-        title="Portate intercettate"
-        ref={pieRef}
-        onDragStart={handleDragStart}
-        onDrop={handleDrop}
-      >
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={pieData}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={80}
-              label={({ name, value }) => `${name}: ${value.toFixed(2)}`}
-            >
-              {pieData.map((entry, index) => (
-                <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-      </Widget>
-    ),
-    line: (
-      <Widget
-        id="line"
-        title="Andamento efficienza"
-        ref={lineRef}
-        onDragStart={handleDragStart}
-        onDrop={handleDrop}
-      >
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={lineData}>
-            <XAxis dataKey="label" />
-            <YAxis domain={[0, 1]} />
-            <Tooltip />
-            <Line type="monotone" dataKey="value" stroke="#8884d8">
-              <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
-            </Line>
-          </LineChart>
-        </ResponsiveContainer>
-      </Widget>
-    ),
-    evolution: (
-      <Widget
-        id="evolution"
-        title={`Grafico evolutivo (${rangeVar})`}
-        ref={evolutionRef}
-        onDragStart={handleDragStart}
-        onDrop={handleDrop}
-      >
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={evolutionData}>
-            <XAxis dataKey={rangeVar} />
-            <YAxis domain={[0, 1]} />
-            <Tooltip />
-            <Line type="monotone" dataKey="efficiency" stroke="#ff7300">
-              <LabelList dataKey="efficiency" position="top" formatter={(v) => v.toFixed(2)} />
-            </Line>
-          </LineChart>
-        </ResponsiveContainer>
-      </Widget>
-    ),
-  };
 
   return (
     <>
@@ -495,232 +329,77 @@ export default function App() {
         </button>
       </header>
       {!sidebarOpen && (
-        <button
-          className="sidebar-toggle fixed-toggle"
-          onClick={toggleSidebar}
-        >
+        <button className="sidebar-toggle fixed-toggle" onClick={toggleSidebar}>
           ❯
         </button>
       )}
-      <aside
-        className={`leftPane bg-white shadow-md p-4 ${
-          sidebarOpen ? "" : "collapsed"
-        }`}
-        style={{ flexBasis: sidebarOpen ? (isMobile ? "100%" : "200px") : "0" }}
-      >
-        <div className="sidebar-header">
-          <button className="sidebar-toggle" onClick={toggleSidebar}>
-            {sidebarOpen ? "❮" : "❯"}
-          </button>
-        </div>
-        <nav className="menu-vertical flex flex-col space-y-2 mt-2">
-          <button
-            className="px-4 py-2 text-left hover:bg-gray-100 w-full"
-            onClick={() =>
-              setActivePage(activePage === 'parameters' ? 'graphs' : 'parameters')
-            }
-          >
-            {activePage === 'parameters' ? 'Simulazione' : 'Parametri'}
-          </button>
-
-          <button
-            className="px-4 py-2 text-left hover:bg-gray-100 w-full"
-            onClick={() => setActivePage('help')}
-          >
-            Help
-          </button>
-
-          <div className="graphs-menu">
-            <button
-              className="px-4 py-2 text-left hover:bg-gray-100 w-full flex justify-between"
-              onClick={() => setAppearanceOpen((o) => !o)}
-            >
-              Aspetto <span>{appearanceOpen ? '▲' : '▼'}</span>
-            </button>
-            {appearanceOpen && (
-              <div className="submenu ml-4 mt-1 space-y-1">
-                <button
-                  className="submenu-item w-full text-left flex items-center"
-                  onClick={() => toggleChart('radar')}
-                >
-                  <span className="w-4">{visibleCharts.radar ? '✓' : ''}</span>
-                  Grafico radar
-                </button>
-                <button
-                  className="submenu-item w-full text-left flex items-center"
-                  onClick={() => toggleChart('bar')}
-                >
-                  <span className="w-4">{visibleCharts.bar ? '✓' : ''}</span>
-                  Grafico a barre
-                </button>
-                <button
-                  className="submenu-item w-full text-left flex items-center"
-                  onClick={() => toggleChart('pie')}
-                >
-                  <span className="w-4">{visibleCharts.pie ? '✓' : ''}</span>
-                  Grafico a torta
-                </button>
-                <button
-                  className="submenu-item w-full text-left flex items-center"
-                  onClick={() => toggleChart('line')}
-                >
-                  <span className="w-4">{visibleCharts.line ? '✓' : ''}</span>
-                  Grafico a linee
-                </button>
-                <button
-                  className="submenu-item w-full text-left flex items-center"
-                  onClick={() => toggleChart('evolution')}
-                >
-                  <span className="w-4">{visibleCharts.evolution ? '✓' : ''}</span>
-                  Grafico evolutivo
-                </button>
-              </div>
-            )}
-          </div>
-
-          <div className="actions-menu">
-            <button
-              className="px-4 py-2 text-left hover:bg-gray-100 w-full flex justify-between"
-              onClick={() => setActionsOpen((o) => !o)}
-            >
-              Azioni <span>{actionsOpen ? '▲' : '▼'}</span>
-            </button>
-            {actionsOpen && (
-              <div className="submenu ml-4 mt-1 space-y-1 export-buttons">
-                <button onClick={downloadCSV}>
-                  Esporta CSV
-                </button>
-                <button onClick={downloadExcel}>
-                  Esporta Excel
-                </button>
-                <button onClick={salvaParametriStorage}>
-                  Salva parametri
-                </button>
-                <button onClick={caricaParametriStorage}>
-                  Carica parametri
-                </button>
-                <button onClick={esportaJSON}>
-                  Esporta JSON
-                </button>
-                <input
-                  type="file"
-                  accept="application/json"
-                  ref={fileInputRef}
-                  style={{ display: 'none' }}
-                  onChange={importaJSON}
-                />
-                <button onClick={() => fileInputRef.current.click()}>
-                  Importa JSON
-                </button>
-                <button onClick={() => downloadImage(radarRef, 'radar.png')}>
-                  Salva radar
-                </button>
-                <button onClick={() => downloadImage(barRef, 'barre.png')}>
-                  Salva barre
-                </button>
-                <button onClick={() => downloadImage(pieRef, 'torta.png')}>
-                  Salva torta
-                </button>
-                <button onClick={() => downloadImage(lineRef, 'linee.png')}>
-                  Salva linee
-                </button>
-                <button onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>
-                  Salva evolutivo
-                </button>
-              </div>
-            )}
-          </div>
-        </nav>
-
-      </aside>
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        toggleSidebar={toggleSidebar}
+        isMobile={isMobile}
+        activePage={activePage}
+        setActivePage={setActivePage}
+        appearanceOpen={appearanceOpen}
+        setAppearanceOpen={setAppearanceOpen}
+        visibleCharts={visibleCharts}
+        toggleChart={toggleChart}
+        actionsOpen={actionsOpen}
+        setActionsOpen={setActionsOpen}
+        downloadCSV={downloadCSV}
+        downloadExcel={downloadExcel}
+        salvaParametriStorage={salvaParametriStorage}
+        caricaParametriStorage={caricaParametriStorage}
+        esportaJSON={esportaJSON}
+        fileInputRef={fileInputRef}
+        importaJSON={importaJSON}
+        downloadImage={downloadImage}
+        radarRef={radarRef}
+        barRef={barRef}
+        pieRef={pieRef}
+        lineRef={lineRef}
+        evolutionRef={evolutionRef}
+      />
       <div className="rightPane flex-1 p-6 overflow-auto grid gap-4">
         {activePage === 'parameters' && (
-          <>
-            {Object.entries(params).map(([key, value]) => {
-              const min = 0;
-              const max =
-                key === 'E0'
-                  ? 1
-                  : key === 'v' || key === 'v0'
-                  ? 10
-                  : key === 'j'
-                  ? 0.2
-                  : key === 'L'
-                  ? 5
-                  : 1000;
-              const step =
-                key === 'E0' || key === 'L'
-                  ? 0.01
-                  : key === 'v' || key === 'v0'
-                  ? 0.01
-                  : key === 'j'
-                  ? 0.001
-                  : 0.1;
-              return (
-                <div key={key} className="slider-container">
-                  <label className="slider-label">
-                    {key}: {value.toFixed(2)}
-                    <span className="info-wrapper">
-                      <span className="info-icon" onClick={() => toggleInfo(key)}>i</span>
-                      {infoParam === key && (
-                        <div className="info-popup">{paramInfo[key]}</div>
-                      )}
-                    </span>
-                  </label>
-                  <div className="slider-wrapper">
-                    <input
-                      type="range"
-                      min={min}
-                      max={max}
-                      step={step}
-                      value={value}
-                      onChange={(e) => handleChange(key, e)}
-                    />
-                    <input
-                      type="number"
-                      className="slider-input"
-                      min={min}
-                      max={max}
-                      step={step}
-                      value={value}
-                      onChange={(e) => handleChange(key, e)}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-
-            <div className="range-selector">
-              <label>
-                Variabile:
-                <select value={rangeVar} onChange={(e) => setRangeVar(e.target.value)}>
-                  <option value="v">v</option>
-                  <option value="Q">Q</option>
-                </select>
-              </label>
-              <label>
-                Min:
-                <input
-                  type="number"
-                  value={rangeMin}
-                  onChange={(e) => setRangeMin(parseFloat(e.target.value))}
-                />
-              </label>
-              <label>
-                Max:
-                <input
-                  type="number"
-                  value={rangeMax}
-                  onChange={(e) => setRangeMax(parseFloat(e.target.value))}
-                />
-              </label>
-            </div>
-          </>
+          <ParameterControls
+            params={params}
+            infoParam={infoParam}
+            toggleInfo={toggleInfo}
+            handleChange={handleChange}
+            rangeVar={rangeVar}
+            setRangeVar={setRangeVar}
+            rangeMin={rangeMin}
+            setRangeMin={setRangeMin}
+            rangeMax={rangeMax}
+            setRangeMax={setRangeMax}
+          />
         )}
         {activePage === 'graphs' && (
-          <>
-            {widgetOrder.map((w) => (visibleCharts[w] ? widgetMap[w] : null))}
-          </>
+          <Graphs
+            R1={R1}
+            R2={R2}
+            Q1_star={Q1_star}
+            Q2={Q2}
+            Q2_star={Q2_star}
+            E={E}
+            E_formula={E_formula}
+            data={data}
+            barData={barData}
+            pieData={pieData}
+            lineData={lineData}
+            evolutionData={evolutionData}
+            rangeVar={rangeVar}
+            visibleCharts={visibleCharts}
+            widgetOrder={widgetOrder}
+            handleDragStart={handleDragStart}
+            handleDrop={handleDrop}
+            radarRef={radarRef}
+            barRef={barRef}
+            pieRef={pieRef}
+            lineRef={lineRef}
+            evolutionRef={evolutionRef}
+            resultsRef={resultsRef}
+          />
         )}
         {activePage === 'help' && <Help />}
 
