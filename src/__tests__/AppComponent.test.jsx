@@ -9,4 +9,9 @@ describe('App component calculations', () => {
     expect(screen.getByText(/Q2\* = Q2 × R2 =/)).toBeInTheDocument();
     expect(screen.getByText(/E = \(Q1\* \+ Q2\*\) \/ Q = 0.52/)).toBeInTheDocument();
   });
+
+  test('shows line chart toggle', () => {
+    render(<App />);
+    expect(screen.getByLabelText('Grafico a linee')).toBeInTheDocument();
+  });
 });

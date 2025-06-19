@@ -122,6 +122,7 @@ export default function App() {
     radar: true,
     bar: true,
     pie: true,
+    line: true,
   });
 
   const toggleChart = (chart) =>
@@ -197,6 +198,14 @@ export default function App() {
                   onChange={() => toggleChart("pie")}
                 />
                 Grafico a torta
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={visibleCharts.line}
+                  onChange={() => toggleChart("line")}
+                />
+                Grafico a linee
               </label>
             </div>
           </>
@@ -284,6 +293,20 @@ export default function App() {
                   </Pie>
                   <Tooltip />
                 </PieChart>
+              </ResponsiveContainer>
+            </div>
+            )}
+
+            {visibleCharts.line && (
+            <div className="chart-box">
+              <h3>Andamento efficienza</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={lineData}>
+                  <XAxis dataKey="time" />
+                  <YAxis domain={[0, 1]} />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                </LineChart>
               </ResponsiveContainer>
             </div>
             )}
