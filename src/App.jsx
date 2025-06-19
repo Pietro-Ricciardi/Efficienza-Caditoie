@@ -19,6 +19,7 @@ import Toast from "./Toast";
 import ParameterControls from "./components/ParameterControls";
 import Graphs from "./components/Graphs";
 import Sidebar from "./components/Sidebar";
+import { fetchRain } from "./utils/weather";
 
 export default function App() {
   const [params, setParams] = useState({
@@ -70,6 +71,9 @@ export default function App() {
   const [rangeMin, setRangeMin] = useState(0.5);
   const [rangeMax, setRangeMax] = useState(3);
   const [evolutionData, setEvolutionData] = useState([]);
+  const [dataSource, setDataSource] = useState('manual');
+  const [city, setCity] = useState('');
+  const [rain, setRain] = useState(null);
 
   const radarRef = useRef(null);
   const barRef = useRef(null);
@@ -104,6 +108,18 @@ export default function App() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (dataSource === 'openweather' && city) {
+      const key = import.meta.env.VITE_OPENWEATHER_KEY || 'YOUR_API_KEY';
+      fetchRain(city, key)
+        .then((r) => {
+          setRain(r);
+          setParams((p) => ({ ...p, Q: r, Q1: r * 0.6 }));
+        })
+        .catch(() => addToast('Errore caricamento dati meteo'));
+    }
+  }, [dataSource, city, addToast]);
 
 
   const R1 = useMemo(() => calcR1(params.v, params.v0), [params]);
@@ -396,6 +412,11 @@ export default function App() {
             setRangeMin={setRangeMin}
             rangeMax={rangeMax}
             setRangeMax={setRangeMax}
+            dataSource={dataSource}
+            setDataSource={setDataSource}
+            city={city}
+            setCity={setCity}
+            rain={rain}
           />
         )}
         {activePage === 'graphs' && (

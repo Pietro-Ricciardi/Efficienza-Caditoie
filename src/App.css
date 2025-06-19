@@ -23,7 +23,9 @@ body.dark-mode {
   overflow: auto;
   padding: 20px;
   padding-top: 100px;
-  transition: transform 0.3s ease, flex-basis 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    flex-basis 0.3s ease;
 }
 
 .leftPane.collapsed {
@@ -51,7 +53,6 @@ body.dark-mode {
   height: 5px;
   background: #ddd;
 }
-
 
 .theme-toggle {
   font-size: 1.5em;
@@ -260,7 +261,6 @@ body.dark-mode {
   margin-bottom: 5px;
 }
 
-
 .export-buttons {
   margin: 20px 0;
   display: flex;
@@ -275,4 +275,21 @@ body.dark-mode {
   text-align: left;
   color: inherit;
   cursor: pointer;
+}
+
+.data-source {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.data-source .source-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.data-source .weather-input {
+  margin-top: 4px;
 }

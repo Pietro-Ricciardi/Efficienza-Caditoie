@@ -9,6 +9,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 ## Funzionalità
 
 - Inserimento dei parametri tramite **slider interattivi**:
+
   - Portata totale (Q)
   - Portata intercettata (Q1)
   - Velocità del flusso (v)
@@ -32,37 +33,48 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Esportazione dei dati e dei grafici in **CSV**, **Excel** e come immagini.
 - Salvataggio e caricamento dei parametri in locale o tramite file JSON.
 - Download dei modelli **CSV**, **Excel** e **JSON** per l'import dei parametri.
+- Opzionalmente è possibile scegliere "OpenWeatherMap" come origine dei dati e
+  caricare automaticamente l'intensità di pioggia per una città, con
+  aggiornamento dei grafici in tempo reale.
 
 ## Avvio locale
 
 1. Installa le dipendenze:
+
    ```bash
    npm install
    ```
 
-2. Avvia il progetto:
+2. (Opzionale) copia `env.example` in `.env.local` e imposta `VITE_OPENWEATHER_KEY`
+   con la tua API key di OpenWeatherMap per abilitare i dati meteo.
+
+3. Avvia il progetto:
+
    ```bash
    npm run dev
    ```
 
-3. (Opzionale) Verifica lo stile del codice:
+4. (Opzionale) Verifica lo stile del codice:
+
    ```bash
    npm run lint
    ```
 
-4. (Opzionale) Applica la formattazione:
+5. (Opzionale) Applica la formattazione:
+
    ```bash
    npm run format
    ```
 
-5. Apri il browser su `http://localhost:5173`
+6. Apri il browser su `http://localhost:5173`
 
-6. (Opzionale) Esegui i test:
+7. (Opzionale) Esegui i test:
+
    ```bash
    npm test
    ```
 
-7. (Opzionale) Visualizza l'anteprima della build:
+8. (Opzionale) Visualizza l'anteprima della build:
    ```bash
    npm run preview
    ```
@@ -70,6 +82,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 ## Deploy (consigliato: Vercel)
 
 1. Inizializza il repository Git:
+
    ```bash
    git init
    git add .
@@ -77,6 +90,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
    ```
 
 2. Crea un repository su [GitHub](https://github.com) e collegalo:
+
    ```bash
    git remote add origin https://github.com/tuo-username/efficienza-caditoie.git
    git push -u origin main
