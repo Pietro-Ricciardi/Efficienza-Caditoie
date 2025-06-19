@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './EvolutionTable.css';
 
 export default function EvolutionTable({ evolutionData, rangeVar }) {
   const header = rangeVar === 'Q' ? 'Q (l/s)' : 'v (m/s)';
 
   return (
-    <table>
+    <table className="evolution-table">
       <thead>
         <tr>
           <th>{header}</th>

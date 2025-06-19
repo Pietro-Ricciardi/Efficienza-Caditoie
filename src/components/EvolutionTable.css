@@ -1,0 +1,16 @@
+.evolution-table {
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.evolution-table th,
+.evolution-table td {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.dark-mode .evolution-table th,
+.dark-mode .evolution-table td {
+  border-color: #555;
+}
