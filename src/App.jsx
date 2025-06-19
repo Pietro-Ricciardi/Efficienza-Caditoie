@@ -260,26 +260,40 @@ export default function App() {
         ];
 
   return (
-    <div className={`container ${isDarkMode ? "dark-mode" : ""}`}>
-      <div className="top-bar">
+    <div
+      className={`container flex min-h-screen bg-gray-100 ${
+        isDarkMode ? "dark-mode" : ""
+      }`}
+    >
+      <header className="top-bar flex items-center justify-center bg-white shadow fixed w-full z-50">
         Efficienza Caditoie - Pietro Ricciardi -{' '}
         <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer">
           Licenza MIT
         </a>
-      </div>
-      <button className="sidebar-toggle" onClick={toggleSidebar}>
+      </header>
+      <button
+        className="sidebar-toggle bg-blue-600 text-white px-2 py-1 rounded fixed top-12 left-2 z-50"
+        onClick={toggleSidebar}
+      >
         {sidebarOpen ? "❮" : "❯"}
       </button>
-      <div
-        className={`leftPane ${sidebarOpen ? "" : "collapsed"}`}
+      <aside
+        className={`leftPane bg-white shadow-md p-4 ${
+          sidebarOpen ? "" : "collapsed"
+        }`}
         style={{ flexBasis: sidebarOpen ? (isMobile ? "100%" : "200px") : "0" }}
       >
-        <nav className="menu-vertical">
+        <nav className="menu-vertical flex flex-col space-y-2">
           {menuItems.map((item) =>
             item.key === "graphs" ? (
               <div key="graphs" className="graphs-menu">
-                <button onClick={() => setActivePage('graphs')}>{item.label}</button>
-                <div className="submenu">
+                <button
+                  className="px-4 py-2 text-left hover:bg-gray-100 w-full"
+                  onClick={() => setActivePage('graphs')}
+                >
+                  {item.label}
+                </button>
+                <div className="submenu ml-4 mt-1 space-y-1">
                   <label>
                     <input
                       type="checkbox"
@@ -323,22 +337,26 @@ export default function App() {
                 </div>
               </div>
             ) : (
-              <button key={item.key} onClick={() => setActivePage(item.key)}>
+              <button
+                key={item.key}
+                onClick={() => setActivePage(item.key)}
+                className="px-4 py-2 text-left hover:bg-gray-100 w-full"
+              >
                 {item.label}
               </button>
             )
           )}
         </nav>
-        <div className="theme-toggle" onClick={toggleDarkMode}>
+        <div className="theme-toggle text-2xl cursor-pointer text-center my-4" onClick={toggleDarkMode}>
           {isDarkMode ? '☀️' : '🌙'}
         </div>
 
-        <div className="export-buttons">
-          <button onClick={downloadCSV}>Esporta CSV</button>
-          <button onClick={downloadExcel}>Esporta Excel</button>
-          <button onClick={salvaParametriStorage}>Salva parametri</button>
-          <button onClick={caricaParametriStorage}>Carica parametri</button>
-          <button onClick={esportaJSON}>Esporta JSON</button>
+        <div className="export-buttons flex flex-wrap gap-2 mt-4">
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadCSV}>Esporta CSV</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadExcel}>Esporta Excel</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={salvaParametriStorage}>Salva parametri</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={caricaParametriStorage}>Carica parametri</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={esportaJSON}>Esporta JSON</button>
           <input
             type="file"
             accept="application/json"
@@ -346,15 +364,15 @@ export default function App() {
             style={{ display: 'none' }}
             onChange={importaJSON}
           />
-          <button onClick={() => fileInputRef.current.click()}>Importa JSON</button>
-          <button onClick={() => downloadImage(radarRef, 'radar.png')}>Salva radar</button>
-          <button onClick={() => downloadImage(barRef, 'barre.png')}>Salva barre</button>
-          <button onClick={() => downloadImage(pieRef, 'torta.png')}>Salva torta</button>
-          <button onClick={() => downloadImage(lineRef, 'linee.png')}>Salva linee</button>
-          <button onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>Salva evolutivo</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => fileInputRef.current.click()}>Importa JSON</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(radarRef, 'radar.png')}>Salva radar</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(barRef, 'barre.png')}>Salva barre</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(pieRef, 'torta.png')}>Salva torta</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(lineRef, 'linee.png')}>Salva linee</button>
+          <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>Salva evolutivo</button>
         </div>
-      </div>
-      <div className="rightPane">
+      </aside>
+      <div className="rightPane flex-1 p-6 overflow-auto grid gap-4">
         {activePage === 'help' && <Help />}
         {activePage === 'parameters' && (
           <>
