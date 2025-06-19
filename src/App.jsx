@@ -17,6 +17,7 @@ import {
   LineChart,
   Line,
   LabelList,
+  Legend,
 
 } from "recharts";
 import "./App.css";
