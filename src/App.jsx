@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import {
   Radar,
   RadarChart,
@@ -62,24 +62,29 @@ export default function App() {
 
   const [toasts, setToasts] = useState([]);
 
-  const addToast = (message) => {
+  const addToast = useCallback((message) => {
     const id = Date.now() + Math.random();
     setToasts((t) => [...t, { id, message }]);
-  };
+  }, []);
 
-  const removeToast = (id) => {
+  const removeToast = useCallback((id) => {
     setToasts((t) => t.filter((toast) => toast.id !== id));
-  };
+  }, []);
 
-  const handleChange = (key, event) => {
-    const value = parseFloat(event.target.value);
-    const newParams = { ...params, [key]: value };
-    const warnings = validaParametri(newParams);
-    setParams(newParams);
-    if (warnings.length) {
-      warnings.forEach(addToast);
-    }
-  };
+  const handleChange = useCallback(
+    (key, event) => {
+      const value = parseFloat(event.target.value);
+      setParams((prev) => {
+        const newParams = { ...prev, [key]: value };
+        const warnings = validaParametri(newParams);
+        if (warnings.length) {
+          warnings.forEach(addToast);
+        }
+        return newParams;
+      });
+    },
+    [addToast]
+  );
 
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -276,7 +281,7 @@ export default function App() {
     }
   };
 
-  const downloadImage = (ref, name) => {
+  const downloadImage = useCallback((ref, name) => {
     const svg = ref.current?.querySelector("svg");
     if (!svg) return;
     const serializer = new XMLSerializer();
@@ -296,7 +301,7 @@ export default function App() {
     img.src =
       "data:image/svg+xml;base64," +
       btoa(unescape(encodeURIComponent(svgString)));
-  };
+  }, []);
 
   const [actionsOpen, setActionsOpen] = useState(false);
 
