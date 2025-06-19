@@ -37,6 +37,7 @@ import {
 } from "./utils/storage";
 import Widget from "./Widget";
 import Help from "./Help";
+import Toast from "./Toast";
 
 const paramInfo = {
   Q: "Portata totale del deflusso (l/s).",
@@ -59,13 +60,24 @@ export default function App() {
     E0: 0.7,
   });
 
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = (message) => {
+    const id = Date.now() + Math.random();
+    setToasts((t) => [...t, { id, message }]);
+  };
+
+  const removeToast = (id) => {
+    setToasts((t) => t.filter((toast) => toast.id !== id));
+  };
+
   const handleChange = (key, event) => {
     const value = parseFloat(event.target.value);
     const newParams = { ...params, [key]: value };
     const warnings = validaParametri(newParams);
     setParams(newParams);
     if (warnings.length) {
-      alert(warnings.join("\n"));
+      warnings.forEach(addToast);
     }
   };
 
@@ -258,7 +270,7 @@ export default function App() {
     if (file) {
       importaParametri(file)
         .then((p) => setParams(p))
-        .catch(() => alert('File JSON non valido'));
+        .catch(() => addToast('File JSON non valido'));
     }
   };
 
@@ -425,12 +437,13 @@ export default function App() {
   };
 
   return (
-    <div
-      className={`container flex min-h-screen bg-gray-100 ${
-        isDarkMode ? "dark-mode" : ""
-      }`}
-    >
-      <header className="top-bar flex items-center justify-start bg-white shadow fixed w-full z-50 p-2 space-x-2">
+    <>
+      <div
+        className={`container flex min-h-screen bg-gray-100 ${
+          isDarkMode ? "dark-mode" : ""
+        }`}
+      >
+        <header className="top-bar flex items-center justify-start bg-white shadow fixed w-full z-50 p-2 space-x-2">
         <img src={logo} alt="Logo" className="w-6 h-6" />
         <span className="font-semibold">Efficienza Caditoie</span>
         <span>- Pietro Ricciardi -</span>
@@ -705,6 +718,12 @@ export default function App() {
         {activePage === 'help' && <Help />}
 
       </div>
-    </div>
+      </div>
+      <div className="fixed top-4 right-4 space-y-2 z-50">
+        {toasts.map((t) => (
+          <Toast key={t.id} message={t.message} onClose={() => removeToast(t.id)} />
+        ))}
+      </div>
+    </>
   );
 }
