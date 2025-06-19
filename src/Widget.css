@@ -19,7 +19,7 @@
 
 .widget {
   resize: both;
-  overflow: visible;
+  overflow: auto;
   min-width: 300px;
   min-height: 350px;
   position: relative;
@@ -28,5 +28,6 @@
 .widget.collapsed {
   min-height: 50px;
   height: auto;
+  overflow: hidden;
 }
 
