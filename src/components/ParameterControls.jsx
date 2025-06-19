@@ -22,9 +22,47 @@ export default function ParameterControls({
   setRangeMin,
   rangeMax,
   setRangeMax,
+  dataSource,
+  setDataSource,
+  city,
+  setCity,
+  rain,
 }) {
   return (
     <>
+      <div className="data-source">
+        <label>
+          <input
+            type="radio"
+            value="manual"
+            checked={dataSource === 'manual'}
+            onChange={() => setDataSource('manual')}
+          />
+          Manuale
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="openweather"
+            checked={dataSource === 'openweather'}
+            onChange={() => setDataSource('openweather')}
+          />
+          OpenWeatherMap
+        </label>
+        {dataSource === 'openweather' && (
+          <div className="weather-input">
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="Città"
+            />
+            <span>
+              Pioggia: {rain != null ? `${rain.toFixed(2)} mm/h` : 'n/d'}
+            </span>
+          </div>
+        )}
+      </div>
       {Object.entries(params).map(([key, value]) => {
         const min = 0;
         const max =
@@ -119,4 +157,9 @@ ParameterControls.propTypes = {
   setRangeMin: PropTypes.func.isRequired,
   rangeMax: PropTypes.number.isRequired,
   setRangeMax: PropTypes.func.isRequired,
+  dataSource: PropTypes.string.isRequired,
+  setDataSource: PropTypes.func.isRequired,
+  city: PropTypes.string.isRequired,
+  setCity: PropTypes.func.isRequired,
+  rain: PropTypes.number,
 };
