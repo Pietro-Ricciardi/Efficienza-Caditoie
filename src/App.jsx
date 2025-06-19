@@ -34,7 +34,6 @@ import {
   esportaParametri,
   importaParametri,
 } from "./utils/storage";
-import Help from "./Help";
 import Widget from "./Widget";
 
 const paramInfo = {
@@ -251,12 +250,10 @@ export default function App() {
       ? [
           { key: 'parameters', label: 'Parametri' },
           { key: 'graphs', label: 'Grafici' },
-          { key: 'help', label: 'Help' },
         ]
       : [
           { key: 'graphs', label: 'Grafici' },
           { key: 'parameters', label: 'Parametri' },
-          { key: 'help', label: 'Help' },
         ];
 
   return (
@@ -272,7 +269,8 @@ export default function App() {
         </a>
       </header>
       <button
-        className="sidebar-toggle bg-blue-600 text-white px-2 py-1 rounded fixed top-12 left-2 z-50"
+        className="sidebar-toggle bg-blue-600 text-white px-2 py-1 rounded fixed top-12 z-50"
+        style={{ left: sidebarOpen ? (isMobile ? 'calc(100% - 40px)' : '200px') : '10px' }}
         onClick={toggleSidebar}
       >
         {sidebarOpen ? "❮" : "❯"}
@@ -373,7 +371,6 @@ export default function App() {
         </div>
       </aside>
       <div className="rightPane flex-1 p-6 overflow-auto grid gap-4">
-        {activePage === 'help' && <Help />}
         {activePage === 'parameters' && (
           <>
             <h1>Efficienza Caditoie</h1>

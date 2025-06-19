@@ -9,6 +9,7 @@
 .leftPane {
   overflow: auto;
   padding: 20px;
+  padding-top: 60px;
   transition: transform 0.3s ease, flex-basis 0.3s ease;
 }
 
@@ -47,9 +48,7 @@
 }
 
 .sidebar-toggle {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  position: fixed;
   z-index: 100;
   background: #007bff;
   color: #fff;
@@ -228,9 +227,6 @@
   margin-bottom: 5px;
 }
 
-.help-page {
-  line-height: 1.6;
-}
 
 .export-buttons {
   margin: 20px 0;
