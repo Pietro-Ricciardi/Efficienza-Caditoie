@@ -141,10 +141,32 @@ export default function App() {
     line: true,
     evolution: true,
   });
+  const [widgetOrder, setWidgetOrder] = useState([
+    'radar',
+    'bar',
+    'pie',
+    'line',
+    'evolution',
+  ]);
+  const [dragging, setDragging] = useState(null);
   const [appearanceOpen, setAppearanceOpen] = useState(true);
 
   const toggleChart = (chart) =>
     setVisibleCharts((c) => ({ ...c, [chart]: !c[chart] }));
+
+  const handleDragStart = (id) => setDragging(id);
+  const handleDrop = (id) => {
+    if (dragging === null || dragging === id) return;
+    const newOrder = [...widgetOrder];
+    const from = newOrder.indexOf(dragging);
+    const to = newOrder.indexOf(id);
+    if (from !== -1 && to !== -1) {
+      newOrder.splice(from, 1);
+      newOrder.splice(to, 0, dragging);
+      setWidgetOrder(newOrder);
+    }
+    setDragging(null);
+  };
 
   useEffect(() => {
     setLineData([
@@ -266,20 +288,18 @@ export default function App() {
           {isDarkMode ? '☀️' : '🌙'}
         </button>
       </header>
-      <button
-        className="sidebar-toggle bg-blue-600 text-white px-2 py-1 rounded fixed top-12 z-50"
-        style={{ left: sidebarOpen ? (isMobile ? 'calc(100% - 40px)' : '200px') : '10px' }}
-        onClick={toggleSidebar}
-      >
-        {sidebarOpen ? "❮" : "❯"}
-      </button>
       <aside
         className={`leftPane bg-white shadow-md p-4 ${
           sidebarOpen ? "" : "collapsed"
         }`}
         style={{ flexBasis: sidebarOpen ? (isMobile ? "100%" : "200px") : "0" }}
       >
-        <nav className="menu-vertical flex flex-col space-y-2">
+        <div className="sidebar-header">
+          <button className="sidebar-toggle" onClick={toggleSidebar}>
+            {sidebarOpen ? "❮" : "❯"}
+          </button>
+        </div>
+        <nav className="menu-vertical flex flex-col space-y-2 mt-2">
           <button
             className="px-4 py-2 text-left hover:bg-gray-100 w-full"
             onClick={() =>
@@ -346,19 +366,19 @@ export default function App() {
             </button>
             {actionsOpen && (
               <div className="submenu ml-4 mt-1 space-y-1 export-buttons">
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadCSV}>
+                <button onClick={downloadCSV}>
                   Esporta CSV
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={downloadExcel}>
+                <button onClick={downloadExcel}>
                   Esporta Excel
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={salvaParametriStorage}>
+                <button onClick={salvaParametriStorage}>
                   Salva parametri
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={caricaParametriStorage}>
+                <button onClick={caricaParametriStorage}>
                   Carica parametri
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={esportaJSON}>
+                <button onClick={esportaJSON}>
                   Esporta JSON
                 </button>
                 <input
@@ -368,22 +388,22 @@ export default function App() {
                   style={{ display: 'none' }}
                   onChange={importaJSON}
                 />
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => fileInputRef.current.click()}>
+                <button onClick={() => fileInputRef.current.click()}>
                   Importa JSON
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(radarRef, 'radar.png')}>
+                <button onClick={() => downloadImage(radarRef, 'radar.png')}>
                   Salva radar
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(barRef, 'barre.png')}>
+                <button onClick={() => downloadImage(barRef, 'barre.png')}>
                   Salva barre
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(pieRef, 'torta.png')}>
+                <button onClick={() => downloadImage(pieRef, 'torta.png')}>
                   Salva torta
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(lineRef, 'linee.png')}>
+                <button onClick={() => downloadImage(lineRef, 'linee.png')}>
                   Salva linee
                 </button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded" onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>
+                <button onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>
                   Salva evolutivo
                 </button>
               </div>
@@ -493,97 +513,127 @@ export default function App() {
               </div>
             </div>
 
-            {visibleCharts.radar && (
-            <Widget title="Confronto efficienze" ref={radarRef}>
-              <ResponsiveContainer width="100%" height={300}>
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                  <PolarGrid />
-                  <PolarAngleAxis dataKey="subject" />
-                  <PolarRadiusAxis angle={30} domain={[0, 1]} />
-                  <Radar
-                    name="Efficienze"
-                    dataKey="A"
-                    stroke="#8884d8"
-                    fill="#8884d8"
-                    fillOpacity={0.6}
-                  >
-                    <LabelList dataKey="A" formatter={(v) => v.toFixed(2)} />
-                  </Radar>
+            const widgetMap = {
+              radar: (
+                <Widget
+                  id="radar"
+                  title="Confronto efficienze"
+                  ref={radarRef}
+                  onDragStart={handleDragStart}
+                  onDrop={handleDrop}
+                >
+                  <ResponsiveContainer width="100%" height={300}>
+                    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                      <PolarGrid />
+                      <PolarAngleAxis dataKey="subject" />
+                      <PolarRadiusAxis angle={30} domain={[0, 1]} />
+                      <Radar
+                        name="Efficienze"
+                        dataKey="A"
+                        stroke="#8884d8"
+                        fill="#8884d8"
+                        fillOpacity={0.6}
+                      >
+                        <LabelList dataKey="A" formatter={(v) => v.toFixed(2)} />
+                      </Radar>
 
-                  <Tooltip />
-                </RadarChart>
-              </ResponsiveContainer>
-            </Widget>
-            )}
+                      <Tooltip />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </Widget>
+              ),
+              bar: (
+                <Widget
+                  id="bar"
+                  title="R1 e R2"
+                  ref={barRef}
+                  onDragStart={handleDragStart}
+                  onDrop={handleDrop}
+                >
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={barData}>
+                      <XAxis dataKey="name" />
+                      <YAxis domain={[0, 1]} />
+                      <Tooltip />
+                      <Bar dataKey="value" fill="#82ca9d">
+                        <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
+                      </Bar>
 
-            {visibleCharts.bar && (
-            <Widget title="R1 e R2" ref={barRef}>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={barData}>
-                  <XAxis dataKey="name" />
-                  <YAxis domain={[0, 1]} />
-                  <Tooltip />
-                  <Bar dataKey="value" fill="#82ca9d">
-                    <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
-                  </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </Widget>
+              ),
+              pie: (
+                <Widget
+                  id="pie"
+                  title="Portate intercettate"
+                  ref={pieRef}
+                  onDragStart={handleDragStart}
+                  onDrop={handleDrop}
+                >
+                  <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                      <Pie
+                        data={pieData}
+                        dataKey="value"
+                        nameKey="name"
+                        outerRadius={80}
+                        label={({ name, value }) => `${name}: ${value.toFixed(2)}`}
 
-                </BarChart>
-              </ResponsiveContainer>
-            </Widget>
-            )}
+                      >
+                        {pieData.map((entry, index) => (
+                          <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </Widget>
+              ),
+              line: (
+                <Widget
+                  id="line"
+                  title="Andamento efficienza"
+                  ref={lineRef}
+                  onDragStart={handleDragStart}
+                  onDrop={handleDrop}
+                >
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={lineData}>
+                      <XAxis dataKey="label" />
+                      <YAxis domain={[0, 1]} />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="value" stroke="#8884d8">
+                        <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
+                      </Line>
 
-            {visibleCharts.pie && (
-            <Widget title="Portate intercettate" ref={pieRef}>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    dataKey="value"
-                    nameKey="name"
-                    outerRadius={80}
-                    label={({ name, value }) => `${name}: ${value.toFixed(2)}`}
+                    </LineChart>
+                  </ResponsiveContainer>
+                </Widget>
+              ),
+              evolution: (
+                <Widget
+                  id="evolution"
+                  title={`Grafico evolutivo (${rangeVar})`}
+                  ref={evolutionRef}
+                  onDragStart={handleDragStart}
+                  onDrop={handleDrop}
+                >
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={evolutionData}>
+                      <XAxis dataKey={rangeVar} />
+                      <YAxis domain={[0, 1]} />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="efficiency" stroke="#ff7300">
+                        <LabelList dataKey="efficiency" position="top" formatter={(v) => v.toFixed(2)} />
+                      </Line>
+                    </LineChart>
+                  </ResponsiveContainer>
+                </Widget>
+              ),
+            };
 
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`c-${index}`} fill={index ? "#8884d8" : "#82ca9d"} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </Widget>
-            )}
-
-            {visibleCharts.line && (
-            <Widget title="Andamento efficienza" ref={lineRef}>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={lineData}>
-                  <XAxis dataKey="label" />
-                  <YAxis domain={[0, 1]} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="#8884d8">
-                    <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
-                  </Line>
-
-                </LineChart>
-              </ResponsiveContainer>
-            </Widget>
-            )}
-
-            {visibleCharts.evolution && (
-            <Widget title={`Grafico evolutivo (${rangeVar})`} ref={evolutionRef}>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={evolutionData}>
-                  <XAxis dataKey={rangeVar} />
-                  <YAxis domain={[0, 1]} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="efficiency" stroke="#ff7300">
-                    <LabelList dataKey="efficiency" position="top" formatter={(v) => v.toFixed(2)} />
-                  </Line>
-                </LineChart>
-              </ResponsiveContainer>
-            </Widget>
-            )}
+            {widgetOrder.map((w) => visibleCharts[w] ? widgetMap[w] : null)}
           </>
         )}
 
