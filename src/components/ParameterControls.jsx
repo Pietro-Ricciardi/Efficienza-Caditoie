@@ -30,12 +30,14 @@ export default function ParameterControls({
   city,
   setCity,
   rain
+
 }) {
   const [showKey, setShowKey] = React.useState(false);
   return (
     <>
       <div className="data-source">
         <label className="source-option">
+
           <input
             type="radio"
             value="manual"
@@ -45,6 +47,7 @@ export default function ParameterControls({
           Manuale
         </label>
         <label className="source-option">
+
           <input
             type="radio"
             value="openweather"
@@ -54,6 +57,7 @@ export default function ParameterControls({
           OpenWeatherMap
         </label>
         {dataSource === 'openweather' && (
+
           <>
             <div className="weather-input">
               <div className="api-key-field">
@@ -92,6 +96,7 @@ export default function ParameterControls({
               </div>
             )}
           </>
+
         )}
       </div>
       {Object.entries(params).map(([key, value]) => {
@@ -201,4 +206,5 @@ ParameterControls.propTypes = {
   city: PropTypes.string.isRequired,
   setCity: PropTypes.func.isRequired,
   rain: PropTypes.number
+
 };

@@ -15,6 +15,7 @@ import {
   importaParametri,
 } from "./utils/storage";
 import Help from "./Help";
+import Normativa from "./Normativa";
 import Toast from "./Toast";
 import ParameterControls from "./components/ParameterControls";
 import Graphs from "./components/Graphs";
@@ -72,8 +73,10 @@ export default function App() {
   const [rangeMax, setRangeMax] = useState(3);
   const [evolutionData, setEvolutionData] = useState([]);
   const [dataSource, setDataSource] = useState('manual');
+
   const [apiKey, setApiKey] = useState(() => import.meta.env.VITE_OPENWEATHER_KEY || '');
   const [apiKeyValid, setApiKeyValid] = useState(false);
+
   const [city, setCity] = useState('');
   const [rain, setRain] = useState(null);
 
@@ -111,7 +114,7 @@ export default function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
+
     if (dataSource === 'openweather' && apiKey) {
       fetchRain('Rome', apiKey)
         .then(() => setApiKeyValid(true))
@@ -127,6 +130,7 @@ export default function App() {
   useEffect(() => {
     if (dataSource === 'openweather' && apiKeyValid && city) {
       fetchRain(city, apiKey)
+
         .then((r) => {
           setRain(r);
           setParams((p) => ({ ...p, Q: r, Q1: r * 0.6 }));
@@ -134,6 +138,7 @@ export default function App() {
         .catch(() => addToast('Errore caricamento dati meteo'));
     }
   }, [dataSource, apiKeyValid, city, apiKey, addToast]);
+
 
 
   const R1 = useMemo(() => calcR1(params.v, params.v0), [params]);
@@ -431,6 +436,7 @@ export default function App() {
             apiKey={apiKey}
             setApiKey={setApiKey}
             apiKeyValid={apiKeyValid}
+
             city={city}
             setCity={setCity}
             rain={rain}
@@ -464,6 +470,7 @@ export default function App() {
           />
         )}
         {activePage === 'help' && <Help />}
+        {activePage === 'normativa' && <Normativa />}
 
       </div>
       </div>

@@ -4,7 +4,7 @@ Questo è un progetto React che consente di calcolare e visualizzare l'efficienz
 Un file Excel di esempio è disponibile nella cartella `excel`.
 Nella directory `public/templates` sono presenti i modelli **CSV**, **Excel** e **JSON** da compilare per caricare i parametri nell'applicazione.
 
-Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o la sezione **Help** dell'applicazione.
+Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o la sezione **Help** dell'applicazione. È presente inoltre un menu **Normativa** con i collegamenti alle principali norme UNI, EN e ISO di settore.
 
 ## Funzionalità
 
@@ -36,10 +36,12 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Opzionalmente è possibile scegliere "OpenWeatherMap" come origine dei dati e
   caricare automaticamente l'intensità di pioggia per una città, con
   aggiornamento dei grafici in tempo reale.
+
   L'API key di OpenWeatherMap va inserita in un apposito campo password
   dell'interfaccia. Tenendo premuta l'icona a forma di occhio si può
   visualizzare temporaneamente la chiave per verificarne la correttezza. Solo
   dopo la convalida della key è possibile specificare la città.
+
 
 ## Avvio locale
 
