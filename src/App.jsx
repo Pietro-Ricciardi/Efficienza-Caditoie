@@ -141,6 +141,7 @@ export default function App() {
     pie: true,
     line: true,
     evolution: true,
+    evolutionTable: true,
     results: true,
   });
   const [widgetOrder, setWidgetOrder] = useState([
@@ -150,6 +151,7 @@ export default function App() {
     'pie',
     'line',
     'evolution',
+    'evolutionTable',
   ]);
   const [dragging, setDragging] = useState(null);
   const [appearanceOpen, setAppearanceOpen] = useState(false);
