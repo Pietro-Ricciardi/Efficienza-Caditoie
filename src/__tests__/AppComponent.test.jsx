@@ -12,7 +12,7 @@ describe('App component calculations', () => {
 
   test('shows line chart toggle', () => {
     render(<App />);
-    expect(screen.getByLabelText('Grafico a linee')).toBeInTheDocument();
+    expect(screen.getByText(/Grafico a linee/)).toBeInTheDocument();
   });
 
   test('widget toggle button exists', () => {

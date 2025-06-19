@@ -140,6 +140,7 @@ export default function App() {
     line: true,
     evolution: true,
   });
+  const [appearanceOpen, setAppearanceOpen] = useState(true);
 
   const toggleChart = (chart) =>
     setVisibleCharts((c) => ({ ...c, [chart]: !c[chart] }));
@@ -249,10 +250,10 @@ export default function App() {
     activePage === 'graphs'
       ? [
           { key: 'parameters', label: 'Parametri' },
-          { key: 'graphs', label: 'Grafici' },
+          { key: 'graphs', label: 'Aspetto' },
         ]
       : [
-          { key: 'graphs', label: 'Grafici' },
+          { key: 'graphs', label: 'Aspetto' },
           { key: 'parameters', label: 'Parametri' },
         ];
 
@@ -286,53 +287,54 @@ export default function App() {
             item.key === "graphs" ? (
               <div key="graphs" className="graphs-menu">
                 <button
-                  className="px-4 py-2 text-left hover:bg-gray-100 w-full"
-                  onClick={() => setActivePage('graphs')}
+                  className="px-4 py-2 text-left hover:bg-gray-100 w-full flex justify-between"
+                  onClick={() => {
+                    setActivePage('graphs');
+                    setAppearanceOpen((o) => !o);
+                  }}
                 >
                   {item.label}
+                  <span>{appearanceOpen ? '▲' : '▼'}</span>
                 </button>
-                <div className="submenu ml-4 mt-1 space-y-1">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={visibleCharts.radar}
-                      onChange={() => toggleChart('radar')}
-                    />
-                    Grafico radar
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={visibleCharts.bar}
-                      onChange={() => toggleChart('bar')}
-                    />
-                    Grafico a barre
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={visibleCharts.pie}
-                      onChange={() => toggleChart('pie')}
-                    />
-                    Grafico a torta
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={visibleCharts.line}
-                      onChange={() => toggleChart('line')}
-                    />
-                    Grafico a linee
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={visibleCharts.evolution}
-                      onChange={() => toggleChart('evolution')}
-                    />
-                    Grafico evolutivo
-                  </label>
-                </div>
+                {appearanceOpen && (
+                  <div className="submenu ml-4 mt-1 space-y-1">
+                    <button
+                      className="submenu-item w-full text-left flex items-center"
+                      onClick={() => toggleChart('radar')}
+                    >
+                      <span className="w-4">{visibleCharts.radar ? '✓' : ''}</span>
+                      Grafico radar
+                    </button>
+                    <button
+                      className="submenu-item w-full text-left flex items-center"
+                      onClick={() => toggleChart('bar')}
+                    >
+                      <span className="w-4">{visibleCharts.bar ? '✓' : ''}</span>
+                      Grafico a barre
+                    </button>
+                    <button
+                      className="submenu-item w-full text-left flex items-center"
+                      onClick={() => toggleChart('pie')}
+                    >
+                      <span className="w-4">{visibleCharts.pie ? '✓' : ''}</span>
+                      Grafico a torta
+                    </button>
+                    <button
+                      className="submenu-item w-full text-left flex items-center"
+                      onClick={() => toggleChart('line')}
+                    >
+                      <span className="w-4">{visibleCharts.line ? '✓' : ''}</span>
+                      Grafico a linee
+                    </button>
+                    <button
+                      className="submenu-item w-full text-left flex items-center"
+                      onClick={() => toggleChart('evolution')}
+                    >
+                      <span className="w-4">{visibleCharts.evolution ? '✓' : ''}</span>
+                      Grafico evolutivo
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <button
