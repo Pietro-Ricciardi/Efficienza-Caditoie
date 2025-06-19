@@ -332,6 +332,27 @@ export default function App() {
         <div className="theme-toggle" onClick={toggleDarkMode}>
           {isDarkMode ? '☀️' : '🌙'}
         </div>
+
+        <div className="export-buttons">
+          <button onClick={downloadCSV}>Esporta CSV</button>
+          <button onClick={downloadExcel}>Esporta Excel</button>
+          <button onClick={salvaParametriStorage}>Salva parametri</button>
+          <button onClick={caricaParametriStorage}>Carica parametri</button>
+          <button onClick={esportaJSON}>Esporta JSON</button>
+          <input
+            type="file"
+            accept="application/json"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={importaJSON}
+          />
+          <button onClick={() => fileInputRef.current.click()}>Importa JSON</button>
+          <button onClick={() => downloadImage(radarRef, 'radar.png')}>Salva radar</button>
+          <button onClick={() => downloadImage(barRef, 'barre.png')}>Salva barre</button>
+          <button onClick={() => downloadImage(pieRef, 'torta.png')}>Salva torta</button>
+          <button onClick={() => downloadImage(lineRef, 'linee.png')}>Salva linee</button>
+          <button onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>Salva evolutivo</button>
+        </div>
       </div>
       <div className="rightPane">
         {activePage === 'help' && <Help />}
@@ -409,20 +430,6 @@ export default function App() {
                 Max:
                 <input type="number" value={rangeMax} onChange={(e) => setRangeMax(parseFloat(e.target.value))} />
               </label>
-            </div>
-            <div className="export-buttons">
-              <button onClick={downloadCSV}>Esporta CSV</button>
-              <button onClick={downloadExcel}>Esporta Excel</button>
-              <button onClick={salvaParametriStorage}>Salva parametri</button>
-              <button onClick={caricaParametriStorage}>Carica parametri</button>
-              <button onClick={esportaJSON}>Esporta JSON</button>
-              <input type="file" accept="application/json" ref={fileInputRef} style={{ display: 'none' }} onChange={importaJSON} />
-              <button onClick={() => fileInputRef.current.click()}>Importa JSON</button>
-              <button onClick={() => downloadImage(radarRef, 'radar.png')}>Salva radar</button>
-              <button onClick={() => downloadImage(barRef, 'barre.png')}>Salva barre</button>
-              <button onClick={() => downloadImage(pieRef, 'torta.png')}>Salva torta</button>
-              <button onClick={() => downloadImage(lineRef, 'linee.png')}>Salva linee</button>
-              <button onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>Salva evolutivo</button>
             </div>
             <div className="chart-box">
               <div className="formula-list">
