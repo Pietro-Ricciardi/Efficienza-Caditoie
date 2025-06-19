@@ -130,19 +130,12 @@ export default function App() {
     setVisibleCharts((c) => ({ ...c, [chart]: !c[chart] }));
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setLineData((d) => [
-        ...d.slice(-9),
-        {
-          time: new Date().toLocaleTimeString().split(" ")[0],
-          R1,
-          R2,
-          E,
-          E_formula,
-        },
-      ]);
-    }, 1000);
-    return () => clearInterval(id);
+    setLineData([
+      { label: "R1", value: R1 },
+      { label: "R2", value: R2 },
+      { label: "E", value: E },
+      { label: "E_formula", value: E_formula },
+    ]);
   }, [E, R1, R2, E_formula]);
 
   return (
@@ -309,14 +302,12 @@ export default function App() {
               <h3>Andamento efficienza</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={lineData}>
-                  <XAxis dataKey="time" />
+                  <XAxis dataKey="label" />
                   <YAxis domain={[0, 1]} />
                   <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="R1" stroke="#82ca9d" />
-                  <Line type="monotone" dataKey="R2" stroke="#8884d8" />
-                  <Line type="monotone" dataKey="E" stroke="#ffc658" />
-                  <Line type="monotone" dataKey="E_formula" stroke="#ff7300" />
+                  <Line type="monotone" dataKey="value" stroke="#8884d8">
+                    <LabelList dataKey="value" position="top" formatter={(v) => v.toFixed(2)} />
+                  </Line>
 
                 </LineChart>
               </ResponsiveContainer>
