@@ -4,7 +4,7 @@ Questo è un progetto React che consente di calcolare e visualizzare l'efficienz
 Un file Excel di esempio è disponibile nella cartella `excel`.
 Nella directory `public/templates` sono presenti i modelli **CSV**, **Excel** e **JSON** da compilare per caricare i parametri nell'applicazione.
 
-Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o la sezione **Help** dell'applicazione.
+Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o la sezione **Help** dell'applicazione. È presente inoltre un menu **Normativa** con i collegamenti alle principali norme UNI, EN e ISO di settore.
 
 ## Funzionalità
 

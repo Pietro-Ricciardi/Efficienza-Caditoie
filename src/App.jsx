@@ -15,6 +15,7 @@ import {
   importaParametri,
 } from "./utils/storage";
 import Help from "./Help";
+import Normativa from "./Normativa";
 import Toast from "./Toast";
 import ParameterControls from "./components/ParameterControls";
 import Graphs from "./components/Graphs";
@@ -447,6 +448,7 @@ export default function App() {
           />
         )}
         {activePage === 'help' && <Help />}
+        {activePage === 'normativa' && <Normativa />}
 
       </div>
       </div>

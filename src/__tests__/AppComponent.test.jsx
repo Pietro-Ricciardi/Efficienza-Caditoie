@@ -38,4 +38,10 @@ describe('App component calculations', () => {
     expect(screen.getByText('Salva parametri')).toBeInTheDocument();
   });
 
+  test('normativa page is reachable', () => {
+    render(<App />);
+    fireEvent.click(screen.getByText('Normativa'));
+    expect(screen.getByText('Norme Europee (EN)')).toBeInTheDocument();
+  });
+
 });

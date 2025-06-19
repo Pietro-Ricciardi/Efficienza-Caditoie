@@ -57,6 +57,13 @@ export default function Sidebar({
           Help
         </button>
 
+        <button
+          className="px-4 py-2 text-left hover:bg-gray-100 w-full"
+          onClick={() => setActivePage('normativa')}
+        >
+          Normativa
+        </button>
+
         <div className="graphs-menu">
           <button
             className="px-4 py-2 text-left hover:bg-gray-100 w-full flex justify-between"
