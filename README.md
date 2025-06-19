@@ -17,10 +17,11 @@ Un file Excel di esempio è disponibile nella cartella `excel`.
 - Calcolo automatico di:
   - Efficienza R1
   - Efficienza R2
-  - Efficienza Totale
-  - Efficienza da formula combinata
+- Efficienza Totale
+- Efficienza da formula combinata
 
 - Visualizzazione su **grafico radar** dinamico.
+- Grafico evolutivo per Q o v su intervalli definiti.
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
 

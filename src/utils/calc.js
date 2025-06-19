@@ -14,3 +14,15 @@ export function calcTotalEfficiency(params) {
   const Q2_star = Q2 * R2;
   return (Q1_star + Q2_star) / params.Q;
 }
+
+export function generateEfficiencySeries(params, variable, min, max, steps = 10) {
+  const results = [];
+  const count = Math.max(2, steps);
+  const delta = (max - min) / (count - 1);
+  for (let i = 0; i < count; i++) {
+    const value = min + delta * i;
+    const newParams = { ...params, [variable]: value };
+    results.push({ [variable]: value, efficiency: calcTotalEfficiency(newParams) });
+  }
+  return results;
+}
