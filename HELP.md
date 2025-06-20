@@ -6,7 +6,7 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 
 - Usa gli slider nella pagina **Parametri** per impostare i valori di input.
 - Passa alla pagina **Simulazione** per vedere i grafici.
-- Ogni grafico è contenuto in un *widget* che puoi:
+- Ogni grafico è contenuto in un _widget_ che puoi:
   - ridimensionare trascinando l'angolo in basso a destra;
   - trascinare per modificare l'ordine dei grafici;
   - minimizzare o espandere con il pulsante `➖`/`➕` nella barra del widget.
@@ -31,20 +31,20 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 
 ## Formule utilizzate
 
-- R1 = 1 - 0.3 (v - v0) → efficienza legata alla velocità del flusso.
-- R2 = 1 / (1 + (0.083 × v¹·⁸) / (j × L²⁄³)) → efficienza influenzata da pendenza e lunghezza della griglia.
-- Q1* = Q1 × R1 → portata intercettata dal tratto a monte.
-- Q2 = Q - Q1 → portata che non raggiunge direttamente la caditoia.
-- Q2* = Q2 × R2 → porzione intercettata di Q2.
-- E = (Q1* + Q2*) / Q → efficienza idraulica totale.
-- E formula = R1 × E0 + R2 × (1 - E0) → stima alternativa basata su E0.
-- θ = τ / ((ρ_s - ρ) g d) → parametro di Shields.
-- τ_c = θ_c (ρ_s - ρ) g d → tensione di inizio moto.
-- q_s^MPM = 8 √[g (s - 1) d³] (θ - θ_c)^{3/2} → bed-load Meyer‑Peter & Müller.
-- q_s^E = 0.4 √[g (s - 1) d³] (θ - θ_c)^{5/2} → bed-load Einstein.
-- P = w_s / (κ u_*) → esponente di Rouse.
-- C(z) = C_a [(h - z)/z · z_a/(h - z_a)]^P → profilo di concentrazione.
-- Q_s = 0.5 (0.05 θ^{2.5} + 0.016 θ^{2.1}) √[g (s - 1) d³] → carico totale.
+- \(R_1 = 1 - 0.3\,(v - v_0)\) → efficienza legata alla velocità del flusso.
+- \(R_2 = \frac{1}{1 + \frac{0.083\, v^{1.8}}{j\, L^{2/3}}}\) → efficienza influenzata da pendenza e lunghezza della griglia.
+- \(Q_1^\* = Q_1\, R_1\) → portata intercettata dal tratto a monte.
+- \(Q_2 = Q - Q_1\) → portata che non raggiunge direttamente la caditoia.
+- \(Q_2^\* = Q_2\, R_2\) → porzione intercettata di Q2.
+- \(E = \frac{Q_1^_ + Q_2^_}{Q}\) → efficienza idraulica totale.
+- \(E\_{\text{formula}} = R_1\, E_0 + R_2\,(1 - E_0)\) → stima alternativa basata su E0.
+- \(\theta = \frac{\tau}{(\rho_s - \rho)\, g\, d}\) → parametro di Shields.
+- \(\tau_c = \theta_c(\rho_s - \rho) g d\) → tensione di inizio moto.
+- \(q_s^{MPM} = 8\,\sqrt{g(s - 1) d^3}(\theta - \theta_c)^{3/2}\) → bed-load Meyer‑Peter & Müller.
+- \(q_s^{E} = 0.4\,\sqrt{g(s - 1) d^3}(\theta - \theta_c)^{5/2}\) → bed-load Einstein.
+- \(P = \frac{w*s}{\kappa u*\*}\) → esponente di Rouse.
+- \(C(z) = C_a \left[\frac{h - z}{z} \cdot \frac{z_a}{h - z_a}\right]^P\) → profilo di concentrazione.
+- \(Q_s = 0.5 (0.05\,\theta^{2.5} + 0.016\theta^{2.1}) \sqrt{g (s - 1) d^3}\) → carico totale.
 
 La pagina **Risultati** e i grafici mostrano i valori calcolati con queste formule.
 
