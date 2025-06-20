@@ -155,9 +155,17 @@ export default function ParameterControls({
         {renderSlider('Q')}
         {renderSlider('Q1')}
       </Widget>
-      {Object.keys(params)
-        .filter((k) => k !== 'Q' && k !== 'Q1')
-        .map((k) => renderSlider(k))}
+
+      {['v', 'v0'].map((k) => renderSlider(k))}
+
+      <Widget id="pendenza" title="Pendenza">
+        {renderSlider('j')}
+      </Widget>
+
+      <Widget id="geometrie" title="Geometrie">
+        {renderSlider('L')}
+        {renderSlider('E0')}
+      </Widget>
 
       <div className="range-selector">
         <label>
