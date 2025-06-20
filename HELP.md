@@ -16,4 +16,26 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - Nella sezione **Modelli** puoi scaricare i file di esempio (CSV, Excel e JSON) da compilare e importare nell'app.
 - Usa il pulsante nella parte alta destra della sidebar per aprirla o chiuderla.
 
+## Parametri
+
+- **Q** – Portata totale del deflusso (l/s).
+- **Q1** – Porzione di Q che raggiunge direttamente la caditoia (l/s).
+- **v** – Velocità del flusso all'ingresso (m/s).
+- **v0** – Velocità di riferimento per il calcolo di R1 (m/s).
+- **j** – Pendenza longitudinale della strada.
+- **L** – Lunghezza della griglia di caduta (m).
+- **E0** – Efficienza geometrica della caditoia.
+
+## Formule utilizzate
+
+- R1 = 1 - 0.3 (v - v0) → efficienza legata alla velocità del flusso.
+- R2 = 1 / (1 + (0.083 × v¹·⁸) / (j × L²⁄³)) → efficienza influenzata da pendenza e lunghezza della griglia.
+- Q1* = Q1 × R1 → portata intercettata dal tratto a monte.
+- Q2 = Q - Q1 → portata che non raggiunge direttamente la caditoia.
+- Q2* = Q2 × R2 → porzione intercettata di Q2.
+- E = (Q1* + Q2*) / Q → efficienza idraulica totale.
+- E formula = R1 × E0 + R2 × (1 - E0) → stima alternativa basata su E0.
+
+La pagina **Risultati** e i grafici mostrano i valori calcolati con queste formule.
+
 Per ulteriori dettagli consulta il file `README.md`.
