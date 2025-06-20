@@ -22,6 +22,7 @@ import {
 import Widget from '../Widget';
 import EvolutionTable from './EvolutionTable';
 import SedimentGraphs from './SedimentGraphs';
+import DryAccumulation from './DryAccumulation';
 import Formula from '../Formula';
 
 function Graphs({
@@ -44,6 +45,10 @@ function Graphs({
   widgetOrder,
   handleDragStart,
   handleDrop,
+  dryDays,
+  setDryDays,
+  zoneType,
+  setZoneType,
   radarRef,
   barRef,
   pieRef,
@@ -241,7 +246,15 @@ function Graphs({
         <EvolutionTable evolutionData={evolutionData} rangeVar={rangeVar} />
       </Widget>
     ),
-    sediments: <SedimentGraphs params={params} sedimentData={sedimentData} />
+    sediments: <SedimentGraphs params={params} sedimentData={sedimentData} />,
+    accumulation: (
+      <DryAccumulation
+        days={dryDays}
+        setDays={setDryDays}
+        zone={zoneType}
+        setZone={setZoneType}
+      />
+    )
   };
 
   return (
@@ -269,6 +282,10 @@ Graphs.propTypes = {
   widgetOrder: PropTypes.array.isRequired,
   handleDragStart: PropTypes.func.isRequired,
   handleDrop: PropTypes.func.isRequired,
+  dryDays: PropTypes.number.isRequired,
+  setDryDays: PropTypes.func.isRequired,
+  zoneType: PropTypes.string.isRequired,
+  setZoneType: PropTypes.func.isRequired,
   radarRef: PropTypes.object,
   barRef: PropTypes.object,
   pieRef: PropTypes.object,

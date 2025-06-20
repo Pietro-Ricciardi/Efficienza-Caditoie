@@ -182,6 +182,8 @@ export default function App() {
     totalLoad: 0,
     rouseP: 0,
   });
+  const [dryDays, setDryDays] = useState(0);
+  const [zoneType, setZoneType] = useState('residenziale');
   const [visibleCharts, setVisibleCharts] = useState({
     radar: true,
     bar: true,
@@ -191,6 +193,7 @@ export default function App() {
     evolutionTable: true,
     results: true,
     sediments: true,
+    accumulation: true,
   });
   const [widgetOrder, setWidgetOrder] = useState([
     'results',
@@ -201,6 +204,7 @@ export default function App() {
     'evolution',
     'evolutionTable',
     'sediments',
+    'accumulation',
   ]);
   const [dragging, setDragging] = useState(null);
   const [appearanceOpen, setAppearanceOpen] = useState(false);
@@ -478,6 +482,10 @@ export default function App() {
             widgetOrder={widgetOrder}
             handleDragStart={handleDragStart}
             handleDrop={handleDrop}
+            dryDays={dryDays}
+            setDryDays={setDryDays}
+            zoneType={zoneType}
+            setZoneType={setZoneType}
             radarRef={radarRef}
             barRef={barRef}
             pieRef={pieRef}
