@@ -21,6 +21,14 @@ import ParameterControls from "./components/ParameterControls";
 import Graphs from "./components/Graphs";
 import Sidebar from "./components/Sidebar";
 import { fetchRain, verifyApiKey } from "./utils/weather";
+import {
+  shieldsParameter,
+  criticalShearStress,
+  meyerPeterMuller,
+  einsteinBedload,
+  rouseExponent,
+  totalLoadEHVR,
+} from "./lib/sediment";
 
 export default function App() {
   const [params, setParams] = useState({
@@ -168,6 +176,15 @@ export default function App() {
   ];
 
   const [lineData, setLineData] = useState([]);
+  const [sedimentData, setSedimentData] = useState({
+    tau: 0,
+    theta: 0,
+    tauC: 0,
+    bedloadMPM: 0,
+    bedloadEinstein: 0,
+    totalLoad: 0,
+    rouseP: 0,
+  });
   const [visibleCharts, setVisibleCharts] = useState({
     radar: true,
     bar: true,
@@ -220,6 +237,31 @@ export default function App() {
       generateEfficiencySeries(params, rangeVar, rangeMin, rangeMax, 5)
     );
   }, [params, rangeVar, rangeMin, rangeMax]);
+
+  useEffect(() => {
+    const rho = 1000; // densità dell'acqua [kg/m^3]
+    const g = 9.81;
+    const tau = rho * g * params.h * params.j;
+    const theta = shieldsParameter(tau, params.rhoS, rho, params.d50);
+    const thetaC = 0.047;
+    const tauC = criticalShearStress(thetaC, params.rhoS, rho, params.d50);
+    const s = params.rhoS / rho;
+    const bedloadMPM = meyerPeterMuller(theta, thetaC, params.d50, s);
+    const bedloadEinstein = einsteinBedload(theta, thetaC, params.d50, s);
+    const totalLoad = totalLoadEHVR(theta, params.d50, s);
+    const uStar = Math.sqrt(tau / rho);
+    const ws = Math.sqrt(((params.rhoS - rho) / rho) * g * params.d50);
+    const rouseP = rouseExponent(ws, uStar);
+    setSedimentData({
+      tau,
+      theta,
+      tauC,
+      bedloadMPM,
+      bedloadEinstein,
+      totalLoad,
+      rouseP,
+    });
+  }, [params]);
 
   const downloadCSV = () => {
     const rows = [
@@ -453,6 +495,7 @@ export default function App() {
             barData={barData}
             pieData={pieData}
             lineData={lineData}
+            sedimentData={sedimentData}
             evolutionData={evolutionData}
             rangeVar={rangeVar}
             visibleCharts={visibleCharts}
