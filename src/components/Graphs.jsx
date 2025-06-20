@@ -49,6 +49,7 @@ function Graphs({
   setDryDays,
   zoneType,
   setZoneType,
+  zoneParams,
   radarRef,
   barRef,
   pieRef,
@@ -253,6 +254,7 @@ function Graphs({
         setDays={setDryDays}
         zone={zoneType}
         setZone={setZoneType}
+        zoneParams={zoneParams}
       />
     )
   };
@@ -286,6 +288,7 @@ Graphs.propTypes = {
   setDryDays: PropTypes.func.isRequired,
   zoneType: PropTypes.string.isRequired,
   setZoneType: PropTypes.func.isRequired,
+  zoneParams: PropTypes.object.isRequired,
   radarRef: PropTypes.object,
   barRef: PropTypes.object,
   pieRef: PropTypes.object,

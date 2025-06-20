@@ -19,6 +19,13 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
   - Granulometria media (d50)
   - Densità dei sedimenti (rhoS)
   - Profondità idraulica (h)
+  - Parametri di accumulo secco per zona (k e Lmax)
+
+    | Ambiente urbano | k tipico (kg/ha/giorno) | Lmax (kg/ha) |
+    | --------------- | ----------------------- | ------------ |
+    | Residenziale    | 0.2 – 0.5               | 3 – 5        |
+    | Commerciale     | 0.5 – 1.0               | 5 – 10       |
+    | Industriale     | 1.0 – 2.0               | 10 – 20      |
 
 - Calcolo automatico di:
   - Efficienza R1

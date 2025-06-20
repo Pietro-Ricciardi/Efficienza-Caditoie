@@ -7,8 +7,14 @@ import {
   getZoneDefaults
 } from '../utils/accumulation';
 
-export default function DryAccumulation({ days, setDays, zone, setZone }) {
-  const defaults = getZoneDefaults(zone);
+export default function DryAccumulation({
+  days,
+  setDays,
+  zone,
+  setZone,
+  zoneParams
+}) {
+  const defaults = getZoneDefaults(zone, zoneParams);
   const linear = linearAccumulation(days, defaults.k);
   const saturating = saturatingAccumulation(days, defaults.k, defaults.Lmax);
 
@@ -45,5 +51,6 @@ DryAccumulation.propTypes = {
   days: PropTypes.number.isRequired,
   setDays: PropTypes.func.isRequired,
   zone: PropTypes.string.isRequired,
-  setZone: PropTypes.func.isRequired
+  setZone: PropTypes.func.isRequired,
+  zoneParams: PropTypes.object
 };

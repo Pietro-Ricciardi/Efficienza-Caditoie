@@ -47,7 +47,9 @@ function ParameterControls({
   setApiKey,
   apiVerified,
   verifyKey,
-  rain
+  rain,
+  zoneParams,
+  setZoneParams
 }) {
   const [showKey, setShowKey] = useState(false);
 
@@ -205,6 +207,51 @@ function ParameterControls({
           </label>
         </div>
       </Widget>
+
+      <Widget id="zoneParams" title="Parametri zona">
+        <table className="zone-table">
+          <thead>
+            <tr>
+              <th>Zona</th>
+              <th>k (kg/ha/giorno)</th>
+              <th>Lmax (kg/ha)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(zoneParams).map(([z, vals]) => (
+              <tr key={z}>
+                <td>{z}</td>
+                <td>
+                  <input
+                    type="number"
+                    value={vals.k}
+                    step="0.01"
+                    onChange={(e) =>
+                      setZoneParams((p) => ({
+                        ...p,
+                        [z]: { ...p[z], k: parseFloat(e.target.value) }
+                      }))
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={vals.Lmax}
+                    step="0.1"
+                    onChange={(e) =>
+                      setZoneParams((p) => ({
+                        ...p,
+                        [z]: { ...p[z], Lmax: parseFloat(e.target.value) }
+                      }))
+                    }
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Widget>
     </>
   );
 }
@@ -239,7 +286,9 @@ ParameterControls.propTypes = {
   setApiKey: PropTypes.func.isRequired,
   apiVerified: PropTypes.bool.isRequired,
   verifyKey: PropTypes.func.isRequired,
-  rain: PropTypes.number
+  rain: PropTypes.number,
+  zoneParams: PropTypes.object.isRequired,
+  setZoneParams: PropTypes.func.isRequired
 };
 
 export default React.memo(ParameterControls);
