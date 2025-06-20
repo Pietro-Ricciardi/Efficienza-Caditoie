@@ -31,6 +31,7 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - **d50** – Granulometria media (m).
 - **rhoS** – Densità dei sedimenti (kg/m^3).
 - **h** – Profondità idraulica (m).
+- **k** e **Lmax** – Parametri di accumulo secco per zona, raccolti in un widget largo due colonne.
 
 ## Formule utilizzate
 
@@ -45,7 +46,7 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - \(\tau_c = \theta_c(\rho_s - \rho) g d\) → tensione di inizio moto.
 - \(q_s^{MPM} = 8\,\sqrt{g(s - 1) d^3}(\theta - \theta_c)^{3/2}\) → bed-load Meyer‑Peter & Müller.
 - \(q_s^{E} = 0.4\,\sqrt{g(s - 1) d^3}(\theta - \theta_c)^{5/2}\) → bed-load Einstein.
-- \(P = \frac{w_s}{\kappa u_*}\) → esponente di Rouse.
+- \(P = \frac{w*s}{\kappa u*\*}\) → esponente di Rouse.
 - \(C(z) = C_a \left[\frac{h - z}{z} \cdot \frac{z_a}{h - z_a}\right]^P\) → profilo di concentrazione.
 - \(Q_s = 0.5 (0.05\,\theta^{2.5} + 0.016\theta^{2.1}) \sqrt{g (s - 1) d^3}\) → carico totale.
 

@@ -320,3 +320,7 @@ body.dark-mode {
   padding: 4px;
   text-align: center;
 }
+
+#zoneParams {
+  grid-column: span 2;
+}

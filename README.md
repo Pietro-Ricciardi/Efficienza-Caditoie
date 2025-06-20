@@ -19,7 +19,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
   - Granulometria media (d50)
   - Densità dei sedimenti (rhoS)
   - Profondità idraulica (h)
-  - Parametri di accumulo secco per zona (k e Lmax)
+  - Parametri di accumulo secco per zona (k e Lmax) – mostrati in un widget a larghezza doppia
 
     | Ambiente urbano | k tipico (kg/ha/giorno) | Lmax (kg/ha) |
     | --------------- | ----------------------- | ------------ |
@@ -42,6 +42,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
 - Widget grafici minimizzabili, spostabili e ridimensionabili.
+- Il widget **Parametri zona** occupa ora due colonne per una compilazione più agevole.
 - Esportazione dei dati e dei grafici in **CSV**, **Excel** e come immagini.
 - Salvataggio e caricamento dei parametri in locale o tramite file JSON.
 - Download dei modelli **CSV**, **Excel** e **JSON** per l'import dei parametri.
@@ -59,21 +60,25 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 ## Avvio locale
 
 1. Installa le dipendenze:
+
    ```bash
    npm install
    ```
 
 2. Avvia il progetto:
+
    ```bash
    npm run dev
    ```
 
 3. (Opzionale) Verifica lo stile del codice:
+
    ```bash
    npm run lint
    ```
 
 4. (Opzionale) Applica la formattazione:
+
    ```bash
    npm run format
    ```
@@ -81,6 +86,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 5. Apri il browser su `http://localhost:5173`
 
 6. (Opzionale) Esegui i test:
+
    ```bash
    npm test
    ```
@@ -93,6 +99,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 ## Deploy (consigliato: Vercel)
 
 1. Inizializza il repository Git:
+
    ```bash
    git init
    git add .
@@ -100,6 +107,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
    ```
 
 2. Crea un repository su [GitHub](https://github.com) e collegalo:
+
    ```bash
    git remote add origin https://github.com/tuo-username/efficienza-caditoie.git
    git push -u origin main
