@@ -15,6 +15,19 @@ const paramInfo = {
   h: 'Profondità idraulica (m).'
 };
 
+const sliderConfig = {
+  Q: { min: 0, max: 1000, step: 0.1 },
+  Q1: { min: 0, max: 1000, step: 0.1 },
+  v: { min: 0, max: 10, step: 0.01 },
+  v0: { min: 0, max: 10, step: 0.01 },
+  j: { min: 0, max: 0.2, step: 0.001 },
+  L: { min: 0, max: 5, step: 0.01 },
+  E0: { min: 0, max: 1, step: 0.01 },
+  d50: { min: 0, max: 0.1, step: 0.001 },
+  rhoS: { min: 0, max: 4000, step: 1 },
+  h: { min: 0, max: 10, step: 0.01 }
+};
+
 export default function ParameterControls({
   params,
   infoParam,
@@ -40,37 +53,8 @@ export default function ParameterControls({
 
   const renderSlider = (key) => {
     const value = params[key];
-    const min = 0;
-    const max =
-      key === 'E0'
-        ? 1
-        : key === 'v' || key === 'v0'
-          ? 10
-          : key === 'j'
-            ? 0.2
-            : key === 'L'
-              ? 5
-              : key === 'd50'
-                ? 0.1
-                : key === 'rhoS'
-                  ? 4000
-                  : key === 'h'
-                    ? 10
-                    : 1000;
-    const step =
-      key === 'E0' || key === 'L'
-        ? 0.01
-        : key === 'v' || key === 'v0'
-          ? 0.01
-          : key === 'j'
-            ? 0.001
-            : key === 'd50'
-              ? 0.001
-              : key === 'rhoS'
-                ? 1
-                : key === 'h'
-                  ? 0.01
-                  : 0.1;
+    const config = sliderConfig[key] || { min: 0, max: 1000, step: 0.1 };
+    const { min, max, step } = config;
     return (
       <div key={key} className="slider-container">
         <label className="slider-label">
