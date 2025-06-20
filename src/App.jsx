@@ -31,6 +31,9 @@ export default function App() {
     j: 0.01,
     L: 0.5,
     E0: 0.7,
+    d50: 0.002,
+    rhoS: 2650,
+    h: 1.0,
   });
 
   const [toasts, setToasts] = useState([]);

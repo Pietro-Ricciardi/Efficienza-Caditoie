@@ -25,6 +25,9 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - **j** – Pendenza longitudinale della strada.
 - **L** – Lunghezza della griglia di caduta (m).
 - **E0** – Efficienza geometrica della caditoia.
+- **d50** – Granulometria media (m).
+- **rhoS** – Densità dei sedimenti (kg/m^3).
+- **h** – Profondità idraulica (m).
 
 ## Formule utilizzate
 

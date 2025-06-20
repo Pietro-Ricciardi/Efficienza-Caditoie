@@ -16,6 +16,9 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
   - Pendenza longitudinale (j)
   - Lunghezza della griglia (L)
   - Efficienza geometrica (E0)
+  - Granulometria media (d50)
+  - Densità dei sedimenti (rhoS)
+  - Profondità idraulica (h)
 
 - Calcolo automatico di:
   - Efficienza R1

@@ -9,7 +9,10 @@ const paramInfo = {
   v0: 'Velocità di riferimento per il calcolo di R1 (m/s).',
   j: 'Pendenza longitudinale della strada.',
   L: 'Lunghezza della griglia di caduta (m).',
-  E0: 'Efficienza geometrica della caditoia.'
+  E0: 'Efficienza geometrica della caditoia.',
+  d50: 'Granulometria media (m).',
+  rhoS: 'Densità dei sedimenti (kg/m^3).',
+  h: 'Profondità idraulica (m).'
 };
 
 export default function ParameterControls({
@@ -47,7 +50,13 @@ export default function ParameterControls({
             ? 0.2
             : key === 'L'
               ? 5
-              : 1000;
+              : key === 'd50'
+                ? 0.1
+                : key === 'rhoS'
+                  ? 4000
+                  : key === 'h'
+                    ? 10
+                    : 1000;
     const step =
       key === 'E0' || key === 'L'
         ? 0.01
@@ -55,7 +64,13 @@ export default function ParameterControls({
           ? 0.01
           : key === 'j'
             ? 0.001
-            : 0.1;
+            : key === 'd50'
+              ? 0.001
+              : key === 'rhoS'
+                ? 1
+                : key === 'h'
+                  ? 0.01
+                  : 0.1;
     return (
       <div key={key} className="slider-container">
         <label className="slider-label">
@@ -165,6 +180,12 @@ export default function ParameterControls({
         {renderSlider('j')}
       </Widget>
 
+      <Widget id="sedimenti" title="Sedimenti">
+        {renderSlider('d50')}
+        {renderSlider('rhoS')}
+        {renderSlider('h')}
+      </Widget>
+
       <Widget id="geometrie" title="Geometrie">
         {renderSlider('L')}
         {renderSlider('E0')}
@@ -203,7 +224,18 @@ export default function ParameterControls({
 }
 
 ParameterControls.propTypes = {
-  params: PropTypes.object.isRequired,
+  params: PropTypes.shape({
+    Q: PropTypes.number.isRequired,
+    Q1: PropTypes.number.isRequired,
+    v: PropTypes.number.isRequired,
+    v0: PropTypes.number.isRequired,
+    j: PropTypes.number.isRequired,
+    L: PropTypes.number.isRequired,
+    E0: PropTypes.number.isRequired,
+    d50: PropTypes.number.isRequired,
+    rhoS: PropTypes.number.isRequired,
+    h: PropTypes.number.isRequired
+  }).isRequired,
   infoParam: PropTypes.string,
   toggleInfo: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
