@@ -9,6 +9,7 @@ const Widget = forwardRef(function Widget(
   const [collapsed, setCollapsed] = useState(false);
   return (
     <div
+      id={id}
       className={`chart-box widget${collapsed ? ' collapsed' : ''}`}
       onDrop={(e) => {
         e.preventDefault();
