@@ -21,6 +21,7 @@ import {
 } from 'recharts';
 import Widget from '../Widget';
 import EvolutionTable from './EvolutionTable';
+import SedimentGraphs from './SedimentGraphs';
 
 export default function Graphs({
   R1,
@@ -35,6 +36,7 @@ export default function Graphs({
   pieData,
   lineData,
   sedimentData,
+  params,
   evolutionData,
   rangeVar,
   visibleCharts,
@@ -194,6 +196,7 @@ export default function Graphs({
         <EvolutionTable evolutionData={evolutionData} rangeVar={rangeVar} />
       </Widget>
     ),
+    sediments: <SedimentGraphs params={params} sedimentData={sedimentData} />,
   };
 
   return <>{widgetOrder.map((w) => (visibleCharts[w] ? widgetMap[w] : null))}</>;
@@ -212,6 +215,7 @@ Graphs.propTypes = {
   pieData: PropTypes.array.isRequired,
   lineData: PropTypes.array.isRequired,
   sedimentData: PropTypes.object,
+  params: PropTypes.object.isRequired,
   evolutionData: PropTypes.array.isRequired,
   rangeVar: PropTypes.string.isRequired,
   visibleCharts: PropTypes.object.isRequired,

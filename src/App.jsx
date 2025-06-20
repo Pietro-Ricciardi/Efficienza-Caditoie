@@ -193,6 +193,7 @@ export default function App() {
     evolution: true,
     evolutionTable: true,
     results: true,
+    sediments: true,
   });
   const [widgetOrder, setWidgetOrder] = useState([
     'results',
@@ -202,6 +203,7 @@ export default function App() {
     'line',
     'evolution',
     'evolutionTable',
+    'sediments',
   ]);
   const [dragging, setDragging] = useState(null);
   const [appearanceOpen, setAppearanceOpen] = useState(false);
@@ -496,6 +498,7 @@ export default function App() {
             pieData={pieData}
             lineData={lineData}
             sedimentData={sedimentData}
+            params={params}
             evolutionData={evolutionData}
             rangeVar={rangeVar}
             visibleCharts={visibleCharts}
