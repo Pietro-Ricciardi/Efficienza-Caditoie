@@ -49,6 +49,8 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - \(P = \frac{w*s}{\kappa u*\*}\) → esponente di Rouse.
 - \(C(z) = C_a \left[\frac{h - z}{z} \cdot \frac{z_a}{h - z_a}\right]^P\) → profilo di concentrazione.
 - \(Q_s = 0.5 (0.05\,\theta^{2.5} + 0.016\theta^{2.1}) \sqrt{g (s - 1) d^3}\) → carico totale.
+- \(L(t) = L_0 + k\, t\) → carico lineare di sedimenti.
+- \(L(t) = L_{max} (1 - e^{-k t})\) → carico con saturazione.
 
 La pagina **Risultati** e i grafici mostrano i valori calcolati con queste formule.
 

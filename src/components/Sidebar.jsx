@@ -97,7 +97,13 @@ export default function Sidebar({
                 <span className="w-4">{visibleCharts.evolutionTable ? '✓' : ''}</span>
                 Tabella evolutiva
               </button>
-              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('sediments')}>
+              <button
+                className="submenu-item w-full text-left flex items-center"
+                onClick={() => {
+                  toggleChart('sediments');
+                  toggleChart('accumulation');
+                }}
+              >
                 <span className="w-4">{visibleCharts.sediments ? '✓' : ''}</span>
                 Sedimenti
               </button>
