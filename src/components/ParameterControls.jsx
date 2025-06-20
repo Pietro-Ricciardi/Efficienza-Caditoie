@@ -156,7 +156,10 @@ export default function ParameterControls({
         {renderSlider('Q1')}
       </Widget>
 
-      {['v', 'v0'].map((k) => renderSlider(k))}
+      <Widget id="velocita" title="Velocità">
+        {renderSlider('v')}
+        {renderSlider('v0')}
+      </Widget>
 
       <Widget id="pendenza" title="Pendenza">
         {renderSlider('j')}
