@@ -82,7 +82,6 @@ export default function App() {
   const [rangeVar, setRangeVar] = useState("v");
   const [rangeMin, setRangeMin] = useState(0.5);
   const [rangeMax, setRangeMax] = useState(3);
-  const [evolutionData, setEvolutionData] = useState([]);
   const [dataSource, setDataSource] = useState('manual');
   const [city, setCity] = useState('');
   const [rain, setRain] = useState(null);
@@ -175,6 +174,11 @@ export default function App() {
     { name: "Q2*", value: Q2_star },
   ];
 
+  const evolutionData = useMemo(
+    () => generateEfficiencySeries(params, rangeVar, rangeMin, rangeMax, 5),
+    [params, rangeVar, rangeMin, rangeMax]
+  );
+
   const [lineData, setLineData] = useState([]);
   const [sedimentData, setSedimentData] = useState({
     tau: 0,
@@ -234,11 +238,6 @@ export default function App() {
     ]);
   }, [E, R1, R2, E_formula]);
 
-  useEffect(() => {
-    setEvolutionData(
-      generateEfficiencySeries(params, rangeVar, rangeMin, rangeMax, 5)
-    );
-  }, [params, rangeVar, rangeMin, rangeMax]);
 
   useEffect(() => {
     const rho = 1000; // densità dell'acqua [kg/m^3]
