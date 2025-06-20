@@ -45,6 +45,9 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
   propria **API key** di OpenWeatherMap; il campo è nascosto e la chiave può
   essere mostrata temporaneamente tenendo premuta l'icona a forma di occhio.
   Solo dopo la verifica della chiave sarà possibile specificare la città.
+- La registrazione e la generazione della chiave avvengono sul sito
+  [openweathermap.org](https://openweathermap.org). L'attivazione della chiave
+  può richiedere circa un'ora dalla sua creazione.
 
 ## Avvio locale
 
