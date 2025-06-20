@@ -28,8 +28,8 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Parametri di trasporto solido (Shields, bed-load, profilo di Rouse, carico totale)
 
 - Visualizzazione su **grafico radar** dinamico.
-- Grafico evolutivo per q o v su intervalli definiti.
-- Tabella dell'andamento per q o v sugli stessi intervalli.
+- Grafico evolutivo per Q o v su intervalli definiti.
+- Tabella dell'andamento per Q o v sugli stessi intervalli.
 - Grafici sul trasporto solido (curva del bed-load, profilo di concentrazione e
   carico totale).
 - Modalità chiaro/scuro con pulsante di attivazione.

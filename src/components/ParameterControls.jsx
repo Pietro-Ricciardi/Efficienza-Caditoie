@@ -200,7 +200,7 @@ export default function ParameterControls({
               onChange={(e) => setRangeVar(e.target.value)}
             >
               <option value="v">v</option>
-              <option value="q">q</option>
+              <option value="Q">Q</option>
             </select>
           </label>
           <label>
