@@ -38,6 +38,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Esportazione dei dati e dei grafici in **CSV**, **Excel** e come immagini.
 - Salvataggio e caricamento dei parametri in locale o tramite file JSON.
 - Download dei modelli **CSV**, **Excel** e **JSON** per l'import dei parametri.
+- Configurazione centralizzata dei limiti degli slider per una manutenzione più semplice.
 - Opzionalmente è possibile scegliere "OpenWeatherMap" come origine dei dati e
   caricare automaticamente l'intensità di pioggia per una città, con
   aggiornamento dei grafici in tempo reale. Verrà richiesto di inserire la
