@@ -34,6 +34,49 @@ export default function Help() {
           Usa il pulsante nella parte alta destra della sidebar per aprirla o chiuderla.
         </li>
       </ul>
+      <h2>Parametri</h2>
+      <ul className="list-disc pl-6 space-y-1">
+        <li>
+          <strong>Q</strong> – Portata totale del deflusso (l/s).
+        </li>
+        <li>
+          <strong>Q1</strong> – Porzione di Q che raggiunge direttamente la
+          caditoia (l/s).
+        </li>
+        <li>
+          <strong>v</strong> – Velocità del flusso all'ingresso (m/s).
+        </li>
+        <li>
+          <strong>v0</strong> – Velocità di riferimento per il calcolo di R1
+          (m/s).
+        </li>
+        <li>
+          <strong>j</strong> – Pendenza longitudinale della strada.
+        </li>
+        <li>
+          <strong>L</strong> – Lunghezza della griglia di caduta (m).
+        </li>
+        <li>
+          <strong>E0</strong> – Efficienza geometrica della caditoia.
+        </li>
+      </ul>
+      <h2>Formule utilizzate</h2>
+      <ul className="list-disc pl-6 space-y-1">
+        <li>R1 = 1 - 0.3 (v - v0) → efficienza legata alla velocità del flusso.</li>
+        <li>
+          R2 = 1 / (1 + (0.083 × v¹¸) / (j × L²⁄³)) → efficienza influenzata
+          da pendenza e lunghezza della griglia.
+        </li>
+        <li>Q1* = Q1 × R1 → portata intercettata dal tratto a monte.</li>
+        <li>Q2 = Q - Q1 → portata che non raggiunge direttamente la caditoia.</li>
+        <li>Q2* = Q2 × R2 → porzione intercettata di Q2.</li>
+        <li>E = (Q1* + Q2*) / Q → efficienza idraulica totale.</li>
+        <li>E formula = R1 × E0 + R2 × (1 - E0) → stima alternativa basata su E0.</li>
+      </ul>
+      <p>
+        La pagina <strong>Risultati</strong> e i grafici mostrano i valori
+        calcolati con queste formule.
+      </p>
       <p>Per ulteriori dettagli consulta il file README.md.</p>
     </div>
   );
