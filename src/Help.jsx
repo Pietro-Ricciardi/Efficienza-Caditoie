@@ -41,7 +41,7 @@ export default function Help() {
           chiuderla.
         </li>
         <li>
-          Per utilizzare i dati meteo di OpenWeatherMap registra un account su
+          Per utilizzare i dati meteo di OpenWeatherMap registra un account su 
           <a href="https://openweathermap.org">openweathermap.org</a> e genera
           la tua API key; l'attivazione potrebbe richiedere circa un'ora.
         </li>
