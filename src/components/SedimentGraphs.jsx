@@ -79,12 +79,12 @@ export default function SedimentGraphs({ params, sedimentData }) {
       </Widget>
       <Widget id="totalLoad" title="Carico totale">
         <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={totalLoadData}>
+          <BarChart data={totalLoadData} margin={{ top: 20, right: 20, left: 40 }}>
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis domain={[0, 'dataMax']} tickFormatter={(v) => v.toExponential(0)} />
             <Tooltip />
             <Bar dataKey="value" fill="#ffc658">
-              <LabelList dataKey="value" position="top" />
+              <LabelList dataKey="value" position="top" formatter={(v) => v.toExponential(2)} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>

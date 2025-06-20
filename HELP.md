@@ -36,7 +36,7 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - \(Q_1^\* = Q_1\, R_1\) → portata intercettata dal tratto a monte.
 - \(Q_2 = Q - Q_1\) → portata che non raggiunge direttamente la caditoia.
 - \(Q_2^\* = Q_2\, R_2\) → porzione intercettata di Q2.
-- \(E = \frac{Q_1^_ + Q_2^_}{Q}\) → efficienza idraulica totale.
+- \(E = \frac{Q_1^\* + Q_2^\*}{Q}\) → efficienza idraulica totale.
 - \(E\_{\text{formula}} = R_1\, E_0 + R_2\,(1 - E_0)\) → stima alternativa basata su E0.
 - \(\theta = \frac{\tau}{(\rho_s - \rho)\, g\, d}\) → parametro di Shields.
 - \(\tau_c = \theta_c(\rho_s - \rho) g d\) → tensione di inizio moto.
