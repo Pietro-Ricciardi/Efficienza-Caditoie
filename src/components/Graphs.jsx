@@ -70,6 +70,22 @@ export default function Graphs({
           <p>Q2* = Q2 × R2 = {Q2_star.toFixed(2)}</p>
           <p>E = (Q1* + Q2*) / Q = {E.toFixed(2)}</p>
           <p>E formula = R1 × E0 + R2 × (1 - E0) = {E_formula.toFixed(2)}</p>
+          <p>τ = ρ g h j = {sedimentData.tau.toFixed(2)}</p>
+          <p>θ = τ / ((ρ_s - ρ) g d) = {sedimentData.theta.toFixed(2)}</p>
+          <p>τ_c = θ_c (ρ_s - ρ) g d = {sedimentData.tauC.toFixed(2)}</p>
+          <p>
+            q_s^MPM = 8 √[g(s - 1) d³] (θ - θ_c)<sup>3/2</sup> ={' '}
+            {sedimentData.bedloadMPM.toExponential(2)}
+          </p>
+          <p>
+            q_s^E = 0.4 √[g(s - 1) d³] (θ - θ_c)<sup>5/2</sup> ={' '}
+            {sedimentData.bedloadEinstein.toExponential(2)}
+          </p>
+          <p>P = w_s / (κ u_*) = {sedimentData.rouseP.toFixed(2)}</p>
+          <p>
+            Q_s = 0.5(0.05 θ^{2.5} + 0.016 θ^{2.1}) √[g(s - 1) d³] ={' '}
+            {sedimentData.totalLoad.toExponential(2)}
+          </p>
         </div>
       </Widget>
     ),
