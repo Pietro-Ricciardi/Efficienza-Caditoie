@@ -294,6 +294,11 @@ body.dark-mode {
   margin-top: 8px;
 }
 
+/* Ensure the full API key is visible */
+.api-key-input input {
+  width: 280px;
+}
+
 .password-wrapper {
   display: flex;
   align-items: center;
