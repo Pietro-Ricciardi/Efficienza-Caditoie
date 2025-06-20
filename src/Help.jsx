@@ -59,6 +59,15 @@ export default function Help() {
         <li>
           <strong>E0</strong> – Efficienza geometrica della caditoia.
         </li>
+        <li>
+          <strong>d50</strong> – Granulometria media (m).
+        </li>
+        <li>
+          <strong>rhoS</strong> – Densità dei sedimenti (kg/m³).
+        </li>
+        <li>
+          <strong>h</strong> – Profondità idraulica (m).
+        </li>
       </ul>
       <h2>Formule utilizzate</h2>
       <ul className="list-disc pl-6 space-y-1">
@@ -72,6 +81,13 @@ export default function Help() {
         <li>Q2* = Q2 × R2 → porzione intercettata di Q2.</li>
         <li>E = (Q1* + Q2*) / Q → efficienza idraulica totale.</li>
         <li>E formula = R1 × E0 + R2 × (1 - E0) → stima alternativa basata su E0.</li>
+        <li>θ = τ / ((ρ_s - ρ) g d) → parametro di Shields.</li>
+        <li>τ_c = θ_c (ρ_s - ρ) g d → tensione di inizio moto.</li>
+        <li>q_s^MPM = 8 √[g (s - 1) d³] (θ - θ_c)<sup>3/2</sup> → bed-load Meyer‑Peter & Müller.</li>
+        <li>q_s^E = 0.4 √[g (s - 1) d³] (θ - θ_c)<sup>5/2</sup> → bed-load Einstein.</li>
+        <li>P = w_s / (κ u_*) → esponente di Rouse.</li>
+        <li>C(z) = C_a [(h - z)/z · z_a/(h - z_a)]^P → profilo di concentrazione.</li>
+        <li>Q_s = 0.5 (0.05 θ^{2.5} + 0.016 θ^{2.1}) √[g (s - 1) d³] → carico totale.</li>
       </ul>
       <p>
         La pagina <strong>Risultati</strong> e i grafici mostrano i valori
