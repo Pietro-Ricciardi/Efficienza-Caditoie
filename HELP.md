@@ -51,7 +51,7 @@ La pagina **Risultati** e i grafici mostrano i valori calcolati con queste formu
 ## Grafici disponibili
 
 - Radar delle efficienze.
-- Grafico evolutivo per Q o v.
+- Grafico evolutivo per q o v.
 - Tabella con gli stessi valori.
 - Curva del bed-load (MPM vs Einstein).
 - Profilo di concentrazione secondo Rouse.

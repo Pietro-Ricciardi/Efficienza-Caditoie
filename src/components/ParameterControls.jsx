@@ -191,34 +191,36 @@ export default function ParameterControls({
         {renderSlider('E0')}
       </Widget>
 
-      <div className="range-selector">
-        <label>
-          Variabile:
-          <select
-            value={rangeVar}
-            onChange={(e) => setRangeVar(e.target.value)}
-          >
-            <option value="v">v</option>
-            <option value="Q">Q</option>
-          </select>
-        </label>
-        <label>
-          Min:
-          <input
-            type="number"
-            value={rangeMin}
-            onChange={(e) => setRangeMin(parseFloat(e.target.value))}
-          />
-        </label>
-        <label>
-          Max:
-          <input
-            type="number"
-            value={rangeMax}
-            onChange={(e) => setRangeMax(parseFloat(e.target.value))}
-          />
-        </label>
-      </div>
+      <Widget id="evolutivoVar" title="Evolutivo per variabile">
+        <div className="range-selector">
+          <label>
+            Variabile:
+            <select
+              value={rangeVar}
+              onChange={(e) => setRangeVar(e.target.value)}
+            >
+              <option value="v">v</option>
+              <option value="q">q</option>
+            </select>
+          </label>
+          <label>
+            Min:
+            <input
+              type="number"
+              value={rangeMin}
+              onChange={(e) => setRangeMin(parseFloat(e.target.value))}
+            />
+          </label>
+          <label>
+            Max:
+            <input
+              type="number"
+              value={rangeMax}
+              onChange={(e) => setRangeMax(parseFloat(e.target.value))}
+            />
+          </label>
+        </div>
+      </Widget>
     </>
   );
 }
