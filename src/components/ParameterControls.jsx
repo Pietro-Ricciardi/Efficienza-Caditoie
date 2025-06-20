@@ -36,28 +36,28 @@ export default function ParameterControls({
   const [showKey, setShowKey] = useState(false);
   return (
     <>
-      <div className="data-source">
-        <label>
-          <input
-            type="radio"
-            value="manual"
-            checked={dataSource === 'manual'}
-            onChange={() => setDataSource('manual')}
-          />
-          Manuale
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="openweather"
-            checked={dataSource === 'openweather'}
-            onChange={() => setDataSource('openweather')}
-          />
-          OpenWeatherMap
-        </label>
-      </div>
-      {dataSource === 'openweather' && (
-        <Widget id="owm" title="OpenWeatherMap">
+      <Widget id="owm" title="Fonte dati">
+        <div className="data-source">
+          <label>
+            <input
+              type="radio"
+              value="manual"
+              checked={dataSource === 'manual'}
+              onChange={() => setDataSource('manual')}
+            />
+            Manuale
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="openweather"
+              checked={dataSource === 'openweather'}
+              onChange={() => setDataSource('openweather')}
+            />
+            OpenWeatherMap
+          </label>
+        </div>
+        {dataSource === 'openweather' && (
           <div className="api-key-input">
             <div className="password-wrapper">
               <input
@@ -91,7 +91,6 @@ export default function ParameterControls({
             </div>
           )}
         </Widget>
-      )}
       {Object.entries(params).map(([key, value]) => {
         const min = 0;
         const max =
