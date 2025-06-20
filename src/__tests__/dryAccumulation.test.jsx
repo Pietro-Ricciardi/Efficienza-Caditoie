@@ -14,6 +14,7 @@ describe('DryAccumulation component', () => {
     );
     expect(screen.getByText('Accumulo secco')).toBeInTheDocument();
     expect(screen.getByText(/Carico lineare/)).toBeInTheDocument();
+    expect(screen.getByText(/g\/m²/)).toBeInTheDocument();
     expect(screen.getByText(/Carico con saturazione/)).toBeInTheDocument();
   });
 });

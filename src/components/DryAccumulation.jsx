@@ -17,6 +17,8 @@ export default function DryAccumulation({
   const defaults = getZoneDefaults(zone, zoneParams);
   const linear = linearAccumulation(days, defaults.k);
   const saturating = saturatingAccumulation(days, defaults.k, defaults.Lmax);
+  const linearGm2 = linear * 0.1; // 1 kg/ha = 0.1 g/m²
+  const saturatingGm2 = saturating * 0.1;
 
   return (
     <Widget id="dry" title="Accumulo secco">
@@ -40,8 +42,13 @@ export default function DryAccumulation({
         </label>
       </div>
       <div className="dry-results">
-        <p>Carico lineare: {linear.toFixed(2)} kg/ha</p>
-        <p>Carico con saturazione: {saturating.toFixed(2)} kg/ha</p>
+        <p>
+          Carico lineare: {linear.toFixed(2)} kg/ha ({linearGm2.toFixed(2)} g/m²)
+        </p>
+        <p>
+          Carico con saturazione: {saturating.toFixed(2)} kg/ha (
+          {saturatingGm2.toFixed(2)} g/m²)
+        </p>
       </div>
     </Widget>
   );
