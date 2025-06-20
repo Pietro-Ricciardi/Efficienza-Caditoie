@@ -303,3 +303,9 @@ body.dark-mode {
   cursor: pointer;
   user-select: none;
 }
+
+.dry-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
