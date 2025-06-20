@@ -82,10 +82,6 @@ export default function App() {
   );
 
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const saved = localStorage.getItem("darkMode");
-    return saved ? JSON.parse(saved) : false;
-  });
   const [activePage, setActivePage] = useState('graphs');
   const [infoParam, setInfoParam] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -106,20 +102,6 @@ export default function App() {
   const evolutionRef = useRef(null);
   const resultsRef = useRef(null);
   const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
-  }, [isDarkMode]);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add("dark-mode");
-    } else {
-      document.body.classList.remove("dark-mode");
-    }
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => setIsDarkMode((d) => !d);
 
   const toggleSidebar = () => setSidebarOpen((s) => !s);
 
@@ -373,11 +355,7 @@ export default function App() {
 
   return (
     <>
-      <div
-        className={`container flex min-h-screen bg-gray-100 ${
-          isDarkMode ? "dark-mode" : ""
-        }`}
-      >
+      <div className="container flex min-h-screen bg-gray-100">
         <header className="top-bar flex items-center justify-start bg-white shadow fixed w-full z-50 p-2 space-x-2">
         <img src={logo} alt="Logo" className="w-6 h-6" />
         <span className="font-semibold">Efficienza Caditoie</span>
@@ -418,9 +396,6 @@ export default function App() {
         <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" className="mr-4">
           Licenza MIT
         </a>
-        <button className="theme-toggle text-2xl cursor-pointer" onClick={toggleDarkMode}>
-          {isDarkMode ? '☀️' : '🌙'}
-        </button>
       </header>
       {!sidebarOpen && (
         <button className="sidebar-toggle fixed-toggle" onClick={toggleSidebar}>
