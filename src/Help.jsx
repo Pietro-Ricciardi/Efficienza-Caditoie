@@ -159,6 +159,14 @@ export default function Help() {
           </Formula>
           → carico totale.
         </li>
+        <li>
+          <Formula>{'\\(L(t) = L_0 + k\\, t\\)'}</Formula> → carico lineare di
+          sedimenti.
+        </li>
+        <li>
+          <Formula>{'\\(L(t) = L_{max} (1 - e^{-k t})\\)'}</Formula> → carico con
+          saturazione.
+        </li>
       </ul>
       <p>
         La pagina <strong>Risultati</strong> e i grafici mostrano i valori
