@@ -34,6 +34,63 @@ export default function ParameterControls({
   rain
 }) {
   const [showKey, setShowKey] = useState(false);
+
+  const renderSlider = (key) => {
+    const value = params[key];
+    const min = 0;
+    const max =
+      key === 'E0'
+        ? 1
+        : key === 'v' || key === 'v0'
+          ? 10
+          : key === 'j'
+            ? 0.2
+            : key === 'L'
+              ? 5
+              : 1000;
+    const step =
+      key === 'E0' || key === 'L'
+        ? 0.01
+        : key === 'v' || key === 'v0'
+          ? 0.01
+          : key === 'j'
+            ? 0.001
+            : 0.1;
+    return (
+      <div key={key} className="slider-container">
+        <label className="slider-label">
+          {key}: {value.toFixed(2)}
+          <span className="info-wrapper">
+            <span className="info-icon" onClick={() => toggleInfo(key)}>
+              i
+            </span>
+            {infoParam === key && (
+              <div className="info-popup">{paramInfo[key]}</div>
+            )}
+          </span>
+        </label>
+        <div className="slider-wrapper">
+          <input
+            type="range"
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={(e) => handleChange(key, e)}
+          />
+          <input
+            type="number"
+            className="slider-input"
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={(e) => handleChange(key, e)}
+          />
+        </div>
+      </div>
+    );
+  };
   return (
     <>
       <Widget id="owm" title="Fonte dati">
@@ -58,94 +115,49 @@ export default function ParameterControls({
           </label>
         </div>
         {dataSource === 'openweather' && (
-          <div className="api-key-input">
-            <div className="password-wrapper">
-              <input
-                type={showKey ? 'text' : 'password'}
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="API Key"
-              />
-              <span
-                className="eye-icon"
-                onMouseDown={() => setShowKey(true)}
-                onMouseUp={() => setShowKey(false)}
-                onMouseLeave={() => setShowKey(false)}
-              >
-                &#128065;
-              </span>
-            </div>
-            {!apiVerified && <button onClick={verifyKey}>Verifica</button>}
-          </div>
-          {apiVerified && (
-            <div className="weather-input">
-              <input
-                type="text"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                placeholder="Città"
-              />
-              <span>
-                Pioggia: {rain != null ? `${rain.toFixed(2)} mm/h` : 'n/d'}
-              </span>
-            </div>
-          )}
-        </Widget>
-      {Object.entries(params).map(([key, value]) => {
-        const min = 0;
-        const max =
-          key === 'E0'
-            ? 1
-            : key === 'v' || key === 'v0'
-              ? 10
-              : key === 'j'
-                ? 0.2
-                : key === 'L'
-                  ? 5
-                  : 1000;
-        const step =
-          key === 'E0' || key === 'L'
-            ? 0.01
-            : key === 'v' || key === 'v0'
-              ? 0.01
-              : key === 'j'
-                ? 0.001
-                : 0.1;
-        return (
-          <div key={key} className="slider-container">
-            <label className="slider-label">
-              {key}: {value.toFixed(2)}
-              <span className="info-wrapper">
-                <span className="info-icon" onClick={() => toggleInfo(key)}>
-                  i
+          <>
+            <div className="api-key-input">
+              <div className="password-wrapper">
+                <input
+                  type={showKey ? 'text' : 'password'}
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="API Key"
+                />
+                <span
+                  className="eye-icon"
+                  onMouseDown={() => setShowKey(true)}
+                  onMouseUp={() => setShowKey(false)}
+                  onMouseLeave={() => setShowKey(false)}
+                >
+                  &#128065;
                 </span>
-                {infoParam === key && (
-                  <div className="info-popup">{paramInfo[key]}</div>
-                )}
-              </span>
-            </label>
-            <div className="slider-wrapper">
-              <input
-                type="range"
-                min={min}
-                max={max}
-                step={step}
-                value={value}
-                onChange={(e) => handleChange(key, e)}
-              />
-              <input
-                type="number"
-                className="slider-input"
-                min={min}
-                max={max}
-                step={step}
-                value={value}
-                onChange={(e) => handleChange(key, e)}
-              />
+              </div>
+              {!apiVerified && <button onClick={verifyKey}>Verifica</button>}
             </div>
-          </div>
-        );
-      })}
+            {apiVerified && (
+              <div className="weather-input">
+                <input
+                  type="text"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  placeholder="Città"
+                />
+                <span>
+                  Pioggia: {rain != null ? `${rain.toFixed(2)} mm/h` : 'n/d'}
+                </span>
+              </div>
+            )}
+          </>
+        )}
+      </Widget>
+      <Widget id="portata" title="Portata">
+        {renderSlider('Q')}
+        {renderSlider('Q1')}
+      </Widget>
+      {Object.keys(params)
+        .filter((k) => k !== 'Q' && k !== 'Q1')
+        .map((k) => renderSlider(k))}
 
       <div className="range-selector">
         <label>
