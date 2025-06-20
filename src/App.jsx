@@ -30,6 +30,17 @@ import {
   totalLoadEHVR,
 } from "./lib/sediment";
 
+function exportFile(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
 export default function App() {
   const [params, setParams] = useState({
     Q: 100,
@@ -274,13 +285,7 @@ export default function App() {
     ];
     const csvContent = rows.map((r) => r.join(",")).join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "efficienze.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    exportFile(blob, "efficienze.csv");
   };
 
   const downloadExcel = () => {
@@ -295,13 +300,7 @@ export default function App() {
     const blob = new Blob([csvContent], {
       type: "application/vnd.ms-excel",
     });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "efficienze.xls");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    exportFile(blob, "efficienze.xls");
   };
 
   const salvaParametriStorage = () => {
