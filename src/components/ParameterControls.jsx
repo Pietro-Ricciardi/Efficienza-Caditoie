@@ -28,7 +28,7 @@ const sliderConfig = {
   h: { min: 0, max: 10, step: 0.01 }
 };
 
-export default function ParameterControls({
+function ParameterControls({
   params,
   infoParam,
   toggleInfo,
@@ -241,3 +241,5 @@ ParameterControls.propTypes = {
   verifyKey: PropTypes.func.isRequired,
   rain: PropTypes.number
 };
+
+export default React.memo(ParameterControls);

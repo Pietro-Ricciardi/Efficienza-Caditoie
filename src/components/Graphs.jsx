@@ -24,7 +24,7 @@ import EvolutionTable from './EvolutionTable';
 import SedimentGraphs from './SedimentGraphs';
 import Formula from '../Formula';
 
-export default function Graphs({
+function Graphs({
   R1,
   R2,
   Q1_star,
@@ -276,3 +276,5 @@ Graphs.propTypes = {
   evolutionRef: PropTypes.object,
   resultsRef: PropTypes.object
 };
+
+export default React.memo(Graphs);
