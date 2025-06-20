@@ -40,6 +40,11 @@ export default function Help() {
           Usa il pulsante nella parte alta destra della sidebar per aprirla o
           chiuderla.
         </li>
+        <li>
+          Per utilizzare i dati meteo di OpenWeatherMap registra un account su
+          <a href="https://openweathermap.org">openweathermap.org</a> e genera
+          la tua API key; l'attivazione potrebbe richiedere circa un'ora.
+        </li>
       </ul>
       <h2>Parametri</h2>
       <ul className="list-disc pl-6 space-y-1">

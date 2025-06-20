@@ -15,6 +15,9 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - Le voci della sezione **Azioni** permettono di esportare i dati o salvare/caricare i parametri; sono visualizzate come semplici etichette cliccabili.
 - Nella sezione **Modelli** puoi scaricare i file di esempio (CSV, Excel e JSON) da compilare e importare nell'app.
 - Usa il pulsante nella parte alta destra della sidebar per aprirla o chiuderla.
+- Per utilizzare i dati meteo di OpenWeatherMap registra un account su
+  [openweathermap.org](https://openweathermap.org) e genera la tua API key; la
+  chiave potrebbe richiedere circa un'ora per diventare attiva.
 
 ## Parametri
 
