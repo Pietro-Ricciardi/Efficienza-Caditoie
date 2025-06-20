@@ -21,6 +21,7 @@ import ParameterControls from "./components/ParameterControls";
 import Graphs from "./components/Graphs";
 import Sidebar from "./components/Sidebar";
 import { fetchRain, verifyApiKey } from "./utils/weather";
+import { zoneDefaults } from "./utils/accumulation";
 import {
   shieldsParameter,
   criticalShearStress,
@@ -184,6 +185,7 @@ export default function App() {
   });
   const [dryDays, setDryDays] = useState(0);
   const [zoneType, setZoneType] = useState('residenziale');
+  const [zoneParams, setZoneParams] = useState(zoneDefaults);
   const [visibleCharts, setVisibleCharts] = useState({
     radar: true,
     bar: true,
@@ -459,6 +461,8 @@ export default function App() {
             apiVerified={apiVerified}
             verifyKey={verifyKey}
             rain={rain}
+            zoneParams={zoneParams}
+            setZoneParams={setZoneParams}
           />
         )}
         {activePage === 'graphs' && (
@@ -486,6 +490,7 @@ export default function App() {
             setDryDays={setDryDays}
             zoneType={zoneType}
             setZoneType={setZoneType}
+            zoneParams={zoneParams}
             radarRef={radarRef}
             barRef={barRef}
             pieRef={pieRef}

@@ -54,7 +54,6 @@ body.dark-mode {
   background: #ddd;
 }
 
-
 .sidebar-toggle {
   background: #007bff;
   color: #fff;
@@ -308,4 +307,16 @@ body.dark-mode {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
+}
+
+.zone-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.zone-table th,
+.zone-table td {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: center;
 }
