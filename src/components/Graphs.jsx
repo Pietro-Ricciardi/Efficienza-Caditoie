@@ -198,10 +198,9 @@ function Graphs({
         </ResponsiveContainer>
       </Widget>
     ),
-    hydro: (
+    hydro: !isMinimized('hydroBalance') && (
       <HydroBalanceChart
         data={hydroData}
-        collapsed={isMinimized('hydroBalance')}
         onCollapseToggle={toggleMinimized}
       />
     ),
