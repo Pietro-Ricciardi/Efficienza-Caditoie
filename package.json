@@ -17,6 +17,7 @@
     "prop-types": "^15.8.1",
     "date-fns": "^3.6.0",
     "numeric": "^1.2.6"
+
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
