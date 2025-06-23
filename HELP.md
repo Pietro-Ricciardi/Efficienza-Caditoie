@@ -69,6 +69,7 @@ La pagina **Risultati** e i grafici mostrano i valori calcolati con queste formu
 - Curva del bed-load (MPM vs Einstein).
 - Profilo di concentrazione secondo Rouse.
 - Bar chart del carico totale.
+- Grafico d'impatto del bilancio idrologico sui sedimenti.
 
 ## Widget Bilancio idrologico
 
@@ -79,5 +80,8 @@ Il grafico "Bilancio idrologico" mostra l'andamento di:
 
 Questi valori si aggiornano modificando gli slider di radiazione solare,
 temperature minima e massima e Curve Number nella pagina **Parametri**.
+Il widget "Impatto bilancio-sedimenti" confronta il trasporto solido calcolato
+con la granulometria nominale e con quella effettiva *D_eff* derivata dal
+bilancio idrologico.
 
 Per ulteriori dettagli consulta il file `README.md`.

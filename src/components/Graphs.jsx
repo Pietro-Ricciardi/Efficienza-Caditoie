@@ -250,7 +250,13 @@ function Graphs({
         <EvolutionTable evolutionData={evolutionData} rangeVar={rangeVar} />
       </Widget>
     ),
-    sediments: <SedimentGraphs params={params} sedimentData={sedimentData} />,
+    sediments: (
+      <SedimentGraphs
+        params={params}
+        sedimentData={sedimentData}
+        hydroData={hydroData}
+      />
+    ),
     accumulation: (
       <DryAccumulation
         days={dryDays}
