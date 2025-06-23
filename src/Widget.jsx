@@ -7,10 +7,12 @@ const Widget = forwardRef(function Widget(
   ref
 ) {
   const [collapsed, setCollapsed] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
   return (
     <div
       id={id}
-      className={`chart-box widget${collapsed ? ' collapsed' : ''}`}
+      className={`chart-box widget${collapsed ? ' collapsed' : ''}${
+        fullscreen ? ' fullscreen' : ''}`}
       onDrop={(e) => {
         e.preventDefault();
         onDrop && onDrop(id);
@@ -26,9 +28,17 @@ const Widget = forwardRef(function Widget(
         onDragStart={() => onDragStart && onDragStart(id)}
       >
         <span>{title}</span>
-        <button onClick={() => setCollapsed((c) => !c)} aria-label="toggle widget">
-          {collapsed ? '+' : '-'}
-        </button>
+        <div className="widget-controls">
+          <button onClick={() => setCollapsed((c) => !c)} aria-label="toggle widget">
+            {collapsed ? '+' : '-'}
+          </button>
+          <button
+            onClick={() => setFullscreen((f) => !f)}
+            aria-label={fullscreen ? 'shrink widget' : 'expand widget'}
+          >
+            {fullscreen ? '🗗' : '🗖'}
+          </button>
+        </div>
       </div>
       {!collapsed && (
         <div className="widget-body" ref={ref}>
