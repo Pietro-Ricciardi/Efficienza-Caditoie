@@ -30,6 +30,12 @@ import {
   rouseExponent,
   totalLoadEHVR,
 } from "./lib/sediment";
+import {
+  computeET0,
+  computeEffectiveRain,
+  computeMoistureFactor,
+  computeDEffective,
+} from "./lib/hydroBalance";
 
 function exportFile(blob, filename) {
   const url = URL.createObjectURL(blob);
@@ -54,6 +60,10 @@ export default function App() {
     d50: 0.002,
     rhoS: 2650,
     h: 1.0,
+    radiation: 15,
+    tmin: 10,
+    tmax: 25,
+    CN: 75,
   });
 
   const [toasts, setToasts] = useState([]);
@@ -171,6 +181,33 @@ export default function App() {
     { name: "Q2*", value: Q2_star },
   ];
 
+  const ET0 = useMemo(
+    () => computeET0(params.radiation, params.tmin, params.tmax),
+    [params]
+  );
+  const peff = useMemo(
+    () => computeEffectiveRain(rain ?? 0, ET0, { CN: params.CN }),
+    [rain, ET0, params]
+  );
+  const fh = useMemo(
+    () => computeMoistureFactor(params.radiation, ET0),
+    [params.radiation, ET0]
+  );
+  const dEff = useMemo(() => computeDEffective(params.d50, 0.1, fh), [params.d50, fh]);
+
+  const hydroData = useMemo(
+    () => [
+      {
+        label: 'oggi',
+        ET0,
+        P: rain ?? 0,
+        Peff: peff,
+        fh,
+      },
+    ],
+    [ET0, rain, peff, fh]
+  );
+
   const evolutionData = useMemo(
     () => generateEfficiencySeries(params, rangeVar, rangeMin, rangeMax, 5),
     [params, rangeVar, rangeMin, rangeMax]
@@ -193,6 +230,7 @@ export default function App() {
     radar: true,
     bar: true,
     pie: true,
+    hydro: true,
     line: true,
     evolution: true,
     evolutionTable: true,
@@ -205,6 +243,7 @@ export default function App() {
     'radar',
     'bar',
     'pie',
+    'hydro',
     'line',
     'evolution',
     'evolutionTable',
@@ -482,6 +521,7 @@ export default function App() {
             pieData={pieData}
             lineData={lineData}
             sedimentData={sedimentData}
+            hydroData={hydroData}
             params={params}
             evolutionData={evolutionData}
             rangeVar={rangeVar}
