@@ -52,6 +52,8 @@ function Graphs({
   zoneType,
   setZoneType,
   zoneParams,
+  minimized,
+  toggleMinimized,
   radarRef,
   barRef,
   pieRef,
@@ -59,14 +61,16 @@ function Graphs({
   evolutionRef,
   resultsRef
 }) {
+  const isMinimized = (id) => minimized?.some((w) => w.id === id);
   const widgetMap = {
-    results: (
+    results: !isMinimized('results') && (
       <Widget
         id="results"
         title="Risultati"
         ref={resultsRef}
         onDragStart={handleDragStart}
         onDrop={handleDrop}
+        onCollapseToggle={toggleMinimized}
       >
         <div className="formula-list">
           <p>
@@ -114,13 +118,14 @@ function Graphs({
         </div>
       </Widget>
     ),
-    radar: (
+    radar: !isMinimized('radar') && (
       <Widget
         id="radar"
         title="Confronto efficienze"
         ref={radarRef}
         onDragStart={handleDragStart}
         onDrop={handleDrop}
+        onCollapseToggle={toggleMinimized}
       >
         <ResponsiveContainer width="100%" height={300}>
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
@@ -141,13 +146,14 @@ function Graphs({
         </ResponsiveContainer>
       </Widget>
     ),
-    bar: (
+    bar: !isMinimized('bar') && (
       <Widget
         id="bar"
         title="R1 e R2"
         ref={barRef}
         onDragStart={handleDragStart}
         onDrop={handleDrop}
+        onCollapseToggle={toggleMinimized}
       >
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={barData}>
@@ -165,13 +171,14 @@ function Graphs({
         </ResponsiveContainer>
       </Widget>
     ),
-    pie: (
+    pie: !isMinimized('pie') && (
       <Widget
         id="pie"
         title="Portate intercettate"
         ref={pieRef}
         onDragStart={handleDragStart}
         onDrop={handleDrop}
+        onCollapseToggle={toggleMinimized}
       >
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
@@ -191,14 +198,21 @@ function Graphs({
         </ResponsiveContainer>
       </Widget>
     ),
-    hydro: <HydroBalanceChart data={hydroData} />,
-    line: (
+    hydro: (
+      <HydroBalanceChart
+        data={hydroData}
+        collapsed={isMinimized('hydroBalance')}
+        onCollapseToggle={toggleMinimized}
+      />
+    ),
+    line: !isMinimized('line') && (
       <Widget
         id="line"
         title="Andamento efficienza"
         ref={lineRef}
         onDragStart={handleDragStart}
         onDrop={handleDrop}
+        onCollapseToggle={toggleMinimized}
       >
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={lineData}>
@@ -216,13 +230,14 @@ function Graphs({
         </ResponsiveContainer>
       </Widget>
     ),
-    evolution: (
+    evolution: !isMinimized('evolution') && (
       <Widget
         id="evolution"
         title={`Grafico evolutivo (${rangeVar})`}
         ref={evolutionRef}
         onDragStart={handleDragStart}
         onDrop={handleDrop}
+        onCollapseToggle={toggleMinimized}
       >
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={evolutionData}>
@@ -240,12 +255,13 @@ function Graphs({
         </ResponsiveContainer>
       </Widget>
     ),
-    evolutionTable: (
+    evolutionTable: !isMinimized('evolutionTable') && (
       <Widget
         id="evolutionTable"
         title={`Tabella evolutiva (${rangeVar})`}
         onDragStart={handleDragStart}
         onDrop={handleDrop}
+        onCollapseToggle={toggleMinimized}
       >
         <EvolutionTable evolutionData={evolutionData} rangeVar={rangeVar} />
       </Widget>
@@ -255,6 +271,8 @@ function Graphs({
         params={params}
         sedimentData={sedimentData}
         hydroData={hydroData}
+        minimized={minimized}
+        toggleMinimized={toggleMinimized}
       />
     ),
     accumulation: (
@@ -264,6 +282,8 @@ function Graphs({
         zone={zoneType}
         setZone={setZoneType}
         zoneParams={zoneParams}
+        minimized={minimized}
+        toggleMinimized={toggleMinimized}
       />
     )
   };
@@ -299,6 +319,8 @@ Graphs.propTypes = {
   zoneType: PropTypes.string.isRequired,
   setZoneType: PropTypes.func.isRequired,
   zoneParams: PropTypes.object.isRequired,
+  minimized: PropTypes.array,
+  toggleMinimized: PropTypes.func,
   radarRef: PropTypes.object,
   barRef: PropTypes.object,
   pieRef: PropTypes.object,
