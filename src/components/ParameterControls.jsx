@@ -12,7 +12,11 @@ const paramInfo = {
   E0: 'Efficienza geometrica della caditoia.',
   d50: 'Granulometria media (m).',
   rhoS: 'Densità dei sedimenti (kg/m^3).',
-  h: 'Profondità idraulica (m).'
+  h: 'Profondità idraulica (m).',
+  radiation: 'Radiazione solare media giornaliera (MJ/m^2/giorno).',
+  tmin: 'Temperatura minima (°C).',
+  tmax: 'Temperatura massima (°C).',
+  CN: 'Curve Number per il modello SCS-CN.'
 };
 
 const sliderConfig = {
@@ -25,7 +29,11 @@ const sliderConfig = {
   E0: { min: 0, max: 1, step: 0.01 },
   d50: { min: 0, max: 0.1, step: 0.001 },
   rhoS: { min: 0, max: 4000, step: 1 },
-  h: { min: 0, max: 10, step: 0.01 }
+  h: { min: 0, max: 10, step: 0.01 },
+  radiation: { min: 0, max: 30, step: 0.1 },
+  tmin: { min: -20, max: 40, step: 0.5 },
+  tmax: { min: -10, max: 50, step: 0.5 },
+  CN: { min: 30, max: 100, step: 1 }
 };
 
 function ParameterControls({
@@ -166,6 +174,13 @@ function ParameterControls({
         {renderSlider('j')}
       </Widget>
 
+      <Widget id="meteo" title="Bilancio idrologico">
+        {renderSlider('radiation')}
+        {renderSlider('tmin')}
+        {renderSlider('tmax')}
+        {renderSlider('CN')}
+      </Widget>
+
       <Widget id="sedimenti" title="Sedimenti">
         {renderSlider('d50')}
         {renderSlider('rhoS')}
@@ -267,7 +282,11 @@ ParameterControls.propTypes = {
     E0: PropTypes.number.isRequired,
     d50: PropTypes.number.isRequired,
     rhoS: PropTypes.number.isRequired,
-    h: PropTypes.number.isRequired
+    h: PropTypes.number.isRequired,
+    radiation: PropTypes.number.isRequired,
+    tmin: PropTypes.number.isRequired,
+    tmax: PropTypes.number.isRequired,
+    CN: PropTypes.number.isRequired
   }).isRequired,
   infoParam: PropTypes.string,
   toggleInfo: PropTypes.func.isRequired,
