@@ -115,6 +115,18 @@ function Graphs({
           <p>
             <Formula>{`\\(Q_s = 0.5(0.05\\,\\theta^{2.5} + 0.016\\theta^{2.1})\\,\\sqrt{g(s-1)d^3} = ${sedimentData.totalLoad.toExponential(2)}\\)`}</Formula>
           </p>
+          <p>
+            <Formula>{`\\(ET_0 = 0.0023\\,(T_{mean} + 17.8)\\sqrt{T_{max} - T_{min}}\\, Ra = ${hydroData?.[0]?.ET0.toFixed(2)}\\)`}</Formula>
+          </p>
+          <p>
+            <Formula>{`\\(P_{\\text{eff}} = \\tfrac{(P - 0.2S)^2}{P + 0.8S} - ET_0 = ${hydroData?.[0]?.Peff.toFixed(2)}\\)`}</Formula>
+          </p>
+          <p>
+            <Formula>{`\\(f_h = \\tfrac{Ra}{Ra + ET_0} = ${hydroData?.[0]?.fh.toFixed(2)}\\)`}</Formula>
+          </p>
+          <p>
+            <Formula>{`\\(D_{eff} = D_{nominal}(1 + \\alpha\\, f_h) = ${hydroData?.[0]?.dEff.toFixed(4)}\\)`}</Formula>
+          </p>
         </div>
       </Widget>
     ),
