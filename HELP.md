@@ -70,4 +70,14 @@ La pagina **Risultati** e i grafici mostrano i valori calcolati con queste formu
 - Profilo di concentrazione secondo Rouse.
 - Bar chart del carico totale.
 
+## Widget Bilancio idrologico
+
+Il grafico "Bilancio idrologico" mostra l'andamento di:
+- ET₀ calcolata con la formula di Hargreaves;
+- precipitazione totale P e pioggia efficace Pₑff ricavata dal modello SCS‑CN;
+- fattore di umidità *fₕ* e granulometria effettiva *D_eff*.
+
+Questi valori si aggiornano modificando gli slider di radiazione solare,
+temperature minima e massima e Curve Number nella pagina **Parametri**.
+
 Per ulteriori dettagli consulta il file `README.md`.

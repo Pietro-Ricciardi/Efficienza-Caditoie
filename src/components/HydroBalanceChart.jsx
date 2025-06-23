@@ -17,7 +17,6 @@ export default function HydroBalanceChart({ data }) {
           <Line type="monotone" dataKey="Peff" stroke="#ff7300" />
           <Line type="monotone" dataKey="fh" stroke="#ff0000" />
           <Line type="monotone" dataKey="dEff" stroke="#aa8800" />
-
         </LineChart>
       </ResponsiveContainer>
     </Widget>
