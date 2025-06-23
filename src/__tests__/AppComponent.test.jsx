@@ -22,6 +22,17 @@ describe('App component calculations', () => {
     expect(screen.getAllByLabelText('toggle widget')[0]).toBeInTheDocument();
   });
 
+  test('widget expand button toggles fullscreen', () => {
+    render(<App />);
+    const expand = screen.getAllByLabelText('expand widget')[0];
+    fireEvent.click(expand);
+    const fullscreenEl = expand.closest('.widget');
+    expect(fullscreenEl.classList.contains('fullscreen')).toBe(true);
+    const shrink = screen.getAllByLabelText('shrink widget')[0];
+    fireEvent.click(shrink);
+    expect(fullscreenEl.classList.contains('fullscreen')).toBe(false);
+  });
+
 
   test('line chart displays calculated values', () => {
     render(<App />);
