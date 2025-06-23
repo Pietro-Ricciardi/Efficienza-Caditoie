@@ -42,7 +42,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
   carico totale e impatto del bilancio idrologico sui sedimenti).
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
-- Widget grafici minimizzabili, spostabili e ridimensionabili (incluso il nuovo widget "Bilancio idrologico").
+- Widget grafici minimizzabili, spostabili e ridimensionabili (incluso il nuovo widget "Bilancio idrologico"), con pulsante per l'espansione a **schermo intero**. I widget ridotti compaiono in una barra fissa in fondo alla pagina e si possono ripristinare con doppio clic sul loro nome.
 - Il widget **Parametri zona** occupa ora due colonne per una compilazione più agevole.
 - Esportazione dei dati e dei grafici in **CSV**, **Excel** e come immagini.
 - Salvataggio e caricamento dei parametri in locale o tramite file JSON.
