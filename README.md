@@ -58,6 +58,16 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
   [openweathermap.org](https://openweathermap.org). L'attivazione della chiave
   può richiedere circa un'ora dalla sua creazione.
 
+## Struttura dei sorgenti
+
+- `src/components` – componenti riutilizzabili
+- `src/pages` – pagine principali come Help e Normativa
+- `src/hooks` – hook personalizzati
+- `src/services` – moduli per l'accesso ai dati (es. meteo)
+- `src/styles` – fogli di stile CSS
+- `src/utils` – funzioni di calcolo, validazione e storage
+- `src/lib` – formule idrologiche e di trasporto
+
 ## Avvio locale
 
 1. Installa le dipendenze:
