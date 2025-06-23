@@ -263,12 +263,13 @@ export default function App() {
   const [appearanceOpen, setAppearanceOpen] = useState(false);
   const [minimizedWidgets, setMinimizedWidgets] = useState([]);
 
-  const toggleMinimized = (id, title) => {
-    setMinimizedWidgets((prev) =>
-      prev.some((w) => w.id === id)
-        ? prev.filter((w) => w.id !== id)
-        : [...prev, { id, title }]
-    );
+  const toggleMinimized = (id, collapsed, title) => {
+    setMinimizedWidgets((prev) => {
+      if (collapsed) {
+        return [...prev, { id, title }];
+      }
+      return prev.filter((w) => w.id !== id);
+    });
   };
 
   const toggleChart = (chart) =>
