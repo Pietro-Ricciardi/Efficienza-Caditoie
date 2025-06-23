@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   LineChart,
@@ -11,17 +11,17 @@ import {
 } from 'recharts';
 import Widget from './Widget';
 
-export default function HydroBalanceChart({
-  data,
-  collapsed,
-  onCollapseToggle
-}) {
+const HydroBalanceChart = forwardRef(function HydroBalanceChart(
+  { data, collapsed, onCollapseToggle },
+  ref
+) {
   return (
     <Widget
       id="hydroBalance"
       title="Bilancio idrologico"
       collapsed={collapsed}
       onCollapseToggle={onCollapseToggle}
+      ref={ref}
     >
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
@@ -38,10 +38,12 @@ export default function HydroBalanceChart({
       </ResponsiveContainer>
     </Widget>
   );
-}
+});
 
 HydroBalanceChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   collapsed: PropTypes.bool,
   onCollapseToggle: PropTypes.func
 };
+
+export default HydroBalanceChart;

@@ -31,6 +31,8 @@ export default function Sidebar({
   pieRef,
   lineRef,
   evolutionRef,
+  hydroRef,
+  tableRef
 }) {
   return (
     <aside
@@ -45,7 +47,9 @@ export default function Sidebar({
       <nav className="menu-vertical flex flex-col space-y-2 mt-2">
         <button
           className="px-4 py-2 text-left hover:bg-gray-100 w-full"
-          onClick={() => setActivePage(activePage === 'parameters' ? 'graphs' : 'parameters')}
+          onClick={() =>
+            setActivePage(activePage === 'parameters' ? 'graphs' : 'parameters')
+          }
         >
           {activePage === 'parameters' ? 'Simulazione' : 'Parametri'}
         </button>
@@ -73,32 +77,57 @@ export default function Sidebar({
           </button>
           {appearanceOpen && (
             <div className="submenu ml-4 mt-1 space-y-1">
-              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('radar')}>
+              <button
+                className="submenu-item w-full text-left flex items-center"
+                onClick={() => toggleChart('radar')}
+              >
                 <span className="w-4">{visibleCharts.radar ? '✓' : ''}</span>
                 Grafico radar
               </button>
-              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('bar')}>
+              <button
+                className="submenu-item w-full text-left flex items-center"
+                onClick={() => toggleChart('bar')}
+              >
                 <span className="w-4">{visibleCharts.bar ? '✓' : ''}</span>
                 Grafico a barre
               </button>
-              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('pie')}>
+              <button
+                className="submenu-item w-full text-left flex items-center"
+                onClick={() => toggleChart('pie')}
+              >
                 <span className="w-4">{visibleCharts.pie ? '✓' : ''}</span>
                 Grafico a torta
               </button>
-              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('hydro')}>
+              <button
+                className="submenu-item w-full text-left flex items-center"
+                onClick={() => toggleChart('hydro')}
+              >
                 <span className="w-4">{visibleCharts.hydro ? '✓' : ''}</span>
                 Bilancio idrologico
               </button>
-              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('line')}>
+              <button
+                className="submenu-item w-full text-left flex items-center"
+                onClick={() => toggleChart('line')}
+              >
                 <span className="w-4">{visibleCharts.line ? '✓' : ''}</span>
                 Grafico a linee
               </button>
-              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('evolution')}>
-                <span className="w-4">{visibleCharts.evolution ? '✓' : ''}</span>
+              <button
+                className="submenu-item w-full text-left flex items-center"
+                onClick={() => toggleChart('evolution')}
+              >
+                <span className="w-4">
+                  {visibleCharts.evolution ? '✓' : ''}
+                </span>
                 Grafico evolutivo
               </button>
-              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('evolutionTable')}>
-                <span className="w-4">{visibleCharts.evolutionTable ? '✓' : ''}</span>
+              <button
+                className="submenu-item w-full text-left flex items-center"
+                onClick={() => toggleChart('evolutionTable')}
+              >
+                <span className="w-4">
+                  {visibleCharts.evolutionTable ? '✓' : ''}
+                </span>
                 Tabella evolutiva
               </button>
               <button
@@ -108,7 +137,9 @@ export default function Sidebar({
                   toggleChart('accumulation');
                 }}
               >
-                <span className="w-4">{visibleCharts.sediments ? '✓' : ''}</span>
+                <span className="w-4">
+                  {visibleCharts.sediments ? '✓' : ''}
+                </span>
                 Sedimenti e bilancio
               </button>
             </div>
@@ -136,12 +167,32 @@ export default function Sidebar({
                 style={{ display: 'none' }}
                 onChange={importaJSON}
               />
-              <button onClick={() => fileInputRef.current.click()}>Importa JSON</button>
-              <button onClick={() => downloadImage(radarRef, 'radar.png')}>Salva radar</button>
-              <button onClick={() => downloadImage(barRef, 'barre.png')}>Salva barre</button>
-              <button onClick={() => downloadImage(pieRef, 'torta.png')}>Salva torta</button>
-              <button onClick={() => downloadImage(lineRef, 'linee.png')}>Salva linee</button>
-              <button onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}>Salva evolutivo</button>
+              <button onClick={() => fileInputRef.current.click()}>
+                Importa JSON
+              </button>
+              <button onClick={() => downloadImage(radarRef, 'radar.png')}>
+                Salva radar
+              </button>
+              <button onClick={() => downloadImage(barRef, 'barre.png')}>
+                Salva barre
+              </button>
+              <button onClick={() => downloadImage(pieRef, 'torta.png')}>
+                Salva torta
+              </button>
+              <button onClick={() => downloadImage(lineRef, 'linee.png')}>
+                Salva linee
+              </button>
+              <button
+                onClick={() => downloadImage(evolutionRef, 'evoluzione.png')}
+              >
+                Salva evolutivo
+              </button>
+              <button onClick={() => downloadImage(hydroRef, 'bilancio.png')}>
+                Salva bilancio
+              </button>
+              <button onClick={() => downloadImage(tableRef, 'tabella.png')}>
+                Salva tabella
+              </button>
             </div>
           )}
         </div>
@@ -196,4 +247,6 @@ Sidebar.propTypes = {
   pieRef: PropTypes.object.isRequired,
   lineRef: PropTypes.object.isRequired,
   evolutionRef: PropTypes.object.isRequired,
+  hydroRef: PropTypes.object.isRequired,
+  tableRef: PropTypes.object.isRequired
 };
