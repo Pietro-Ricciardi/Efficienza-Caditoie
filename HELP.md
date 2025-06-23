@@ -31,6 +31,9 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - **d50** – Granulometria media (m).
 - **rhoS** – Densità dei sedimenti (kg/m^3).
 - **h** – Profondità idraulica (m).
+- **Radiazione** – Radiazione solare media giornaliera (MJ/m²/giorno).
+- **Tmin/Tmax** – Temperature minima e massima (°C).
+- **CN** – Curve Number per il modello SCS-CN.
 - **k** e **Lmax** – Parametri di accumulo secco per zona, raccolti in un widget largo due colonne.
 
 ## Formule utilizzate
@@ -51,6 +54,9 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - \(Q_s = 0.5 (0.05\,\theta^{2.5} + 0.016\theta^{2.1}) \sqrt{g (s - 1) d^3}\) → carico totale.
 - \(L(t) = L_0 + k\, t\) → carico lineare di sedimenti.
 - \(L(t) = L_{max} (1 - e^{-k t})\) → carico con saturazione.
+- \(ET_0 = 0.0023\,(T_{mean} + 17.8) \sqrt{T_{max} - T_{min}}\, Ra\) → formula di Hargreaves.
+- \(P_{\text{eff}} = \tfrac{(P - 0.2S)^2}{P + 0.8S} - ET_0\) con \(S = \tfrac{25400}{CN} - 254\) → modello SCS-CN.
+- \(D_{eff} = D_{nominal}(1 + \alpha\, f_h)\) con \(f_h = \tfrac{Ra}{Ra + ET_0}\).
 
 La pagina **Risultati** e i grafici mostrano i valori calcolati con queste formule.
 
@@ -59,6 +65,7 @@ La pagina **Risultati** e i grafici mostrano i valori calcolati con queste formu
 - Radar delle efficienze.
 - Grafico evolutivo per Q o v.
 - Tabella con gli stessi valori.
+- Bilancio idrologico (ET₀, precipitazione, pioggia efficace, fattore di umidità e D_eff).
 - Curva del bed-load (MPM vs Einstein).
 - Profilo di concentrazione secondo Rouse.
 - Bar chart del carico totale.
