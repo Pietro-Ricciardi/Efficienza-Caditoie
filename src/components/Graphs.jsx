@@ -24,6 +24,7 @@ import EvolutionTable from './EvolutionTable';
 import SedimentGraphs from './SedimentGraphs';
 import DryAccumulation from './DryAccumulation';
 import Formula from '../Formula';
+import HydroBalanceChart from './HydroBalanceChart';
 
 function Graphs({
   R1,
@@ -38,6 +39,7 @@ function Graphs({
   pieData,
   lineData,
   sedimentData,
+  hydroData,
   params,
   evolutionData,
   rangeVar,
@@ -189,6 +191,7 @@ function Graphs({
         </ResponsiveContainer>
       </Widget>
     ),
+    hydro: <HydroBalanceChart data={hydroData} />,
     line: (
       <Widget
         id="line"
@@ -277,6 +280,7 @@ Graphs.propTypes = {
   pieData: PropTypes.array.isRequired,
   lineData: PropTypes.array.isRequired,
   sedimentData: PropTypes.object,
+  hydroData: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
   evolutionData: PropTypes.array.isRequired,
   rangeVar: PropTypes.string.isRequired,

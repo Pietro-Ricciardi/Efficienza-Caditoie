@@ -33,6 +33,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Efficienza Totale
 - Efficienza da formula combinata
 - Parametri di trasporto solido (Shields, bed-load, profilo di Rouse, carico totale)
+- Bilancio idrologico con ET₀ (Hargreaves), pioggia efficace (SCS-CN) e fattore di umidità, con grafico dedicato
 
 - Visualizzazione su **grafico radar** dinamico.
 - Grafico evolutivo per Q o v su intervalli definiti.
@@ -41,7 +42,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
   carico totale).
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
-- Widget grafici minimizzabili, spostabili e ridimensionabili.
+- Widget grafici minimizzabili, spostabili e ridimensionabili (incluso il nuovo widget "Bilancio idrologico").
 - Il widget **Parametri zona** occupa ora due colonne per una compilazione più agevole.
 - Esportazione dei dati e dei grafici in **CSV**, **Excel** e come immagini.
 - Salvataggio e caricamento dei parametri in locale o tramite file JSON.
