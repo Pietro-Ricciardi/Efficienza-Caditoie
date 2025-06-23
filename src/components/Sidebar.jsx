@@ -85,6 +85,10 @@ export default function Sidebar({
                 <span className="w-4">{visibleCharts.pie ? '✓' : ''}</span>
                 Grafico a torta
               </button>
+              <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('hydro')}>
+                <span className="w-4">{visibleCharts.hydro ? '✓' : ''}</span>
+                Bilancio idrologico
+              </button>
               <button className="submenu-item w-full text-left flex items-center" onClick={() => toggleChart('line')}>
                 <span className="w-4">{visibleCharts.line ? '✓' : ''}</span>
                 Grafico a linee
