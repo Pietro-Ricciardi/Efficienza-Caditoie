@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './FooterBar.css';
+import '../styles/FooterBar.css';
 
 export default function FooterBar({ widgets, onRestore }) {
   return (

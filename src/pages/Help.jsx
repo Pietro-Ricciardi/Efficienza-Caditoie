@@ -1,5 +1,5 @@
 import React from 'react';
-import Formula from './Formula';
+import { Formula } from '../components';
 
 export default function Help() {
   return (

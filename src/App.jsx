@@ -5,44 +5,32 @@ import React, {
   useMemo,
   useCallback
 } from 'react';
-import './App.css';
+import { useLineData, useSedimentData } from './hooks';
+import './styles/App.css';
 import logo from './logo.svg';
-import { validaParametri } from './utils/validate';
+import { validaParametri } from './utils';
 import {
   calcR1,
   calcR2,
   calcTotalEfficiency,
   generateEfficiencySeries
-} from './utils/calc';
+} from './utils';
 import {
   salvaParametri,
   caricaParametri,
   esportaParametri,
   importaParametri
-} from './utils/storage';
-import Help from './Help';
-import Normativa from './Normativa';
-import Toast from './Toast';
-import ParameterControls from './components/ParameterControls';
-import Graphs from './components/Graphs';
-import Sidebar from './components/Sidebar';
-import FooterBar from './FooterBar';
-import { fetchRain, verifyApiKey } from './utils/weather';
-import { zoneDefaults } from './utils/accumulation';
-import {
-  shieldsParameter,
-  criticalShearStress,
-  meyerPeterMuller,
-  einsteinBedload,
-  rouseExponent,
-  totalLoadEHVR
-} from './lib/sediment';
+} from './utils';
+import { Help, Normativa } from './pages';
+import { Toast, ParameterControls, Graphs, Sidebar, FooterBar } from './components';
+import { fetchRain, verifyApiKey } from './services';
+import { zoneDefaults } from './utils';
 import {
   computeET0,
   computeEffectiveRain,
   computeMoistureFactor,
   computeDEffective
-} from './lib/hydroBalance';
+} from './lib';
 
 function exportFile(blob, filename) {
   const url = URL.createObjectURL(blob);
@@ -222,16 +210,8 @@ export default function App() {
     [params, rangeVar, rangeMin, rangeMax]
   );
 
-  const [lineData, setLineData] = useState([]);
-  const [sedimentData, setSedimentData] = useState({
-    tau: 0,
-    theta: 0,
-    tauC: 0,
-    bedloadMPM: 0,
-    bedloadEinstein: 0,
-    totalLoad: 0,
-    rouseP: 0
-  });
+  const lineData = useLineData(R1, R2, E, E_formula);
+  const sedimentData = useSedimentData(params);
   const [dryDays, setDryDays] = useState(0);
   const [zoneType, setZoneType] = useState('residenziale');
   const [zoneParams, setZoneParams] = useState(zoneDefaults);
@@ -289,39 +269,7 @@ export default function App() {
     setDragging(null);
   };
 
-  useEffect(() => {
-    setLineData([
-      { label: 'R1', value: R1 },
-      { label: 'R2', value: R2 },
-      { label: 'E', value: E },
-      { label: 'E_formula', value: E_formula }
-    ]);
-  }, [E, R1, R2, E_formula]);
 
-  useEffect(() => {
-    const rho = 1000; // densità dell'acqua [kg/m^3]
-    const g = 9.81;
-    const tau = rho * g * params.h * params.j;
-    const theta = shieldsParameter(tau, params.rhoS, rho, params.d50);
-    const thetaC = 0.047;
-    const tauC = criticalShearStress(thetaC, params.rhoS, rho, params.d50);
-    const s = params.rhoS / rho;
-    const bedloadMPM = meyerPeterMuller(theta, thetaC, params.d50, s);
-    const bedloadEinstein = einsteinBedload(theta, thetaC, params.d50, s);
-    const totalLoad = totalLoadEHVR(theta, params.d50, s);
-    const uStar = Math.sqrt(tau / rho);
-    const ws = Math.sqrt(((params.rhoS - rho) / rho) * g * params.d50);
-    const rouseP = rouseExponent(ws, uStar);
-    setSedimentData({
-      tau,
-      theta,
-      tauC,
-      bedloadMPM,
-      bedloadEinstein,
-      totalLoad,
-      rouseP
-    });
-  }, [params]);
 
   const downloadCSV = () => {
     const rows = [
