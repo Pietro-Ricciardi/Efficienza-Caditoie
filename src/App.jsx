@@ -130,12 +130,15 @@ export default function App() {
 
   useEffect(() => {
     if (dataSource === 'openweather' && apiVerified && city) {
-      fetchRain(city, apiKey)
-        .then((r) => {
-          setRain(r);
-          setParams((p) => ({ ...p, Q: r, Q1: r * 0.6 }));
-        })
-        .catch(() => addToast('Errore caricamento dati meteo'));
+      const handle = setTimeout(() => {
+        fetchRain(city, apiKey)
+          .then((r) => {
+            setRain(r);
+            setParams((p) => ({ ...p, Q: r, Q1: r * 0.6 }));
+          })
+          .catch((err) => addToast(err.message));
+      }, 500);
+      return () => clearTimeout(handle);
     }
   }, [dataSource, apiVerified, city, apiKey, addToast]);
 
