@@ -9,7 +9,9 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - Ogni grafico è contenuto in un _widget_ che puoi:
   - ridimensionare trascinando l'angolo in basso a destra;
   - trascinare per modificare l'ordine dei grafici;
-  - minimizzare o espandere con il pulsante `➖`/`➕` nella barra del widget.
+  - minimizzare o espandere con il pulsante `➖`/`➕` nella barra del widget;
+  - aprire il grafico a schermo intero con l'icona `🗖` e tornare alla dimensione normale con `🗗`;
+  - i widget ridotti compaiono in fondo alla pagina in una barra grigia: fai doppio clic sul titolo per ripristinarli.
 - Nella sidebar puoi attivare o disattivare i singoli grafici dalla sezione **Aspetto**.
 - Tra questi è disponibile anche la **tabella evolutiva** dei valori calcolati.
 - Le voci della sezione **Azioni** permettono di esportare i dati o salvare/caricare i parametri; sono visualizzate come semplici etichette cliccabili.
@@ -49,7 +51,7 @@ Questa applicazione permette di calcolare l'efficienza idraulica delle caditoie 
 - \(\tau_c = \theta_c(\rho_s - \rho) g d\) → tensione di inizio moto.
 - \(q_s^{MPM} = 8\,\sqrt{g(s - 1) d^3}(\theta - \theta_c)^{3/2}\) → bed-load Meyer‑Peter & Müller.
 - \(q_s^{E} = 0.4\,\sqrt{g(s - 1) d^3}(\theta - \theta_c)^{5/2}\) → bed-load Einstein.
-- \(P = \frac{w*s}{\kappa u*\*}\) → esponente di Rouse.
+- \(P = \frac{w_s}{\kappa\, u_*}\) → esponente di Rouse.
 - \(C(z) = C_a \left[\frac{h - z}{z} \cdot \frac{z_a}{h - z_a}\right]^P\) → profilo di concentrazione.
 - \(Q_s = 0.5 (0.05\,\theta^{2.5} + 0.016\theta^{2.1}) \sqrt{g (s - 1) d^3}\) → carico totale.
 - \(L(t) = L_0 + k\, t\) → carico lineare di sedimenti.
