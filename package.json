@@ -16,8 +16,8 @@
     "recharts": "^2.7.2",
     "prop-types": "^15.8.1",
     "date-fns": "^3.6.0",
-    "numeric": "^1.2.6",
-    "integrate-js": "^1.1.0"
+    "numeric": "^1.2.6"
+
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
