@@ -203,10 +203,12 @@ export default function App() {
         P: rain ?? 0,
         Peff: peff,
         fh,
+
         dEff,
       },
     ],
     [ET0, rain, peff, fh, dEff]
+
   );
 
   const evolutionData = useMemo(
