@@ -80,6 +80,20 @@ export default function Help() {
         <li>
           <strong>h</strong> – Profondità idraulica (m).
         </li>
+        <li>
+          <strong>Radiazione</strong> – Radiazione solare media giornaliera
+          (MJ/m²/giorno).
+        </li>
+        <li>
+          <strong>Tmin/Tmax</strong> – Temperature minima e massima (°C).
+        </li>
+        <li>
+          <strong>CN</strong> – Curve Number per il modello SCS-CN.
+        </li>
+        <li>
+          <strong>k</strong> e <strong>Lmax</strong> – Parametri di accumulo secco
+          per zona, raccolti in un widget largo due colonne.
+        </li>
       </ul>
       <h2>Formule utilizzate</h2>
       <ul className="list-disc pl-6 space-y-1">
@@ -167,10 +181,62 @@ export default function Help() {
           <Formula>{'\\(L(t) = L_{max} (1 - e^{-k t})\\)'}</Formula> → carico con
           saturazione.
         </li>
+        <li>
+          <Formula>
+            {'\\(ET_0 = 0.0023\\,(T_{mean} + 17.8) \\sqrt{T_{max} - T_{min}}\\, Ra\\)'}
+          </Formula>
+          → formula di Hargreaves.
+        </li>
+        <li>
+          <Formula>
+            {
+              '\\(P_{\\text{eff}} = \\tfrac{(P - 0.2S)^2}{P + 0.8S} - ET_0\\) con \\(S = \\tfrac{25400}{CN} - 254\\)'
+            }
+          </Formula>
+          → modello SCS-CN.
+        </li>
+        <li>
+          <Formula>
+            {'\\(D_{eff} = D_{nominal}(1 + \\alpha\\, f_h)\\) con \\(f_h = \\tfrac{Ra}{Ra + ET_0}\\)'}
+          </Formula>
+        </li>
       </ul>
       <p>
         La pagina <strong>Risultati</strong> e i grafici mostrano i valori
         calcolati con queste formule.
+      </p>
+      <h2>Grafici disponibili</h2>
+      <ul className="list-disc pl-6 space-y-1">
+        <li>Radar delle efficienze.</li>
+        <li>Grafico evolutivo per Q o v.</li>
+        <li>Tabella con gli stessi valori.</li>
+        <li>
+          Bilancio idrologico (ET₀, precipitazione, pioggia efficace, fattore di
+          umidità e D_eff).
+        </li>
+        <li>Curva del bed-load (MPM vs Einstein).</li>
+        <li>Profilo di concentrazione secondo Rouse.</li>
+        <li>Bar chart del carico totale.</li>
+        <li>Grafico d'impatto del bilancio idrologico sui sedimenti.</li>
+      </ul>
+      <h2>Widget Bilancio idrologico</h2>
+      <p>Il grafico "Bilancio idrologico" mostra l'andamento di:</p>
+      <ul className="list-disc pl-6 space-y-1">
+        <li>ET₀ calcolata con la formula di Hargreaves;</li>
+        <li>
+          precipitazione totale P e pioggia efficace Pₑff ricavata dal modello
+          SCS‑CN;
+        </li>
+        <li>
+          fattore di umidità <em>fₕ</em> e granulometria effettiva <em>D_eff</em>.
+        </li>
+      </ul>
+      <p>
+        Questi valori si aggiornano modificando gli slider di radiazione solare,
+        temperature minima e massima e Curve Number nella pagina
+        <strong>Parametri</strong>. Il widget "Impatto bilancio-sedimenti"
+        confronta il trasporto solido calcolato con la granulometria nominale e
+        con quella effettiva <em>D_eff</em> derivata dal bilancio idrologico.
       </p>
       <p>Per ulteriori dettagli consulta il file README.md.</p>
     </div>
