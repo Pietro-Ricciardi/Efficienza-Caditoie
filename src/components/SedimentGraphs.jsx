@@ -12,7 +12,7 @@ import {
   LabelList,
   Legend
 } from 'recharts';
-import Widget from '../Widget';
+import Widget from './Widget';
 import {
   meyerPeterMuller,
   einsteinBedload,
