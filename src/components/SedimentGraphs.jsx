@@ -20,7 +20,14 @@ import {
   totalLoadEHVR
 } from '../lib/sediment';
 
-export default function SedimentGraphs({ params, sedimentData, hydroData }) {
+export default function SedimentGraphs({
+  params,
+  sedimentData,
+  hydroData,
+  minimized,
+  toggleMinimized
+}) {
+  const isMinimized = (id) => minimized?.some((w) => w.id === id);
   const bedloadData = useMemo(() => {
     const thetaC = 0.047;
     const s = params.rhoS / 1000;
@@ -76,78 +83,105 @@ export default function SedimentGraphs({ params, sedimentData, hydroData }) {
 
   return (
     <>
-      <Widget id="bedloadCurve" title="Curva del bed-load">
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={bedloadData}>
-            <XAxis dataKey="theta" tickFormatter={(v) => v.toFixed(2)} />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="mpm" stroke="#8884d8" name="MPM" />
-            <Line
-              type="monotone"
-              dataKey="einstein"
-              stroke="#82ca9d"
-              name="Einstein"
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </Widget>
-      <Widget id="concentrationProfile" title="Profilo di concentrazione">
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={concentrationData}>
-            <XAxis dataKey="z" tickFormatter={(v) => v.toFixed(2)} />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="c" stroke="#ff7300" dot={false} />
-          </LineChart>
-        </ResponsiveContainer>
-      </Widget>
-      <Widget id="totalLoad" title="Carico totale">
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart
-            data={totalLoadData}
-            margin={{ top: 20, right: 20, left: 40 }}
-          >
-            <XAxis dataKey="name" />
-            <YAxis
-              domain={[0, 'dataMax']}
-              tickFormatter={(v) => v.toExponential(0)}
-            />
-            <Tooltip />
-            <Bar dataKey="value" fill="#ffc658">
-              <LabelList
-                dataKey="value"
-                position="top"
-                formatter={(v) => v.toExponential(2)}
+      {!isMinimized('bedloadCurve') && (
+        <Widget
+          id="bedloadCurve"
+          title="Curva del bed-load"
+          onCollapseToggle={toggleMinimized}
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={bedloadData}>
+              <XAxis dataKey="theta" tickFormatter={(v) => v.toFixed(2)} />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="mpm" stroke="#8884d8" name="MPM" />
+              <Line
+                type="monotone"
+                dataKey="einstein"
+                stroke="#82ca9d"
+                name="Einstein"
               />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </Widget>
-      <Widget id="impact" title="Impatto bilancio-sedimenti">
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={impactData} margin={{ top: 20, right: 20, left: 20 }}>
-            <XAxis dataKey="name" />
-            <YAxis tickFormatter={(v) => v.toExponential(1)} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="base" fill="#8884d8" name="d50">
-              <LabelList
-                dataKey="base"
-                position="top"
-                formatter={(v) => v.toExponential(2)}
+            </LineChart>
+          </ResponsiveContainer>
+        </Widget>
+      )}
+      {!isMinimized('concentrationProfile') && (
+        <Widget
+          id="concentrationProfile"
+          title="Profilo di concentrazione"
+          onCollapseToggle={toggleMinimized}
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={concentrationData}>
+              <XAxis dataKey="z" tickFormatter={(v) => v.toFixed(2)} />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="c" stroke="#ff7300" dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        </Widget>
+      )}
+      {!isMinimized('totalLoad') && (
+        <Widget
+          id="totalLoad"
+          title="Carico totale"
+          onCollapseToggle={toggleMinimized}
+        >
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart
+              data={totalLoadData}
+              margin={{ top: 20, right: 20, left: 40 }}
+            >
+              <XAxis dataKey="name" />
+              <YAxis
+                domain={[0, 'dataMax']}
+                tickFormatter={(v) => v.toExponential(0)}
               />
-            </Bar>
-            <Bar dataKey="eff" fill="#82ca9d" name="D_eff">
-              <LabelList
-                dataKey="eff"
-                position="top"
-                formatter={(v) => v.toExponential(2)}
-              />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </Widget>
+              <Tooltip />
+              <Bar dataKey="value" fill="#ffc658">
+                <LabelList
+                  dataKey="value"
+                  position="top"
+                  formatter={(v) => v.toExponential(2)}
+                />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </Widget>
+      )}
+      {!isMinimized('impact') && (
+        <Widget
+          id="impact"
+          title="Impatto bilancio-sedimenti"
+          onCollapseToggle={toggleMinimized}
+        >
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart
+              data={impactData}
+              margin={{ top: 20, right: 20, left: 20 }}
+            >
+              <XAxis dataKey="name" />
+              <YAxis tickFormatter={(v) => v.toExponential(1)} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="base" fill="#8884d8" name="d50">
+                <LabelList
+                  dataKey="base"
+                  position="top"
+                  formatter={(v) => v.toExponential(2)}
+                />
+              </Bar>
+              <Bar dataKey="eff" fill="#82ca9d" name="D_eff">
+                <LabelList
+                  dataKey="eff"
+                  position="top"
+                  formatter={(v) => v.toExponential(2)}
+                />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </Widget>
+      )}
     </>
   );
 }
@@ -163,5 +197,7 @@ SedimentGraphs.propTypes = {
     rouseP: PropTypes.number.isRequired,
     totalLoad: PropTypes.number.isRequired
   }).isRequired,
-  hydroData: PropTypes.array
+  hydroData: PropTypes.array,
+  minimized: PropTypes.array,
+  toggleMinimized: PropTypes.func
 };

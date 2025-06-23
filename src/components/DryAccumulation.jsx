@@ -12,8 +12,11 @@ export default function DryAccumulation({
   setDays,
   zone,
   setZone,
-  zoneParams
+  zoneParams,
+  minimized,
+  toggleMinimized
 }) {
+  const isMinimized = minimized?.some((w) => w.id === 'dry');
   const defaults = getZoneDefaults(zone, zoneParams);
   const linear = linearAccumulation(days, defaults.k);
   const saturating = saturatingAccumulation(days, defaults.k, defaults.Lmax);
@@ -21,36 +24,43 @@ export default function DryAccumulation({
   const saturatingGm2 = saturating * 0.1;
 
   return (
-    <Widget id="dry" title="Accumulo secco">
-      <div className="dry-inputs">
-        <label>
-          Zona:
-          <select value={zone} onChange={(e) => setZone(e.target.value)}>
-            <option value="residenziale">Residenziale</option>
-            <option value="commerciale">Commerciale</option>
-            <option value="industriale">Industriale</option>
-          </select>
-        </label>
-        <label>
-          Giorni senza pioggia:
-          <input
-            type="number"
-            value={days}
-            min={0}
-            onChange={(e) => setDays(parseFloat(e.target.value))}
-          />
-        </label>
-      </div>
-      <div className="dry-results">
-        <p>
-          Carico lineare: {linear.toFixed(2)} kg/ha ({linearGm2.toFixed(2)} g/m²)
-        </p>
-        <p>
-          Carico con saturazione: {saturating.toFixed(2)} kg/ha (
-          {saturatingGm2.toFixed(2)} g/m²)
-        </p>
-      </div>
-    </Widget>
+    !isMinimized && (
+      <Widget
+        id="dry"
+        title="Accumulo secco"
+        onCollapseToggle={toggleMinimized}
+      >
+        <div className="dry-inputs">
+          <label>
+            Zona:
+            <select value={zone} onChange={(e) => setZone(e.target.value)}>
+              <option value="residenziale">Residenziale</option>
+              <option value="commerciale">Commerciale</option>
+              <option value="industriale">Industriale</option>
+            </select>
+          </label>
+          <label>
+            Giorni senza pioggia:
+            <input
+              type="number"
+              value={days}
+              min={0}
+              onChange={(e) => setDays(parseFloat(e.target.value))}
+            />
+          </label>
+        </div>
+        <div className="dry-results">
+          <p>
+            Carico lineare: {linear.toFixed(2)} kg/ha ({linearGm2.toFixed(2)}{' '}
+            g/m²)
+          </p>
+          <p>
+            Carico con saturazione: {saturating.toFixed(2)} kg/ha (
+            {saturatingGm2.toFixed(2)} g/m²)
+          </p>
+        </div>
+      </Widget>
+    )
   );
 }
 
@@ -59,5 +69,7 @@ DryAccumulation.propTypes = {
   setDays: PropTypes.func.isRequired,
   zone: PropTypes.string.isRequired,
   setZone: PropTypes.func.isRequired,
-  zoneParams: PropTypes.object
+  zoneParams: PropTypes.object,
+  minimized: PropTypes.array,
+  toggleMinimized: PropTypes.func
 };

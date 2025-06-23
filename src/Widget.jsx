@@ -3,16 +3,28 @@ import PropTypes from 'prop-types';
 import './Widget.css';
 
 const Widget = forwardRef(function Widget(
-  { id, title, children, onDragStart, onDrop, onDragOver },
+  {
+    id,
+    title,
+    children,
+    onDragStart,
+    onDrop,
+    onDragOver,
+    collapsed = false,
+    onCollapseToggle
+  },
   ref
 ) {
-  const [collapsed, setCollapsed] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+  const handleToggle = () => {
+    onCollapseToggle && onCollapseToggle(id, !collapsed, title);
+  };
   return (
     <div
       id={id}
       className={`chart-box widget${collapsed ? ' collapsed' : ''}${
-        fullscreen ? ' fullscreen' : ''}`}
+        fullscreen ? ' fullscreen' : ''
+      }`}
       onDrop={(e) => {
         e.preventDefault();
         onDrop && onDrop(id);
@@ -29,7 +41,7 @@ const Widget = forwardRef(function Widget(
       >
         <span>{title}</span>
         <div className="widget-controls">
-          <button onClick={() => setCollapsed((c) => !c)} aria-label="toggle widget">
+          <button onClick={handleToggle} aria-label="toggle widget">
             {collapsed ? '+' : '-'}
           </button>
           <button
@@ -56,6 +68,8 @@ Widget.propTypes = {
   onDragStart: PropTypes.func,
   onDrop: PropTypes.func,
   onDragOver: PropTypes.func,
+  collapsed: PropTypes.bool,
+  onCollapseToggle: PropTypes.func
 };
 
 export default Widget;

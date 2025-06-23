@@ -1,11 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from 'recharts';
 import Widget from '../Widget';
 
-export default function HydroBalanceChart({ data }) {
+export default function HydroBalanceChart({
+  data,
+  collapsed,
+  onCollapseToggle
+}) {
   return (
-    <Widget id="hydroBalance" title="Bilancio idrologico">
+    <Widget
+      id="hydroBalance"
+      title="Bilancio idrologico"
+      collapsed={collapsed}
+      onCollapseToggle={onCollapseToggle}
+    >
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <XAxis dataKey="label" />
@@ -25,4 +42,6 @@ export default function HydroBalanceChart({ data }) {
 
 HydroBalanceChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  collapsed: PropTypes.bool,
+  onCollapseToggle: PropTypes.func
 };
