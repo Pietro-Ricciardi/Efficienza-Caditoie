@@ -9,16 +9,18 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
-  LabelList
+  LabelList,
+  Legend
 } from 'recharts';
 import Widget from '../Widget';
 import {
   meyerPeterMuller,
   einsteinBedload,
-  rouseProfile
+  rouseProfile,
+  totalLoadEHVR
 } from '../lib/sediment';
 
-export default function SedimentGraphs({ params, sedimentData }) {
+export default function SedimentGraphs({ params, sedimentData, hydroData }) {
   const bedloadData = useMemo(() => {
     const thetaC = 0.047;
     const s = params.rhoS / 1000;
@@ -48,6 +50,29 @@ export default function SedimentGraphs({ params, sedimentData }) {
   }, [params.h, sedimentData.rouseP]);
 
   const totalLoadData = [{ name: 'Q_s', value: sedimentData.totalLoad }];
+
+  const impactData = useMemo(() => {
+    const dEff = hydroData?.[0]?.dEff ?? params.d50;
+    const thetaC = 0.047;
+    const s = params.rhoS / 1000;
+    const baseMPM = meyerPeterMuller(sedimentData.theta, thetaC, params.d50, s);
+    const baseEinstein = einsteinBedload(
+      sedimentData.theta,
+      thetaC,
+      params.d50,
+      s
+    );
+    const baseTotal = totalLoadEHVR(sedimentData.theta, params.d50, s);
+
+    const effMPM = meyerPeterMuller(sedimentData.theta, thetaC, dEff, s);
+    const effEinstein = einsteinBedload(sedimentData.theta, thetaC, dEff, s);
+    const effTotal = totalLoadEHVR(sedimentData.theta, dEff, s);
+    return [
+      { name: 'MPM', base: baseMPM, eff: effMPM },
+      { name: 'Einstein', base: baseEinstein, eff: effEinstein },
+      { name: 'Totale', base: baseTotal, eff: effTotal }
+    ];
+  }, [hydroData, params.d50, params.rhoS, sedimentData.theta]);
 
   return (
     <>
@@ -79,12 +104,46 @@ export default function SedimentGraphs({ params, sedimentData }) {
       </Widget>
       <Widget id="totalLoad" title="Carico totale">
         <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={totalLoadData} margin={{ top: 20, right: 20, left: 40 }}>
+          <BarChart
+            data={totalLoadData}
+            margin={{ top: 20, right: 20, left: 40 }}
+          >
             <XAxis dataKey="name" />
-            <YAxis domain={[0, 'dataMax']} tickFormatter={(v) => v.toExponential(0)} />
+            <YAxis
+              domain={[0, 'dataMax']}
+              tickFormatter={(v) => v.toExponential(0)}
+            />
             <Tooltip />
             <Bar dataKey="value" fill="#ffc658">
-              <LabelList dataKey="value" position="top" formatter={(v) => v.toExponential(2)} />
+              <LabelList
+                dataKey="value"
+                position="top"
+                formatter={(v) => v.toExponential(2)}
+              />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Widget>
+      <Widget id="impact" title="Impatto bilancio-sedimenti">
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={impactData} margin={{ top: 20, right: 20, left: 20 }}>
+            <XAxis dataKey="name" />
+            <YAxis tickFormatter={(v) => v.toExponential(1)} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="base" fill="#8884d8" name="d50">
+              <LabelList
+                dataKey="base"
+                position="top"
+                formatter={(v) => v.toExponential(2)}
+              />
+            </Bar>
+            <Bar dataKey="eff" fill="#82ca9d" name="D_eff">
+              <LabelList
+                dataKey="eff"
+                position="top"
+                formatter={(v) => v.toExponential(2)}
+              />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -103,5 +162,6 @@ SedimentGraphs.propTypes = {
     theta: PropTypes.number.isRequired,
     rouseP: PropTypes.number.isRequired,
     totalLoad: PropTypes.number.isRequired
-  }).isRequired
+  }).isRequired,
+  hydroData: PropTypes.array
 };

@@ -38,8 +38,8 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Visualizzazione su **grafico radar** dinamico.
 - Grafico evolutivo per Q o v su intervalli definiti.
 - Tabella dell'andamento per Q o v sugli stessi intervalli.
-- Grafici sul trasporto solido (curva del bed-load, profilo di concentrazione e
-  carico totale).
+ - Grafici sul trasporto solido (curva del bed-load, profilo di concentrazione,
+  carico totale e impatto del bilancio idrologico sui sedimenti).
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
 - Widget grafici minimizzabili, spostabili e ridimensionabili (incluso il nuovo widget "Bilancio idrologico").

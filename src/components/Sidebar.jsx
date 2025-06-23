@@ -109,7 +109,7 @@ export default function Sidebar({
                 }}
               >
                 <span className="w-4">{visibleCharts.sediments ? '✓' : ''}</span>
-                Sedimenti
+                Sedimenti e bilancio
               </button>
             </div>
           )}
