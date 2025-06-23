@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './EvolutionTable.css';
+import '../styles/EvolutionTable.css';
 
 export default function EvolutionTable({ evolutionData, rangeVar }) {
   const header = rangeVar === 'v' ? 'v (m/s)' : 'Q (l/s)';

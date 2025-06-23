@@ -19,11 +19,11 @@ import {
   Line,
   LabelList
 } from 'recharts';
-import Widget from '../Widget';
+import Widget from './Widget';
 import EvolutionTable from './EvolutionTable';
 import SedimentGraphs from './SedimentGraphs';
 import DryAccumulation from './DryAccumulation';
-import Formula from '../Formula';
+import Formula from './Formula';
 import HydroBalanceChart from './HydroBalanceChart';
 
 function Graphs({

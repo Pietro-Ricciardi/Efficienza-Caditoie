@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import './Widget.css';
+import '../styles/Widget.css';
 
 const Widget = forwardRef(function Widget(
   {

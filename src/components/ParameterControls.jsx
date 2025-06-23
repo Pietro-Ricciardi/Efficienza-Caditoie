@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Widget from '../Widget';
+import Widget from './Widget';
 
 const paramInfo = {
   Q: 'Portata totale del deflusso (l/s).',
