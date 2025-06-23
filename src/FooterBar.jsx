@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import './FooterBar.css';
 
 export default function FooterBar({ widgets, onRestore }) {
-  if (!widgets.length) return null;
   return (
     <div className="footer-bar">
       {widgets.map((w) => (
         <div
           key={w.id}
           className="footer-item"
-          onDoubleClick={() => onRestore(w.id)}
+          onDoubleClick={() => onRestore(w.id, false)}
         >
           {w.title}
         </div>
