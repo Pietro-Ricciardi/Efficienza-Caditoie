@@ -22,7 +22,13 @@ import {
   importaParametri
 } from './utils';
 import { Help, Normativa } from './pages';
-import { Toast, ParameterControls, Graphs, Sidebar, FooterBar } from './components';
+import {
+  Toast,
+  ParameterControls,
+  Graphs,
+  Sidebar,
+  FooterBar
+} from './components';
 import { fetchRain, verifyApiKey } from './services';
 import { zoneDefaults } from './utils';
 import {
@@ -106,6 +112,8 @@ export default function App() {
   const pieRef = useRef(null);
   const lineRef = useRef(null);
   const evolutionRef = useRef(null);
+  const hydroRef = useRef(null);
+  const tableRef = useRef(null);
   const resultsRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -269,8 +277,6 @@ export default function App() {
     setDragging(null);
   };
 
-
-
   const downloadCSV = () => {
     const rows = [
       ['Parametro', 'Valore'],
@@ -326,13 +332,26 @@ export default function App() {
   };
 
   const downloadImage = useCallback((ref, name) => {
-    const svg = ref.current?.querySelector('svg');
-    if (!svg) return;
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svg);
+    const container = ref.current;
+    if (!container) return;
+    let svg = container.querySelector('svg');
+    let svgString;
+    if (svg) {
+      const serializer = new XMLSerializer();
+      svgString = serializer.serializeToString(svg);
+    } else {
+      const { width, height } = container.getBoundingClientRect();
+      const serializer = new XMLSerializer();
+      const html = serializer.serializeToString(container);
+      svgString =
+        `<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}'>` +
+        `<foreignObject width='100%' height='100%'>` +
+        html +
+        '</foreignObject></svg>';
+    }
     const canvas = document.createElement('canvas');
-    canvas.width = svg.clientWidth;
-    canvas.height = svg.clientHeight;
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
     const ctx = canvas.getContext('2d');
     const img = new Image();
     img.onload = () => {
@@ -456,6 +475,8 @@ export default function App() {
           pieRef={pieRef}
           lineRef={lineRef}
           evolutionRef={evolutionRef}
+          hydroRef={hydroRef}
+          tableRef={tableRef}
         />
         <div className="rightPane flex-1 p-6 overflow-auto grid gap-4">
           {activePage === 'parameters' && (
@@ -517,6 +538,8 @@ export default function App() {
               pieRef={pieRef}
               lineRef={lineRef}
               evolutionRef={evolutionRef}
+              hydroRef={hydroRef}
+              tableRef={tableRef}
               resultsRef={resultsRef}
             />
           )}

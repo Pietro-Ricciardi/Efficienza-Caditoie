@@ -59,6 +59,8 @@ function Graphs({
   pieRef,
   lineRef,
   evolutionRef,
+  hydroRef,
+  tableRef,
   resultsRef
 }) {
   const isMinimized = (id) => minimized?.some((w) => w.id === id);
@@ -212,6 +214,7 @@ function Graphs({
     ),
     hydro: !isMinimized('hydroBalance') && (
       <HydroBalanceChart
+        ref={hydroRef}
         data={hydroData}
         onCollapseToggle={toggleMinimized}
       />
@@ -274,7 +277,11 @@ function Graphs({
         onDrop={handleDrop}
         onCollapseToggle={toggleMinimized}
       >
-        <EvolutionTable evolutionData={evolutionData} rangeVar={rangeVar} />
+        <EvolutionTable
+          ref={tableRef}
+          evolutionData={evolutionData}
+          rangeVar={rangeVar}
+        />
       </Widget>
     ),
     sediments: (
@@ -337,6 +344,8 @@ Graphs.propTypes = {
   pieRef: PropTypes.object,
   lineRef: PropTypes.object,
   evolutionRef: PropTypes.object,
+  hydroRef: PropTypes.object,
+  tableRef: PropTypes.object,
   resultsRef: PropTypes.object
 };
 
