@@ -1,6 +1,9 @@
 export async function fetchRain(city, apiKey) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
   const res = await fetch(url);
+  if (res.status === 404) {
+    throw new Error('Località non trovata');
+  }
   if (!res.ok) {
     throw new Error('Errore richiesta OpenWeatherMap');
   }
