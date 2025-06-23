@@ -2,13 +2,14 @@
 
 Questo è un progetto React che consente di calcolare e visualizzare l'efficienza idraulica delle caditoie stradali.
 Un file Excel di esempio è disponibile nella cartella `excel`.
-Nella directory `public/templates` sono presenti i modelli **CSV**, **Excel** e **JSON** da compilare per caricare i parametri nell'applicazione.
+Nella directory `public/templates` sono presenti i modelli **CSV**, **Excel** e **JSON** da compilare per caricare i parametri nell'applicazione, inclusi quelli del bilancio idrologico (radiazione, Tmin/Tmax e CN).
 
 Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o la sezione **Help** dell'applicazione. È presente inoltre un menu **Normativa** con i collegamenti alle principali norme UNI, EN e ISO di settore.
 
 ## Funzionalità
 
 - Inserimento dei parametri tramite **slider interattivi**:
+
   - Portata totale (Q)
   - Portata intercettata (Q1)
   - Velocità del flusso (v)
@@ -19,6 +20,9 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
   - Granulometria media (d50)
   - Densità dei sedimenti (rhoS)
   - Profondità idraulica (h)
+  - Radiazione solare media giornaliera (radiation)
+  - Temperature minima e massima (tmin/tmax)
+  - Curve Number SCS-CN (CN)
   - Parametri di accumulo secco per zona (k e Lmax) – mostrati in un widget a larghezza doppia
 
     | Ambiente urbano | k tipico (kg/ha/giorno) | Lmax (kg/ha) |
@@ -38,7 +42,7 @@ Per una guida rapida all'interfaccia è disponibile il file [HELP.md](HELP.md) o
 - Visualizzazione su **grafico radar** dinamico.
 - Grafico evolutivo per Q o v su intervalli definiti.
 - Tabella dell'andamento per Q o v sugli stessi intervalli.
- - Grafici sul trasporto solido (curva del bed-load, profilo di concentrazione,
+- Grafici sul trasporto solido (curva del bed-load, profilo di concentrazione,
   carico totale e impatto del bilancio idrologico sui sedimenti).
 - Modalità chiaro/scuro con pulsante di attivazione.
 - Layout responsive con possibilità di ridimensionare i pannelli.
